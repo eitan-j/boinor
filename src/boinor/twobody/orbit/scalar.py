@@ -10,9 +10,10 @@ from astropy.coordinates import (
 )
 import numpy as np
 
-from boinor.bodies import Earth
+# XXX avoid cycle import: from boinor.bodies import Earth
 from boinor.core.events import elevation_function as elevation_function_fast
-from boinor.ephem import Ephem
+
+# XXX avoid cycle import: from boinor.ephem import Ephem
 from boinor.frames.util import get_frame
 from boinor.threebody.soi import laplace_radius
 from boinor.twobody.elements import eccentricity_vector, energy, t_p
@@ -532,6 +533,8 @@ class Orbit(OrbitCreationMixin):
         """
 
         coordinates, epochs = strategy.sample(self)
+        from boinor.ephem import Ephem  # HACK: avoid cylce import
+
         return Ephem(coordinates, epochs, self.plane)
 
     def sample(self, values=100, *, min_anomaly=None, max_anomaly=None):
@@ -701,6 +704,8 @@ class Orbit(OrbitCreationMixin):
         Local sideral time needs to be precomputed. If Earth is the attractor, it can
         be computed using `boinor.earth.util.get_local_sidereal_time`.
         """
+        from boinor.bodies import Earth  # HACK: to avoid cycle import
+
         if self.attractor != Earth:
             raise NotImplementedError(
                 "Elevation implementation is currently only supported for orbits having Earth as the attractor."
