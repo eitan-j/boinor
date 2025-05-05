@@ -116,7 +116,7 @@ You can now export the extractor packets by simply calling ``extractor.packets``
          "range": "LOOP_STOP",
          "step": "SYSTEM_CLOCK_MULTIPLIER"
      }
- }, [...]
+  }], [...]
 ```
 
 ## Landing on Mars
