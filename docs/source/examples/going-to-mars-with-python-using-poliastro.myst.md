@@ -97,7 +97,7 @@ plotter.plot_trajectory(
     label="Transfer orbit",
 )
 #plotter.set_view(30 * u.deg, 260 * u.deg, distance=3 * u.km)
-plotter.show()
+plotter.show();
 ```
 
 Not bad! Let's celebrate with some music!
