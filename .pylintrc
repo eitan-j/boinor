@@ -420,7 +420,6 @@ confidence=HIGH,
 # XXX no-member does not seem to work for astropy.units, so disabling it for now
 disable=too-many-positional-arguments,
         invalid-name,
-        non-ascii-name,
         unused-argument,
         missing-class-docstring,
         missing-function-docstring,
