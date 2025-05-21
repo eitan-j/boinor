@@ -424,7 +424,7 @@ disable=too-many-positional-arguments,
         missing-class-docstring,
         missing-function-docstring,
         missing-module-docstring,
-        duplicate-code,
+        R0801,
         fixme,
         no-member,
         line-too-long
