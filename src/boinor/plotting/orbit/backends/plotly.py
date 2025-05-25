@@ -266,10 +266,12 @@ class Plotly2D(BasePlotly):
         theme = "plotly_dark" if use_dark_theme is True else "plotly"
 
         # Declare the layout and attach it to the figure
+        # XXX original: xaxis=dict(constrain="domain")
+        # XXX original: yaxis=dict(scaleanchor="x")
         layout = go.Layout(
             autosize=True,
-            xaxis=dict(constrain="domain"),
-            yaxis=dict(scaleanchor="x"),
+            xaxis={"constrain": "domain"},
+            yaxis={"scaleanchor": "x"},
             template=theme,
         )
         super().__init__(figure, layout)
