@@ -4,18 +4,15 @@
 
 ### Highlights
 
-- **boinor**
-  Taking care of pylint tags:
-  - super-init-not-called
-  - no-else-break
-  - no-else-return
+- Deprecating Python 3.8
+- As numpy 2.0 does not work with Python 3.9, deprecation of Python 3.9 started.
+- Taking care of most pylint issues (except some of too-many-* or *docstring).
+- a github funding body was added, don't hesitate to use it :-).
 
 ### Coverage
 
-New tests have been added or improved:
- - 
-
-The code coverage increased from 91.45% to 91.67%.
+New tests have been added or improved all over the code.
+The code coverage increased from 91.45% to 96.16%.
 
 ### Bugs fixed
 
