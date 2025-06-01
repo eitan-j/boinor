@@ -1485,7 +1485,7 @@ def test_orbit_object():
     _eccParabolic = 1.0 * u.one  # dimensionless value
     _eccHyperbolic = 1.5 * u.one  # dimensionless value
     _a = 1.0 * u.deg  # angle
-    out_angle = np.pi * u.rad
+    out_angle = np.pi / 3 * u.rad
 
     oc = Orbit.from_classical(
         attractor=Sun,
