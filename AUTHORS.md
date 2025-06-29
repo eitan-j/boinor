@@ -1,6 +1,7 @@
 # Contributors
 
 * [Thorsten Alteholz](mailto:boinor@alteholz.dev)
+* Manuel López-Ibáñez
 
 
 
