@@ -418,6 +418,7 @@ confidence=HIGH,
 # there is nothing wrong with messages up until line-too-long
 # at the moment I prefer not to fix them
 # XXX no-member does not seem to work for astropy.units, so disabling it for now
+# XXX fixme <- remove for a moment
 disable=too-many-positional-arguments,
         invalid-name,
         unused-argument,
@@ -425,7 +426,6 @@ disable=too-many-positional-arguments,
         missing-function-docstring,
         missing-module-docstring,
         R0801,
-        fixme,
         no-member,
         line-too-long
 
