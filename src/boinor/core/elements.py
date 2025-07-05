@@ -490,11 +490,13 @@ def mee2coe(p, f, g, h, k, L):
 
 
 @jit
-def mee2rv(p, f, g, h, k, L):
+def mee2rv(mu, p, f, g, h, k, L):
     """Calculates position and velocity vector from modified equinoctial elements.
 
     Parameters
     ----------
+    mu: float
+        gravitational constant (k)
     p: float
         Semi-latus rectum
     f: float
@@ -533,7 +535,7 @@ def mee2rv(p, f, g, h, k, L):
 
     vx = (
         (-1 / s2)
-        * (np.sqrt(k / p))
+        * (np.sqrt(mu / p))
         * (
             np.sin(L)
             + alpha2 * np.sin(L)
@@ -545,7 +547,7 @@ def mee2rv(p, f, g, h, k, L):
     )
     vy = (
         (-1 / s2)
-        * (np.sqrt(k / p))
+        * (np.sqrt(mu / p))
         * (
             -np.cos(L)
             + alpha2 * np.cos(L)
@@ -557,8 +559,7 @@ def mee2rv(p, f, g, h, k, L):
     )
     vz = (
         (2 / s2)
-        * (np.sqrt(k / p))
+        * (np.sqrt(mu / p))
         * (h * np.cos(L) + k * np.sin(L) + f * h + g * k)
     )
-
     return np.array([rx, ry, rz]), np.array([vx, vy, vz])
