@@ -8,8 +8,13 @@
 - Version requires numpy 2.0.2
 
 ### Coverage
+
 ### Bugs fixed
+
+- Fix mee2rv(), which needs another parameter to correctly calculate equation 3b from the mentioned paper, see ({github}`boinor issue #1 <boinor/boinor#1>`)
+
 ### Pull requests
+
 ### Contributors
 
 This is the complete list of the people that contributed to this
