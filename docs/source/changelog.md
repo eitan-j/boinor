@@ -1,6 +1,25 @@
 # What's new
 
-## boinor 0.18.7
+## boinor 0.19.0 (xx.xx.xxxx)
+
+### Highlights
+
+- Deprecating Python 3.9
+- Version requires numpy 2.0.2
+
+### Coverage
+### Bugs fixed
+### Pull requests
+### Contributors
+
+This is the complete list of the people that contributed to this
+release, with a + sign indicating first contribution.
+
+- Thorsten Alteholz
+
+
+
+## boinor 0.18.7 (29.06.2025)
 
 ### Highlights
 
@@ -51,6 +70,8 @@ release, with a + sign indicating first contribution.
 - @s-m-e
 - @mtryan83
 - @DhruvJ22
+
+
 
 ## boinor 0.18.6
 
