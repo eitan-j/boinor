@@ -9,6 +9,9 @@
 
 ### Coverage
 
+New tests have been added or improved all over the code.
+The code coverage increased from 95.94% to XX.XX%.
+
 ### Bugs fixed
 
 - Fix mee2rv(), which needs another parameter to correctly calculate equation 3b from the mentioned paper, see ({github}`boinor issue #1 <boinor/boinor#1>`)
@@ -41,7 +44,7 @@ release, with a + sign indicating first contribution.
 ### Coverage
 
 New tests have been added or improved all over the code.
-The code coverage increased from 91.45% to 96.16%.
+The code coverage increased from 91.45% to 95.94%.
 
 ### Bugs fixed
 
