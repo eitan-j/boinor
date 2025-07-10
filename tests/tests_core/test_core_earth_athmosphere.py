@@ -1,4 +1,3 @@
-from astropy import units as u
 from numpy.testing import assert_allclose
 
 from boinor.core.earth_atmosphere.util import (
@@ -10,15 +9,22 @@ from boinor.core.earth_atmosphere.util import (
 
 
 def test_earth_athmosphere_util():
-    g0 = 9.81 * u.m / (u.s * u.s)
-    r0 = 6000 * u.km
+    # do call these tests without units
+    # g0 = 9.81 * u.m / (u.s * u.s)
+    # r0 = 6000 * u.km
+    # z = 100 * u.km
+    # alt = 100 * u.km
+    # expected_h = 98.360656 * u.km
+    # expected_g = 9.490997 * u.m / (u.s * u.s)
+    g0 = 9.81
+    r0 = 6000
     z = 100
     alt = 100
     expected_h = 98.360656
     expected_g = 9.490997
 
     h = z_to_h(z, r0)
-    assert_allclose(expected_h, h)
+    assert_allclose(h, expected_h)
 
     z_new = h_to_z(h, r0)
     assert_allclose(z_new, z)
