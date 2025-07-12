@@ -413,7 +413,7 @@ def _initial_guess(T, ll, M, lowpath):
             # elif T_1 < T < T_0
             # Corrected initial guess,
             # piecewise equation right after expression (30) in the original paper is incorrect
-            # See https://github.com/boinor/boinor/issues/1362
+            # See https://github.com/poliastro/poliastro/issues/1362
             x_0 = np.exp(np.log(2) * np.log(T / T_0) / np.log(T_1 / T_0)) - 1
 
         return x_0
