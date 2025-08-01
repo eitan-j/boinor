@@ -109,8 +109,8 @@ def nu_to_D(nu):
         B = \tan{\frac{\nu}{2}}
 
     """
-    # TODO: Rename to B
-    return np.tan(nu / 2.0)
+    B = np.tan(nu / 2.0)
+    return B
 
 
 @jit
