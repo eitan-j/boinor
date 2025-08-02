@@ -53,7 +53,7 @@ class SystemChars:
         return cls(name, mu, lstar, tstar)
 
     @classmethod
-    def bodies_char_compute(self, p1, p2):
+    def bodies_char_compute(cls, p1, p2):
         """Calculates mu, lstar, and tstar of the 'p1' and 'p2' system.
 
         Also, if M2>M1, then swaps p1 and p2, so that M1>M2
