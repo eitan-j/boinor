@@ -43,7 +43,7 @@ def build_ephem_interpolant(body, epochs, attractor=Earth):
 
     interpolant = interp1d(
         (epochs - epochs[0]).to_value(u.s),
-        ephem._coordinates.xyz.to_value(u.km),
+        ephem.coordinates.xyz.to_value(u.km),
     )
     return interpolant
 
@@ -165,6 +165,11 @@ class Ephem:
     def epochs(self):
         """Epochs at which the ephemerides was originally sampled."""
         return self._epochs
+
+    @property
+    def coordinates(self):
+        """Coordinates with velocitiy."""
+        return self._coordinates
 
     @property
     def plane(self):
