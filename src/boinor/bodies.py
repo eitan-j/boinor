@@ -68,6 +68,8 @@ class Body(
         ],
     )
 ):
+    """class to contain data from bodies of the solar system"""
+
     __slots__ = ()
 
     def __new__(
@@ -137,6 +139,11 @@ class Body(
 
 
 class SolarSystemPlanet(Body):
+    """class to contain data from planets of the solar system
+
+    this class only adds a plotting function to its parent class Body()
+    """
+
     def plot(
         self,
         epoch=None,

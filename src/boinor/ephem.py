@@ -49,11 +49,15 @@ def build_ephem_interpolant(body, epochs, attractor=Earth):
 
 
 class BaseInterpolator:
+    """Dummy interpolator, the correct one has to be set"""
+
     def interpolate(self, epochs, reference_epochs, coordinates):
         raise NotImplementedError
 
 
 class SincInterpolator:
+    """Whittaker-Shannon interpolator"""
+
     def interpolate(self, epochs, reference_epochs, coordinates):
         def _interp_1d(arr):
             return sinc_interp(arr, reference_epochs.jd, epochs.jd)
@@ -81,6 +85,8 @@ class SincInterpolator:
 
 
 class SplineInterpolator:
+    """spline interpolator, by default a cubic spline is used"""
+
     def __init__(self, kind="cubic"):
         self._kind = kind
 
