@@ -1,8 +1,8 @@
-[![boinor Logo](https://raw.githubusercontent.com/boinor/boinor/main/docs/source/_static/logo_readme.png)](https://docs.boinor.space/en/stable/)
+[![boinor Logo](https://raw.githubusercontent.com/boinor/boinor/main/docs/source/_static/logo_readme.png)](https://docs.boinor.space/en/latest/)
 
 | **Name**  |                        **Website**                         |                                                         **Authors**                                                       |                                      **Maintainers**                                      |                     **Version**                      |
 |:---------:|:----------------------------------------------------------:|:-------------------------------------------------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------:|:----------------------------------------------------:|
-| boinor | [https://www.boinor.space](https://www.boinor.space) | [Thorsten Alteholz](https://orcid.org/0000-0002-9570-7046) | [boinor development team](https://github.com/boinor/boinor/blob/main/AUTHORS.md) | [0.18.7](https://github.com/boinor/boinor/) |
+| boinor | [https://www.boinor.space](https://www.boinor.space) | [Thorsten Alteholz](https://orcid.org/0000-0002-9570-7046) [![orcid_badge]](https://orcid.org/0000-0002-9570-7046) | [boinor development team](https://github.com/boinor/boinor/blob/main/AUTHORS.md) | [0.18.7](https://github.com/boinor/boinor/) |
 
 [![boinor_badge]](https://github.com/boinor/boinor)
 [![CircleCI_badge]]()
@@ -14,14 +14,14 @@
 [![mailing_badge]](https://groups.io/g/boinor-dev) 
 [![docs_badge]](https://readthedocs.org/projects/boinor/badge/?version=latest)
 [![coverage_badge]](https://codecov.io/github/boinor/boinor?branch=main) 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.12809725.svg)](https://doi.org/10.5281/zenodo.12809725)
+[![doi_badge]](https://doi.org/10.5281/zenodo.12809724)
 [![FAIR checklist badge]](https://fairsoftwarechecklist.net/v0.2?f=31&a=32112&i=32311&r=132)
+[![astropy_badge]](https://www.astropy.org) 
 
 
 <!--
 [![backers_badge]](https://opencollective.com/boinor/) 
 [![sponsors_badge]](https://opencollective.com/boinor/) 
-[![astropy_badge]](https://zenodo.org/badge/latestdoi/11178845) 
 [![chat_badge]](http://chat.boinor.space/) 
 [![binder_badge]](https://mybinder.org/v2/gh/boinor/boinor/main?labpath=index.ipynb) 
 -->
@@ -40,10 +40,9 @@ but can also be used to analyze artificial satellites in Low-Earth Orbit (LEO).
 If you use boinor on your project, please [let us know]. Use the DOI to cite
 boinor in your publications:
 
-    Juan Luis Cano Rodríguez, Jorge Martinez, et al.. (2023). boinor: boinor 0.17.0. Zenodo. 10.5281/zenodo.6817189
+    Thorsten Alteholz, et al.. (2025). boinor: boinor 0.18.7. Zenodo. 10.5281/zenodo.12809724
 
 ![Multiple examples image](https://github.com/boinor/boinor/raw/main/docs/source/_static/examples.png)
--->
 
 ## Requirements
 
@@ -57,7 +56,7 @@ boinor requires the following Python packages:
 - [plotly](https://plotly.com/) for 2D and 3D interactive orbit plotting
 - [scipy](https://scipy.org/) for root finding and numerical propagation
 
-boinor is supported on Linux, macOS and Windows on Python 3.9 to 3.13.
+boinor is supported on Linux, macOS and Windows on Python 3.10 to 3.13.
 
 ## Installation
 
@@ -77,8 +76,8 @@ For other installation methods, see the [alternative installation methods].
 Complete documentation, including a [quickstart guide] and an [API reference], can
 be read on the wonderful [Read the Docs]. Multi-version documentation includes:
 
-* [Development documentation](https://docs.boinor.space/en/latest/)
-* [Stable documentation](https://docs.boinor.space/en/stable/)
+* [Development documentation]
+* [Stable documentation]
 
 
 ## Examples, background and talks
@@ -160,7 +159,8 @@ room].
 
 boinor requires finnacial support to mantain its high quality standars. The
 money is used to renew the web domain and updating the documentation hosting
-subscription among others.
+subscription among others. Please [let us know] if you would like to support
+boinor. **Thanks to all our sponsors!**
 
 <!--
 If you would like to support boinor, consider [becoming a backer] or
@@ -194,18 +194,24 @@ If you would like to support boinor, consider [becoming a backer] or
 
 * **What's the future of the project?**
 
-  boinor is actively maintained and receiving an influx of new contributors
+  boinor is actively maintained
+<!--  
+   and receiving an influx of new contributors
   thanks to the generous sponsorship of Google, the European Space Agency, and
   NumFOCUS. The best way to get an idea of the roadmap is to see the
   [milestones] of the project.
+-->  
 
 <!-- LINKS AND REFERENCES -->
 
-[quickstart guide]: https://docs.boinor.space/en/stable/quickstart.html
+[quickstart guide]: https://docs.boinor.space/en/latest/quickstart.html
 [API reference]: https://docs.boinor.space/en/latest/api.html
+[alternative installation methods]: https://docs.boinor.space/en/latest/installation.html#alternative-installation-methods
+[commonly used Astrodynamics software]: https://docs.boinor.space/en/latest/related.html
+[Development documentation]: https://docs.boinor.space/en/latest/
+[Stable documentation]: https://docs.boinor.space/en/0.18.7/
 [Read the docs]: https://readthedocs.org
 [binder]: https://mybinder.org/
-[alternative installation methods]: https://docs.boinor.space/en/stable/installation.html#alternative-installation-methods
 [issue tracker]: https://github.com/boinor/boinor/issues 
 [CONTRIBUTING.md]: https://github.com/boinor/boinor/blob/main/CONTRIBUTING.md
 [COPYING]: https://github.com/boinor/boinor/blob/main/COPYING
@@ -214,11 +220,8 @@ If you would like to support boinor, consider [becoming a backer] or
 [let us know]: mailto:boinor@alteholz.dev
 [examples directory]: https://github.com/boinor/boinor/tree/main/docs/source/examples
 [become a sponsor]: https://opencollective.com/boinor/sponsor/0/website
-[docs_stable]: https://docs.boinor.space/en/stable/
-[docs_latest]: https://docs.boinor.space/en/latest/
 [that are validated]: https://github.com/boinor/validation/
-[commonly used Astrodynamics software]: https://docs.boinor.space/en/stable/related.html
-[open an issue]: https://github.com/boinor/validation/issues/new
+[open an issue]: https://github.com/boinor/boinor/issues/new
 [milestones]: https://github.com/boinor/boinor/milestones
 [Want to be a backer]: https://opencollective.com/boinor#backer
 [gallery of examples]: https://docs.boinor.space/en/latest/gallery.html
@@ -229,10 +232,7 @@ If you would like to support boinor, consider [becoming a backer] or
 
 <!-- Badges -->
 
-<!--
-[orcid_badge]: https://img.shields.io/badge/id-0000--0002--2187--161X-a6ce39.svg "orcid badge"
--->
-
+[orcid_badge]: https://img.shields.io/badge/id-0000--0002--9570--7046.svg "orcid badge"
 [python_badge]: https://img.shields.io/pypi/pyversions/boinor?logo=pypi&logoColor=white "python badge"
 [license_badge]: https://img.shields.io/badge/license-MIT-blue.svg?logo=open%20source%20initiative&logoColor=white "license badge"
 
@@ -241,7 +241,7 @@ If you would like to support boinor, consider [becoming a backer] or
 [docs_badge]: https://readthedocs.org/projects/boinor/badge/?version=latest
 [coverage_badge]:  https://img.shields.io/codecov/c/github/boinor/boinor.svg?logo=Codecov&logoColor=white "coverage badge"
 [pre_commit_badge]: https://results.pre-commit.ci/badge/github/boinor/boinor/main.svg "pre-commit badge"
-[doi_badge]: https://zenodo.org/badge/11178845.svg "doi badge" 
+[doi_badge]: https://zenodo.org/badge/DOI/10.5281/zenodo.12809724.svg "doi badge"
 [FAIR checklist badge]: https://fairsoftwarechecklist.net/badge.svg
 [astropy_badge]: http://img.shields.io/badge/powered%20by-AstroPy-orange.svg "astropy badge"
 [mailing_badge]: https://img.shields.io/badge/mailing%20list-groups.io-8cbcd1.svg 
