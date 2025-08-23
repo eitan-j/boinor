@@ -1,22 +1,28 @@
 # What's new
 
-## boinor 0.19.0 (xx.xx.xxxx)
+## boinor 0.19.0 (28.08.2025)
 
 ### Highlights
 
 - Deprecating Python 3.9
 - Version requires numpy 2.0.2
+- Reactivating first steps of validation
+- Taking care of pylint issues
+- Reintroducing Debian package of Boinor
 
 ### Coverage
 
 New tests have been added or improved all over the code.
-The code coverage increased from 95.94% to XX.XX%.
+The code coverage increased from 95.94% to 96.47%.
 
 ### Bugs fixed
 
 - Fix mee2rv(), which needs another parameter to correctly calculate equation 3b from the mentioned paper, see ({github}`boinor issue #1 <boinor/boinor#1>`)
+- Fix propagation test to obtain the same results for each propagator.
 
 ### Pull requests
+
+- sadly none
 
 ### Contributors
 
@@ -24,7 +30,7 @@ This is the complete list of the people that contributed to this
 release, with a + sign indicating first contribution.
 
 - Thorsten Alteholz
-
+- Manuel López-Ibáñez
 
 
 ## boinor 0.18.7 (29.06.2025)
