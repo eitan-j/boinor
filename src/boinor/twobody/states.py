@@ -1,3 +1,30 @@
+""" classes of different states defined by their elements
+
+classical orbital elements.
+    p    : Semilatus rectum.
+    ecc  : Eccentricity.
+    inc  : Inclination.
+    raan : Right ascension of the ascending node.
+    argp : Argument of the perigee.
+    nu   : True anomaly.
+
+
+position and velocity vectors.
+    r : Position vector wrt attractor center.
+    v : Velocity vector.
+
+
+modified equinoctial elements representation.
+    p : Semilatus rectum.
+    f : Second modified equinoctial element.
+    g : Third modified equinoctial element.
+    h : Fourth modified equinoctial element.
+    k : Fifth modified equinoctial element.
+    L : True longitude.
+
+
+"""
+
 from functools import cached_property
 
 from astropy import units as u
