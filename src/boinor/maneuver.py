@@ -180,9 +180,6 @@ class Maneuver:
 
         # Time of flight is solved by subtracting both orbit epochs
         tof = orbit_f.epoch - orbit_i.epoch
-        # todo: this assert happens during test_lambert_tof_exception()
-        # assert tof > 0, f"Time of flight={tof} must be positive"
-
         if tof.to_value(u.s) < 0:
             raise ValueError(
                 "Epoch of initial orbit greater than epoch of final orbit, "
