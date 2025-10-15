@@ -391,6 +391,5 @@ class ModifiedEquinoctialState(BaseState):
         )
 
     def to_equinoctial(self):
-        # TODO: gives pylint abstract_method but what shall we do here?
-        # this is nonsense
+        """Converts to modified equinoctial elements representation."""
         return self
