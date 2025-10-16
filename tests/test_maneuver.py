@@ -287,3 +287,71 @@ def test_lambert_tof_exception():
         str(excinfo.value)
         == "Epoch of initial orbit greater than epoch of final orbit, causing a negative time of flight"
     )
+
+def test_total_cost_optimization():
+    nu=-180 * u.deg
+    # Data from Vallado, example 6.1
+    alt_i = 191.34411 * u.km
+    alt_f = 35781.34857 * u.km
+    _a = 0 * u.deg
+    orb_i = Orbit.from_classical(
+        attractor=Earth,
+        a=Earth.R + alt_i,
+        ecc=0 * u.one,
+        inc=_a,
+        raan=_a,
+        argp=_a,
+        nu=nu,
+    )
+
+    # Expected output
+    expected_dv = 3.935224 * u.km / u.s
+    expected_t_pericenter = orb_i.time_to_anomaly(0 * u.deg)
+    expected_t_trans = 5.256713 * u.h
+    expected_total_time = expected_t_pericenter + expected_t_trans
+
+    man = Maneuver.hohmann(orb_i, Earth.R + alt_f)
+    assert_quantity_allclose(man.get_total_cost(), expected_dv, rtol=1e-5)
+    assert_quantity_allclose(man.get_total_cost_optimized(), expected_dv, rtol=1e-5)
+
+
+def test_total_cost_optimization_benchmark_slow(benchmark):
+    nu=-180 * u.deg
+    # Data from Vallado, example 6.1
+    alt_i = 191.34411 * u.km
+    alt_f = 35781.34857 * u.km
+    _a = 0 * u.deg
+    orb_i = Orbit.from_classical(
+        attractor=Earth,
+        a=Earth.R + alt_i,
+        ecc=0 * u.one,
+        inc=_a,
+        raan=_a,
+        argp=_a,
+        nu=nu,
+    )
+
+    man = Maneuver.hohmann(orb_i, Earth.R + alt_f)
+    #result=benchmark.pedantic(man.get_total_cost, iterations=10, rounds=10000)
+    result=benchmark(man.get_total_cost)
+
+
+def test_total_cost_optimization_benchmark_fast(benchmark):
+    nu=-180 * u.deg
+    # Data from Vallado, example 6.1
+    alt_i = 191.34411 * u.km
+    alt_f = 35781.34857 * u.km
+    _a = 0 * u.deg
+    orb_i = Orbit.from_classical(
+        attractor=Earth,
+        a=Earth.R + alt_i,
+        ecc=0 * u.one,
+        inc=_a,
+        raan=_a,
+        argp=_a,
+        nu=nu,
+    )
+
+    man = Maneuver.hohmann(orb_i, Earth.R + alt_f)
+    #result=benchmark.pedantic(man.get_total_cost_optimized, iterations=10, rounds=10000)
+    result=benchmark(man.get_total_cost_optimized)

@@ -113,6 +113,7 @@ test = [
     "pytest-remotedata",
     "pytest-xdist[psutil]",
     "pytest-timestamps",
+    "pytest-benchmark",
     "tox",
     "vulture",
 ]
