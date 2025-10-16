@@ -207,11 +207,7 @@ class Maneuver:
 
     def get_total_cost_optimized(self):
         """Returns total cost of the maneuver (km / s) in optimized version."""
-        tc2 = (
-             np.linalg.norm(self._dvs, axis=1).sum()
-             * u.m
-             / u.s
-         )
+        tc2 = np.linalg.norm(self._dvs, axis=1).sum() * u.m / u.s
         return tc2
 
     @classmethod
