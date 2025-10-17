@@ -19,7 +19,7 @@ def vallado(k, r0, r, tof, M, prograde, lowpath, numiter, rtol):
         \vec{v} &= \frac{1}{g}(\dot{g}\vec{r} - \vec{r_{0}})
 
     Therefore, the lagrange coefficients need to be computed. For the case of
-    Lamber's problem, they can be expressed by terms of the initial and final vector:
+    Lambert's problem, they can be expressed by terms of the initial and final vector:
 
     .. math::
 
