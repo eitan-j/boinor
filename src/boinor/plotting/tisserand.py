@@ -125,8 +125,8 @@ class TisserandPlotter:
             # Generate period lines
             lines = self.ax.plot(RR_P.to(u.AU), TT.to(u.year), color=color)
         else:
-            # this should not happen
-            assert lines == []
+            # an empty list of lines should not happen (self.kind should have a certain value)
+            assert not lines
 
         return lines
 
