@@ -1,3 +1,10 @@
+"""Module of sub-package plotting related to creation of Gabbard diagrams
+
+Gabbard diagrams are developed by John Gabbard to analyze and diagnose
+satellite breakups.
+The plots contain orbital period of each debris object on x-axis and
+perigee/apogee on y-axis.
+"""
 from astropy import units as u
 from matplotlib import pyplot as plt
 
