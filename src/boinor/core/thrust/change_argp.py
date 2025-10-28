@@ -1,3 +1,4 @@
+"""Argument of perigee change, with formulas developed by Pollard (in sub-package core)."""
 from numba import njit as jit
 import numpy as np
 from numpy import cross

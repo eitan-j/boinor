@@ -1,3 +1,4 @@
+"""module to take care of thrust when semimajor axis and inclination change at the same time (in sub-package core)"""
 from numba import njit as jit
 import numpy as np
 from numpy import cross

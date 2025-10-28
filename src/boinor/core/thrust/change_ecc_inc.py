@@ -1,4 +1,4 @@
-"""Simultaneous eccentricity and inclination changes.
+"""Simultaneous eccentricity and inclination changes (in sub-package core).
 
 References
 ----------
@@ -19,10 +19,11 @@ from boinor.core.elements import (
 
 @jit
 def beta(ecc_0, ecc_f, inc_0, inc_f, argp):
-    # Note: "The argument of perigee will vary during the orbit transfer
-    # due to the natural drift and because e may approach zero.
-    # However, [the equation] still gives a good estimate of the desired
-    # thrust angle."
+    """Note: "The argument of perigee will vary during the orbit transfer
+    due to the natural drift and because e may approach zero.
+    However, [the equation] still gives a good estimate of the desired
+    thrust angle."
+    """
     return np.arctan(
         abs(
             3
