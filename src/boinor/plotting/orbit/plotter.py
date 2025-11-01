@@ -719,9 +719,9 @@ class OrbitPlotter:
             )
 
         # Get orbit colors and label (protected function, use on your own risk
-        colors = self.backend._get_colors(
+        colors = self.backend._get_colors(  # pylint: disable=protected-access
             color=color, trail=trail
-        )  # pylint: disable=protected-access
+        )
 
         # Force Cartesian representation for coordinates
         coordinates = coordinates.represent_as(CartesianRepresentation)

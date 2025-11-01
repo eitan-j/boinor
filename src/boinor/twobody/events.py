@@ -180,7 +180,10 @@ class PenumbraEvent(EclipseEvent):
 
     """
 
-    def __init__(self, orbit, terminal=False, direction=0):
+    # for better clarity we do want to keep this function here
+    def __init__(
+        self, orbit, terminal=False, direction=0
+    ):  # pylint: disable=useless-parent-delegation
         super().__init__(orbit, terminal, direction)
 
     def __call__(self, t, u_, k):
@@ -214,7 +217,10 @@ class UmbraEvent(EclipseEvent):
 
     """
 
-    def __init__(self, orbit, terminal=False, direction=0):
+    # for better clarity we do want to keep this function here
+    def __init__(
+        self, orbit, terminal=False, direction=0
+    ):  # pylint: disable=useless-parent-delegation
         super().__init__(orbit, terminal, direction)
 
     def __call__(self, t, u_, k):
