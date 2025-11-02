@@ -5,6 +5,7 @@
 ### Highlights
 
 - pylint no longer complains about missing docstrings
+- orbit._state now is public available as orbit.state
 
 ### Coverage
 

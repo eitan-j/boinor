@@ -56,13 +56,13 @@ class Orbit(OrbitCreationMixin):
             Epoch of the orbit.
 
         """
-        self._state = state  # type: BaseState
+        self.state = state  # type: BaseState
         self._epoch = epoch  # type: time.Time
 
     @property
     def attractor(self):
         """Main attractor."""
-        return self._state.attractor
+        return self.state.attractor
 
     @property
     def epoch(self):
@@ -72,82 +72,82 @@ class Orbit(OrbitCreationMixin):
     @property
     def plane(self):
         """Fundamental plane of the frame."""
-        return self._state.plane
+        return self.state.plane
 
     @cached_property
     def r(self):
         """Position vector."""
-        return self._state.to_vectors().r
+        return self.state.to_vectors().r
 
     @cached_property
     def v(self):
         """Velocity vector."""
-        return self._state.to_vectors().v
+        return self.state.to_vectors().v
 
     @cached_property
     def a(self):
         """Semimajor axis."""
-        return self._state.to_classical().a
+        return self.state.to_classical().a
 
     @cached_property
     def p(self):
         """Semilatus rectum."""
-        return self._state.to_classical().p
+        return self.state.to_classical().p
 
     @cached_property
     def r_p(self):
         """Radius of pericenter."""
-        return self._state.r_p
+        return self.state.r_p
 
     @cached_property
     def r_a(self):
         """Radius of apocenter."""
-        return self._state.r_a
+        return self.state.r_a
 
     @cached_property
     def ecc(self):
         """Eccentricity."""
-        return self._state.to_classical().ecc
+        return self.state.to_classical().ecc
 
     @cached_property
     def inc(self):
         """Inclination."""
-        return self._state.to_classical().inc
+        return self.state.to_classical().inc
 
     @cached_property
     def raan(self):
         """Right ascension of the ascending node."""
-        return self._state.to_classical().raan
+        return self.state.to_classical().raan
 
     @cached_property
     def argp(self):
         """Argument of the perigee."""
-        return self._state.to_classical().argp
+        return self.state.to_classical().argp
 
     @property
     def nu(self):
         """True anomaly."""
-        return self._state.to_classical().nu
+        return self.state.to_classical().nu
 
     @cached_property
     def f(self):
         """Second modified equinoctial element."""
-        return self._state.to_equinoctial().f
+        return self.state.to_equinoctial().f
 
     @cached_property
     def g(self):
         """Third modified equinoctial element."""
-        return self._state.to_equinoctial().g
+        return self.state.to_equinoctial().g
 
     @cached_property
     def h(self):
         """Fourth modified equinoctial element."""
-        return self._state.to_equinoctial().h
+        return self.state.to_equinoctial().h
 
     @cached_property
     def k(self):
         """Fifth modified equinoctial element."""
-        return self._state.to_equinoctial().k
+        return self.state.to_equinoctial().k
 
     @cached_property
     def L(self):
@@ -157,12 +157,12 @@ class Orbit(OrbitCreationMixin):
     @cached_property
     def period(self):
         """Period of the orbit."""
-        return self._state.period
+        return self.state.period
 
     @cached_property
     def n(self):
         """Mean motion."""
-        return self._state.n
+        return self.state.n
 
     @cached_property
     def energy(self):
@@ -199,7 +199,7 @@ class Orbit(OrbitCreationMixin):
     @cached_property
     def t_p(self):
         """Elapsed time since latest perifocal passage."""
-        return self._state.t_p
+        return self.state.t_p
 
     def get_frame(self):
         """Get equivalent reference frame of the orbit.
@@ -454,7 +454,7 @@ class Orbit(OrbitCreationMixin):
             )
 
         new_state = method.propagate(
-            self._state,
+            self.state,
             time_of_flight,
         )
         new_epoch = self.epoch + time_of_flight

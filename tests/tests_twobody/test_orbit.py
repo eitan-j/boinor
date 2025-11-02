@@ -1576,7 +1576,7 @@ def test_apply_impulse():
         orbit.apply_impulse(vapply)
 
     # just checks whether it works without exception
-    # TODO: check whether self._state has some meaningfull values afterwards
+    # TODO: check whether self.state has some meaningfull values afterwards
     orbit.apply_impulse(v)
 
 

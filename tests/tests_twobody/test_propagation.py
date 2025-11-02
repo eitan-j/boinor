@@ -284,7 +284,7 @@ def test_cowell_propagation_with_zero_acceleration_equals_kepler():
     expected_v = np.array([3.689866, -1.916735, -6.112511]) * u.km / u.s
 
     method = CowellPropagator()
-    rrs, vvs = method.propagate_many(orbit._state, tofs)
+    rrs, vvs = method.propagate_many(orbit.state, tofs)
 
     assert_quantity_allclose(rrs[0], expected_r, rtol=1e-5)
     assert_quantity_allclose(vvs[0], expected_v, rtol=1e-4)
@@ -310,7 +310,7 @@ def test_cowell_propagation_circle_to_circle():
     tofs = [20] * ss.period
 
     method = CowellPropagator(f=f)
-    rrs, vvs = method.propagate_many(ss._state, tofs)
+    rrs, vvs = method.propagate_many(ss.state, tofs)
 
     orb_final = Orbit.from_vectors(Earth, rrs[0], vvs[0])
 
@@ -397,7 +397,7 @@ def test_farnocchia_propagation_very_high_ecc_does_not_fail():
 
     tofs = [74] << u.s  # tof = 74s and above is the critical region
     method = FarnocchiaPropagator()
-    coords, _ = method.propagate_many(orbit._state, tofs)
+    coords, _ = method.propagate_many(orbit.state, tofs)
 
     assert not np.isnan(coords).any()
 

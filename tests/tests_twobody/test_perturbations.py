@@ -47,7 +47,7 @@ def test_J2_propagation_Earth():
         return du_kep + du_ad
 
     method = CowellPropagator(f=f)
-    rr, vv = method.propagate_many(orbit._state, tofs)
+    rr, vv = method.propagate_many(orbit.state, tofs)
 
     k = Earth.k.to(u.km**3 / u.s**2).value
 
@@ -134,7 +134,7 @@ def test_J3_propagation_Earth(test_params):
     tofs = np.linspace(0, 10.0 * u.day, 1000)
     method = CowellPropagator(rtol=1e-8, f=f)
     r_J2, v_J2 = method.propagate_many(
-        orbit._state,
+        orbit.state,
         tofs,
     )
 
@@ -150,7 +150,7 @@ def test_J3_propagation_Earth(test_params):
 
     method = CowellPropagator(rtol=1e-8, f=f_combined)
     r_J3, v_J3 = method.propagate_many(
-        orbit._state,
+        orbit.state,
         tofs,
     )
 
@@ -250,7 +250,7 @@ def test_atmospheric_drag_exponential():
 
     method = CowellPropagator(f=f)
     rr, _ = method.propagate_many(
-        orbit._state,
+        orbit.state,
         [tof] * u.s,
     )
 
@@ -292,7 +292,7 @@ def test_atmospheric_demise():
 
     method = CowellPropagator(events=events, f=f)
     rr, _ = method.propagate_many(
-        orbit._state,
+        orbit.state,
         tofs,
     )
 
@@ -309,7 +309,7 @@ def test_atmospheric_demise():
 
     method = CowellPropagator(events=events, f=f)
     rr, _ = method.propagate_many(
-        orbit._state,
+        orbit.state,
         tofs,
     )
 
@@ -357,7 +357,7 @@ def test_atmospheric_demise_coesa76():
 
     method = CowellPropagator(events=events, f=f)
     rr, _ = method.propagate_many(
-        orbit._state,
+        orbit.state,
         tofs,
     )
 
@@ -584,7 +584,7 @@ def test_3rd_body_Curtis(test_params):
 
     method = CowellPropagator(rtol=1e-10, f=f)
     rr, vv = method.propagate_many(
-        initial._state,
+        initial.state,
         np.linspace(0, tof, 400) << u.s,
     )
 
@@ -684,7 +684,7 @@ def test_solar_pressure(t_days, deltas_expected, sun_r):
         f=f,
     )
     rr, vv = method.propagate_many(
-        initial._state,
+        initial.state,
         np.linspace(0, tof.to_value(u.s), 4000) << u.s,
     )
 

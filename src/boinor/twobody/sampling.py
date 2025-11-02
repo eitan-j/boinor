@@ -89,8 +89,7 @@ class EpochsArray(SamplingStrategy):
 
     def sample(self, orbit):
         times_of_flight = self._epochs - orbit.epoch
-        # TODO: Make state public?
-        rr, vv = self._method.propagate_many(orbit._state, times_of_flight)
+        rr, vv = self._method.propagate_many(orbit.state, times_of_flight)
 
         # TODO: For now we're returning CartesianRepresentation
         # because that's what Ephem objects expect,
