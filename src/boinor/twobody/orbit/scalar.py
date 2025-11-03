@@ -535,7 +535,10 @@ class Orbit(OrbitCreationMixin):
         """
 
         coordinates, epochs = strategy.sample(self)
-        from boinor.ephem import Ephem  # HACK: avoid cylce import
+        # HACK: avoid cylce import
+        from boinor.ephem import (  # pylint: disable=import-outside-toplevel
+            Ephem,
+        )
 
         return Ephem(coordinates, epochs, self.plane)
 
@@ -755,7 +758,10 @@ class Orbit(OrbitCreationMixin):
         Local sideral time needs to be precomputed. If Earth is the attractor, it can
         be computed using `boinor.earth.util.get_local_sidereal_time`.
         """
-        from boinor.bodies import Earth  # HACK: to avoid cycle import
+        # HACK: to avoid cycle import
+        from boinor.bodies import (  # pylint: disable=import-outside-toplevel
+            Earth,
+        )
 
         if self.attractor != Earth:
             raise NotImplementedError(

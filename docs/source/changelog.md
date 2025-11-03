@@ -6,6 +6,7 @@
 
 - pylint no longer complains about missing docstrings
 - orbit._state now is public available as orbit.state
+- instead of needing to shovel units back and forth, a new property exists: Event.last_t_without_unit
 
 ### Coverage
 
