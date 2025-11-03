@@ -46,9 +46,7 @@ def sample_closed(ecc, min_nu, max_nu=None, num_values=100):
 
 
 @u.quantity_input(min_nu=u.rad, ecc=u.one, max_nu=u.rad, nu_limit=u.rad)
-def sample_open(
-    ecc, min_nu=None, max_nu=None, num_values=100, *, nu_limit=None
-):
+def sample_open(ecc, min_nu=None, max_nu=None, num_values=100, *, nu_limit=None):
     """Sample an open orbit.
 
     Notes
@@ -98,9 +96,7 @@ class EpochsArray(SamplingStrategy):
         # (since computing them here is more efficient than doing it from the outside)
         # but there are open questions around StateArrays and epochs.
         # See discussion at https://github.com/poliastro/poliastro/pull/1492
-        cartesian = CartesianRepresentation(
-            rr, differentials=CartesianDifferential(vv, xyz_axis=1), xyz_axis=1
-        )
+        cartesian = CartesianRepresentation(rr, differentials=CartesianDifferential(vv, xyz_axis=1), xyz_axis=1)
         return cartesian, self._epochs
 
 
@@ -109,9 +105,7 @@ class TrueAnomalyBounds(SamplingStrategy):
     as default, orbit consists of 100 samples
     """
 
-    def __init__(
-        self, min_nu=None, max_nu=None, num_values=100, hyp_r_factor=3.0
-    ):
+    def __init__(self, min_nu=None, max_nu=None, num_values=100, hyp_r_factor=3.0):
         self._min_nu = min_nu
         self._max_nu = max_nu
         self._hyp_r_factor = hyp_r_factor
@@ -146,15 +140,10 @@ class TrueAnomalyBounds(SamplingStrategy):
             )
 
         # Weird units roundtrip because list of quantities != array quantity
-        delta_ts = [
-            t_p(nu, orbit.ecc, orbit.attractor.k, orbit.r_p).to_value(u.s)
-            for nu in nu_values
-        ]
+        delta_ts = [t_p(nu, orbit.ecc, orbit.attractor.k, orbit.r_p).to_value(u.s) for nu in nu_values]
         # Unwrap time increments to return monotonic increasing epochs
         # Notice that astropy.units does not support the period kwarg for np.unwrap
-        delta_ts = (
-            np.unwrap(delta_ts, period=orbit.period.to_value(u.s)) << u.s
-        )
+        delta_ts = np.unwrap(delta_ts, period=orbit.period.to_value(u.s)) << u.s
         epochs = orbit.epoch + (delta_ts - orbit.t_p)
 
         n = nu_values.shape[0]
@@ -175,9 +164,7 @@ class TrueAnomalyBounds(SamplingStrategy):
         # (since computing them here is more efficient than doing it from the outside)
         # but there are open questions around StateArrays and epochs.
         # See discussion at https://github.com/boinor/boinor/pull/1492
-        cartesian = CartesianRepresentation(
-            rr, differentials=CartesianDifferential(vv, xyz_axis=1), xyz_axis=1
-        )
+        cartesian = CartesianRepresentation(rr, differentials=CartesianDifferential(vv, xyz_axis=1), xyz_axis=1)
         return cartesian, epochs
 
 
@@ -204,6 +191,4 @@ class EpochBounds(SamplingStrategy):
         else:
             max_nu = orbit.propagate(self._max_epoch).nu
 
-        return TrueAnomalyBounds(
-            min_nu=min_nu, max_nu=max_nu, num_values=self._num_values
-        ).sample(orbit)
+        return TrueAnomalyBounds(min_nu=min_nu, max_nu=max_nu, num_values=self._num_values).sample(orbit)

@@ -75,9 +75,7 @@ rf = np.array(rf)
 
 fig = plt.figure()
 ax = plt.axes(projection="3d")
-ax.set_box_aspect(
-    (np.ptp(rf[:, 0]), np.ptp(rf[:, 1]), np.ptp(rf[:, 2]))
-)  # aspect ratio is 1:1:1 in data space
+ax.set_box_aspect((np.ptp(rf[:, 0]), np.ptp(rf[:, 1]), np.ptp(rf[:, 2])))  # aspect ratio is 1:1:1 in data space
 # ploting the moon
 ax.plot3D(1 - mu, 0, 0, "ok")
 ax.set_title("L2 Southern NRHO")
@@ -126,9 +124,7 @@ rf = np.array(rf)
 
 fig = plt.figure()
 ax = plt.axes(projection="3d")
-ax.set_box_aspect(
-    (np.ptp(rf[:, 0]), np.ptp(rf[:, 1]), np.ptp(rf[:, 2]))
-)  # aspect ratio is 1:1:1 in data space
+ax.set_box_aspect((np.ptp(rf[:, 0]), np.ptp(rf[:, 1]), np.ptp(rf[:, 2])))  # aspect ratio is 1:1:1 in data space
 # ploting the moon
 ax.plot3D(1 - mu, 0, 0, "ok")
 ax.set_title("Distant Restrograde orbit (DRO)")
@@ -160,9 +156,7 @@ rf = np.array(rf)
 
 fig = plt.figure()
 ax = plt.axes(projection="3d")
-ax.set_box_aspect(
-    (np.ptp(rf[:, 0]), np.ptp(rf[:, 1]), np.ptp(rf[:, 2]))
-)  # aspect ratio is 1:1:1 in data space
+ax.set_box_aspect((np.ptp(rf[:, 0]), np.ptp(rf[:, 1]), np.ptp(rf[:, 2])))  # aspect ratio is 1:1:1 in data space
 # ploting the moon
 ax.plot3D(1 - mu, 0, 0, "ok")
 ax.set_title("Butterfly orbit")
@@ -194,9 +188,7 @@ rf = np.array(rf)
 
 fig = plt.figure()
 ax = plt.axes(projection="3d")
-ax.set_box_aspect(
-    (np.ptp(rf[:, 0]), np.ptp(rf[:, 1]), np.ptp(rf[:, 2]))
-)  # aspect ratio is 1:1:1 in data space
+ax.set_box_aspect((np.ptp(rf[:, 0]), np.ptp(rf[:, 1]), np.ptp(rf[:, 2])))  # aspect ratio is 1:1:1 in data space
 # ploting the moon
 ax.plot3D(1 - mu, 0, 0, "ok")
 ax.set_title("L2 Vertical orbit")

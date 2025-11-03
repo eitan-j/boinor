@@ -95,9 +95,7 @@ def lib_pt_loc(SysChars, conv_tol=1e-12):
     return lib_loc * SysChars.L_ND
 
 
-def newton_raphson_lib_calc(
-    initial_guess, func_coeffs, dfunc_coeffs, conv_tol
-):
+def newton_raphson_lib_calc(initial_guess, func_coeffs, dfunc_coeffs, conv_tol):
     """Uses Newton-Raphson Method to compute a zero of a function
 
     Parameters

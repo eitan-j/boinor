@@ -136,9 +136,7 @@ def test_orbit_from_sbdb():
     assert "AttributeError" in exc3.exconly()
 
     # e=1; no body in SBDB should have e=1, so this should raise an exception somewhere
-    with pytest.raises(
-        ValueError, match="For parabolic orbits use Orbit.parabolic instead"
-    ):
+    with pytest.raises(ValueError, match="For parabolic orbits use Orbit.parabolic instead"):
         orbit_from_sbdb("test4", **test_kwargs)
 
     # e=1.1; no body in SBDB should have e>1, but it seems to work

@@ -47,9 +47,7 @@ class GeocentricSolarEcliptic(BaseEclipticFrame):
     obstime = TimeAttribute(default=DEFAULT_OBSTIME)
 
 
-@frame_transform_graph.transform(
-    DynamicMatrixTransform, GCRS, GeocentricSolarEcliptic
-)
+@frame_transform_graph.transform(DynamicMatrixTransform, GCRS, GeocentricSolarEcliptic)
 def gcrs_to_geosolarecliptic(gcrs_coo, to_frame):
     """Convert coordinates from the Geocentric Celestial Reference System
     to the Earth-centered ecliptic coordinates.
@@ -57,9 +55,7 @@ def gcrs_to_geosolarecliptic(gcrs_coo, to_frame):
     """
 
     if not to_frame.obstime.isscalar:
-        raise ValueError(
-            "To perform this transformation the obstime Attribute must be a scalar."
-        )
+        raise ValueError("To perform this transformation the obstime Attribute must be a scalar.")
 
     _earth_orbit_perpen_point_gcrs = UnitSphericalRepresentation(
         lon=0 * u.deg,
@@ -84,9 +80,7 @@ def gcrs_to_geosolarecliptic(gcrs_coo, to_frame):
     return rot_matrix @ _earth_detilt_matrix
 
 
-@frame_transform_graph.transform(
-    DynamicMatrixTransform, GeocentricSolarEcliptic, GCRS
-)
+@frame_transform_graph.transform(DynamicMatrixTransform, GeocentricSolarEcliptic, GCRS)
 def geosolarecliptic_to_gcrs(from_coo, gcrs_frame):
     """Convert Earth-centered ecliptic coordinates to the
     Geocentric Celestial Reference System
@@ -111,12 +105,8 @@ def _make_rotation_matrix_from_reprs(start_representation, end_representation):
     A = start_representation.to_cartesian()
     B = end_representation.to_cartesian()
     rotation_axis = A.cross(B)
-    rotation_angle = -np.arccos(
-        A.dot(B) / (A.norm() * B.norm())
-    )  # Negation is required
+    rotation_angle = -np.arccos(A.dot(B) / (A.norm() * B.norm()))  # Negation is required
 
     # This line works around some input/output quirks of Astropy's rotation_matrix()
-    matrix = np.array(
-        rotation_matrix(rotation_angle, rotation_axis.xyz.value.tolist())
-    )
+    matrix = np.array(rotation_matrix(rotation_angle, rotation_axis.xyz.value.tolist()))
     return matrix

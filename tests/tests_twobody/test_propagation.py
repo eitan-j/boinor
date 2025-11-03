@@ -128,9 +128,7 @@ def test_propagating_to_certain_nu_is_correct():
     ecc = 1.0 / 3.0 * u.one
     _a = 0.0 * u.rad
     nu = 10 * u.deg
-    elliptic = Orbit.from_classical(
-        attractor=Sun, a=a, ecc=ecc, inc=_a, raan=_a, argp=_a, nu=nu
-    )
+    elliptic = Orbit.from_classical(attractor=Sun, a=a, ecc=ecc, inc=_a, raan=_a, argp=_a, nu=nu)
 
     elliptic_at_perihelion = elliptic.propagate_to_anomaly(0.0 * u.rad)
     r_per, _ = elliptic_at_perihelion.rv()
@@ -150,9 +148,7 @@ def test_propagating_to_certain_nu_is_correct():
     for nu in np.random.uniform(low=-np.pi, high=np.pi, size=10):
         elliptic = elliptic.propagate_to_anomaly(nu * u.rad)
         r, _ = elliptic.rv()
-        assert_quantity_allclose(
-            norm(r), a * (1.0 - ecc**2) / (1 + ecc * np.cos(nu))
-        )
+        assert_quantity_allclose(norm(r), a * (1.0 - ecc**2) / (1 + ecc * np.cos(nu)))
 
 
 def test_propagate_to_anomaly_in_the_past_fails_for_open_orbits():
@@ -160,9 +156,7 @@ def test_propagate_to_anomaly_in_the_past_fails_for_open_orbits():
     v0 = [0, 15, 0] * u.km / u.s
     orb = Orbit.from_vectors(Earth, r0, v0)
 
-    with pytest.raises(
-        ValueError, match="True anomaly -0.02 rad not reachable"
-    ):
+    with pytest.raises(ValueError, match="True anomaly -0.02 rad not reachable"):
         orb.propagate_to_anomaly(orb.nu - 1 * u.deg)
 
 
@@ -259,16 +253,12 @@ def test_apply_zero_maneuver_returns_equal_state():
     _d = 1.0 * u.AU  # Unused distance
     _ = 0.5 * u.one  # Unused dimensionless value
     _a = 1.0 * u.deg  # Unused angle
-    ss = Orbit.from_classical(
-        attractor=Sun, a=_d, ecc=_, inc=_a, raan=_a, argp=_a, nu=_a
-    )
+    ss = Orbit.from_classical(attractor=Sun, a=_d, ecc=_, inc=_a, raan=_a, argp=_a, nu=_a)
     dt = 0 * u.s
     dv = [0, 0, 0] * u.km / u.s
     orbit_new = ss.apply_maneuver([(dt, dv)])
     assert_allclose(orbit_new.r.to(u.km).value, ss.r.to(u.km).value)
-    assert_allclose(
-        orbit_new.v.to(u.km / u.s).value, ss.v.to(u.km / u.s).value
-    )
+    assert_allclose(orbit_new.v.to(u.km / u.s).value, ss.v.to(u.km / u.s).value)
 
 
 def test_cowell_propagation_with_zero_acceleration_equals_kepler():
@@ -346,9 +336,7 @@ def test_propagate_to_date_has_proper_epoch():
 
 
 @pytest.mark.filterwarnings("ignore::erfa.core.ErfaWarning")
-@pytest.mark.parametrize(
-    "method", [DanbyPropagator(), MarkleyPropagator(), GoodingPropagator()]
-)
+@pytest.mark.parametrize("method", [DanbyPropagator(), MarkleyPropagator(), GoodingPropagator()])
 def test_propagate_long_times_keeps_geometry(method):
     # TODO: Extend to other propagators?
     # See https://github.com/poliastro/poliastro/issues/265
@@ -362,9 +350,7 @@ def test_propagate_long_times_keeps_geometry(method):
     assert_quantity_allclose(iss.raan, res.raan)
     assert_quantity_allclose(iss.argp, res.argp)
 
-    assert_quantity_allclose(
-        (res.epoch - iss.epoch).to(time_of_flight.unit), time_of_flight
-    )
+    assert_quantity_allclose((res.epoch - iss.epoch).to(time_of_flight.unit), time_of_flight)
 
 
 @pytest.mark.filterwarnings("ignore::erfa.core.ErfaWarning")
@@ -411,23 +397,17 @@ def with_units(draw, elements, unit):
 @settings(deadline=None)
 @given(
     tof=with_units(
-        elements=st.floats(
-            min_value=80, max_value=120, allow_nan=False, allow_infinity=False
-        ),
+        elements=st.floats(min_value=80, max_value=120, allow_nan=False, allow_infinity=False),
         unit=u.year,
     )
 )
-@pytest.mark.parametrize(
-    "method", [FarnocchiaPropagator(), ValladoPropagator()]
-)
+@pytest.mark.parametrize("method", [FarnocchiaPropagator(), ValladoPropagator()])
 def test_long_propagation_preserves_orbit_elements(tof, method, halley):
     expected_slow_classical = halley.classical()[:-1]
 
     slow_classical = halley.propagate(tof, method=method).classical()[:-1]
 
-    for element, expected_element in zip(
-        slow_classical, expected_slow_classical
-    ):
+    for element, expected_element in zip(slow_classical, expected_slow_classical):
         assert_quantity_allclose(element, expected_element)
 
 

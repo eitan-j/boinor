@@ -93,8 +93,7 @@ class CZMLExtractor:
             or self.attractor.R_polar == 0
         ):
             raise ValueError(
-                "Invalid ellipsoid of attractor.\n"
-                + "Make sure your body has valid 'R' and 'R_polar' parameters"
+                "Invalid ellipsoid of attractor.\n" + "Make sure your body has valid 'R' and 'R_polar' parameters"
             )
 
         ellipsoid = (
@@ -137,11 +136,7 @@ class CZMLExtractor:
         for k in range(self.orbits[i][1] + 2):
             # FIXME: Unused rtol with default propagation method,
             # should we just get rid of it?
-            cords = (
-                self.orbits[i][0]
-                .propagate(TimeDelta(k * h))
-                .r.to_value(u.m)[..., None]
-            )
+            cords = self.orbits[i][0].propagate(TimeDelta(k * h)).r.to_value(u.m)[..., None]
 
             cords = np.insert(cords, 0, h.value * k, axis=0)
 
@@ -177,20 +172,14 @@ class CZMLExtractor:
         for k in range(self.orbits[i][1] + 2):
             # FIXME: Unused rtol with default propagation method,
             # should we just get rid of it?
-            cords = (
-                self.orbits[i][0]
-                .propagate(TimeDelta(k * h))
-                .r.to_value(u.m)[..., None]
-            )
+            cords = self.orbits[i][0].propagate(TimeDelta(k * h)).r.to_value(u.m)[..., None]
 
             cords = np.insert(cords, 0, h.value * k, axis=0)
 
             # Flatten list
             cords = list(map(lambda x: round(x[0], rf), cords.tolist()))
             t, p = cords[0], cords[1:]
-            pr_p = project_point_on_ellipsoid_fast(
-                p[0], p[1], p[2], ellipsoid[0], ellipsoid[1], ellipsoid[2]
-            )
+            pr_p = project_point_on_ellipsoid_fast(p[0], p[1], p[2], ellipsoid[0], ellipsoid[1], ellipsoid[2])
             # Add a small number to ensure that our point lies above the surface of the
             # ellipsoid. We do this because small losses in precision may cause the point
             # to lie slightly below the surface. An iterative method could be used instead
@@ -209,9 +198,7 @@ class CZMLExtractor:
                 start=self.start_epoch,
                 end=self.end_epoch,
                 value=Clock(
-                    currentTime=self.start_epoch.datetime.replace(
-                        tzinfo=timezone.utc
-                    ),
+                    currentTime=self.start_epoch.datetime.replace(tzinfo=timezone.utc),
                     multiplier=60,
                 ),
             ),
@@ -234,9 +221,7 @@ class CZMLExtractor:
 
         """
         if pr_map is None:
-            pr_map = (
-                "https://upload.wikimedia.org/wikipedia/commons/c/c4/Earthmap1000x500compac.jpg",
-            )
+            pr_map = ("https://upload.wikimedia.org/wikipedia/commons/c/c4/Earthmap1000x500compac.jpg",)
             self.cust_prop[1] = pr_map
 
         custom_props = {
@@ -280,11 +265,7 @@ class CZMLExtractor:
         label_show : bool
             Indicates whether the label is visible
         """
-        if (
-            len(pos) == 2
-            and isinstance(pos[0], u.quantity.Quantity)
-            and isinstance(pos[0], u.quantity.Quantity)
-        ):
+        if len(pos) == 2 and isinstance(pos[0], u.quantity.Quantity) and isinstance(pos[0], u.quantity.Quantity):
             u0, v0 = pos
 
             if self.cust_prop[0]:
@@ -300,29 +281,19 @@ class CZMLExtractor:
             pos = list(gd2gce(a, f, u0.to_value(u.rad), v0.to_value(u.rad), 0))
 
         else:
-            raise TypeError(
-                "Invalid coordinates. Coordinates must be of the form [u, v] where u, v are astropy units"
-            )
+            raise TypeError("Invalid coordinates. Coordinates must be of the form [u, v] where u, v are astropy units")
 
         pckt = Packet(
             id="GS" + str(self.gs_n),
             description=id_description,
-            availability=TimeInterval(
-                start=self.start_epoch, end=self.end_epoch
-            ),
+            availability=TimeInterval(start=self.start_epoch, end=self.end_epoch),
             position=Position(cartesian=pos),
             label=Label(
                 show=label_show,
                 text=label_text,
-                font=label_font
-                if label_font is not None
-                else "11pt Lucida Console",
-                fillColor=Color(rgba=label_fill_color)
-                if label_fill_color is not None
-                else None,
-                outlineColor=Color(rgba=label_outline_color)
-                if label_outline_color is not None
-                else None,
+                font=label_font if label_font is not None else "11pt Lucida Console",
+                fillColor=Color(rgba=label_fill_color) if label_fill_color is not None else None,
+                outlineColor=Color(rgba=label_outline_color) if label_outline_color is not None else None,
             ),
             billboard=Billboard(image=PIC_GROUNDSTATION, show=True),
         )
@@ -399,29 +370,21 @@ class CZMLExtractor:
         if orbit.epoch < self.start_epoch:
             orbit = orbit.propagate(self.start_epoch - orbit.epoch)
         elif orbit.epoch > self.end_epoch:
-            raise ValueError(
-                "The orbit's epoch cannot exceed the constructor's ending epoch"
-            )
+            raise ValueError("The orbit's epoch cannot exceed the constructor's ending epoch")
 
         if rtol <= 0 or rtol >= 1:
-            raise ValueError(
-                "The relative tolerance must be a value in the range (0, 1)"
-            )
+            raise ValueError("The relative tolerance must be a value in the range (0, 1)")
 
         self.orbits.append([orbit, N, orbit.epoch])
         cartesian_cords = self._init_orbit_packet_cords_(self.i, rtol=rtol)
 
-        start_epoch = Time(
-            min(self.orbits[self.i][2], self.start_epoch), format="isot"
-        )
+        start_epoch = Time(min(self.orbits[self.i][2], self.start_epoch), format="isot")
 
         pckt = Packet(
             id=self.i,
             name=id_name,
             description=id_description,
-            availability=TimeInterval(
-                start=self.start_epoch, end=self.end_epoch
-            ),
+            availability=TimeInterval(start=self.start_epoch, end=self.end_epoch),
             position=Position(
                 interpolationDegree=5,
                 interpolationAlgorithm=InterpolationAlgorithms.LAGRANGE,
@@ -433,24 +396,14 @@ class CZMLExtractor:
             path=Path(
                 show=path_show,
                 width=path_width,
-                material=Material(
-                    solidColor=SolidColorMaterial(
-                        color=Color.from_list(path_color)
-                    )
-                )
+                material=Material(solidColor=SolidColorMaterial(color=Color.from_list(path_color)))
                 if path_color is not None
-                else Material(
-                    solidColor=SolidColorMaterial(
-                        color=Color.from_list([255, 255, 0])
-                    )
-                ),
+                else Material(solidColor=SolidColorMaterial(color=Color.from_list([255, 255, 0]))),
                 resolution=120,
             ),
             label=Label(
                 text=label_text,
-                font=label_font
-                if label_font is not None
-                else "11pt Lucida Console",
+                font=label_font if label_font is not None else "11pt Lucida Console",
                 show=label_show,
                 fillColor=Color(rgba=label_fill_color)
                 if label_fill_color is not None
@@ -467,14 +420,10 @@ class CZMLExtractor:
         if groundtrack_show:
             groundtrack_color = path_color
 
-            groundtrack_cords = self._init_groundtrack_packet_cords_(
-                self.i, rtol=rtol
-            )
+            groundtrack_cords = self._init_groundtrack_packet_cords_(self.i, rtol=rtol)
             pckt = Packet(
                 id="groundtrack" + str(self.i),
-                availability=TimeInterval(
-                    start=self.start_epoch, end=self.end_epoch
-                ),
+                availability=TimeInterval(start=self.start_epoch, end=self.end_epoch),
                 position=Position(
                     interpolationDegree=5,
                     interpolationAlgorithm=InterpolationAlgorithms.LAGRANGE,
@@ -485,25 +434,13 @@ class CZMLExtractor:
                 ),
                 path=Path(
                     show=True,
-                    material=Material(
-                        solidColor=SolidColorMaterial(
-                            color=Color(rgba=groundtrack_color)
-                        )
-                    )
+                    material=Material(solidColor=SolidColorMaterial(color=Color(rgba=groundtrack_color)))
                     if groundtrack_color is not None
-                    else Material(
-                        solidColor=SolidColorMaterial(
-                            color=Color(rgba=[255, 255, 0, 255])
-                        )
-                    ),
+                    else Material(solidColor=SolidColorMaterial(color=Color(rgba=[255, 255, 0, 255]))),
                     resolution=60,
                     width=groundtrack_width,
-                    leadTime=groundtrack_lead_time
-                    if groundtrack_lead_time
-                    else 100,
-                    trailTime=groundtrack_trail_time
-                    if groundtrack_trail_time
-                    else 100,
+                    leadTime=groundtrack_lead_time if groundtrack_lead_time else 100,
+                    trailTime=groundtrack_trail_time if groundtrack_trail_time else 100,
                 ),
             )
             self.packets.append(pckt)
@@ -571,11 +508,7 @@ class CZMLExtractor:
             Indicates whether the label is visible
 
         """
-        positions = (
-            positions.represent_as(CartesianRepresentation)
-            .get_xyz(1)
-            .to_value(u.m)
-        )
+        positions = positions.represent_as(CartesianRepresentation).get_xyz(1).to_value(u.m)
 
         epochs = Time(epochs, format="isot")
 
@@ -587,9 +520,7 @@ class CZMLExtractor:
             dtype=float,
         )
 
-        positions = np.around(
-            np.concatenate([epochs[..., None], positions], axis=1).ravel(), 1
-        ).tolist()
+        positions = np.around(np.concatenate([epochs[..., None], positions], axis=1).ravel(), 1).tolist()
 
         self.trajectories.append([positions, None, label_text, path_color])
 
@@ -599,9 +530,7 @@ class CZMLExtractor:
             id=self.i,
             name=id_name,
             description=id_description,
-            availability=TimeInterval(
-                start=self.start_epoch, end=self.end_epoch
-            ),
+            availability=TimeInterval(start=self.start_epoch, end=self.end_epoch),
             position=Position(
                 interpolationDegree=5,
                 interpolationAlgorithm=InterpolationAlgorithms.LAGRANGE,
@@ -613,24 +542,14 @@ class CZMLExtractor:
             path=Path(
                 show=path_show,
                 width=path_width,
-                material=Material(
-                    solidColor=SolidColorMaterial(
-                        color=Color.from_list(path_color)
-                    )
-                )
+                material=Material(solidColor=SolidColorMaterial(color=Color.from_list(path_color)))
                 if path_color is not None
-                else Material(
-                    solidColor=SolidColorMaterial(
-                        color=Color.from_list([255, 255, 0])
-                    )
-                ),
+                else Material(solidColor=SolidColorMaterial(color=Color.from_list([255, 255, 0]))),
                 resolution=120,
             ),
             label=Label(
                 text=label_text,
-                font=label_font
-                if label_font is not None
-                else "11pt Lucida Console",
+                font=label_font if label_font is not None else "11pt Lucida Console",
                 show=label_show,
                 fillColor=Color(rgba=label_fill_color)
                 if label_fill_color is not None
@@ -645,9 +564,7 @@ class CZMLExtractor:
         self.packets.append(pckt)
 
         if groundtrack_show:
-            raise NotImplementedError(
-                "Ground tracking for trajectory not implemented yet"
-            )
+            raise NotImplementedError("Ground tracking for trajectory not implemented yet")
 
         self.i += 1
 

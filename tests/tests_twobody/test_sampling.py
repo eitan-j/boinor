@@ -35,15 +35,11 @@ def test_sample_closed_is_always_between_minus_pi_and_pi(min_nu, ecc, max_nu):
     assert ((-np.pi * u.rad <= result) & (result <= np.pi * u.rad)).all()
 
 
-@pytest.mark.xfail(
-    reason="Some corner cases around the circle boundary need closer inspection"
-)
+@pytest.mark.xfail(reason="Some corner cases around the circle boundary need closer inspection")
 @settings(deadline=None)
 @given(
     min_nu=with_units(
-        elements=st.floats(
-            min_value=-np.pi, max_value=np.pi, exclude_max=True
-        ),
+        elements=st.floats(min_value=-np.pi, max_value=np.pi, exclude_max=True),
         unit=u.rad,
     ),
     ecc=eccentricities_q(),
@@ -57,14 +53,10 @@ def test_sample_closed_starts_at_min_anomaly_if_in_range(min_nu, ecc, max_nu):
     assert_quantity_allclose(result[0], min_nu, atol=1e-15 * u.rad)
 
 
-@pytest.mark.xfail(
-    reason="Some corner cases around the circle boundary need closer inspection"
-)
+@pytest.mark.xfail(reason="Some corner cases around the circle boundary need closer inspection")
 @settings(deadline=None)
 @given(
-    min_nu=with_units(
-        elements=st.floats(min_value=-np.pi, max_value=np.pi), unit=u.rad
-    ),
+    min_nu=with_units(elements=st.floats(min_value=-np.pi, max_value=np.pi), unit=u.rad),
     ecc=eccentricities_q(),
 )
 @example(1e-16 * u.rad, 0 * u.one)
@@ -72,9 +64,7 @@ def test_sample_closed_starts_at_min_anomaly_if_in_range(min_nu, ecc, max_nu):
 @example(0 * u.rad, 0.88680956 * u.one)
 @example(0 << u.rad, (1 - 1e-16) << u.one)
 @example(3.14159265 << u.rad, 0 << u.one)
-def test_sample_closed_starts_and_ends_at_min_anomaly_if_in_range_and_no_max_given(
-    min_nu, ecc
-):
+def test_sample_closed_starts_and_ends_at_min_anomaly_if_in_range_and_no_max_given(min_nu, ecc):
     result = sample_closed(ecc, min_nu)
 
     # FIXME: In some corner cases the resulting anomaly goes out of range
@@ -101,9 +91,7 @@ def test_sample_num_points(num_values, elliptic):
 def test_sample_hyperbolic_limits(hyperbolic, min_anomaly, max_anomaly):
     num_values = 50
 
-    strategy = TrueAnomalyBounds(
-        min_nu=min_anomaly, max_nu=max_anomaly, num_values=num_values
-    )
+    strategy = TrueAnomalyBounds(min_nu=min_anomaly, max_nu=max_anomaly, num_values=num_values)
     coords, epochs = strategy.sample(hyperbolic)
 
     assert len(coords) == len(epochs) == num_values

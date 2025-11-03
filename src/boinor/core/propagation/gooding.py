@@ -7,27 +7,17 @@ from boinor.core.elements import coe2rv, rv2coe
 
 
 @jit
-def gooding_coe_parabolic(
-    k, p, ecc, inc, raan, argp, nu, tof, numiter=150, rtol=1e-8
-):
-    raise NotImplementedError(
-        "Parabolic/Hyperbolic cases still not implemented in gooding."
-    )
+def gooding_coe_parabolic(k, p, ecc, inc, raan, argp, nu, tof, numiter=150, rtol=1e-8):
+    raise NotImplementedError("Parabolic/Hyperbolic cases still not implemented in gooding.")
 
 
 @jit
-def gooding_coe_hyperbolic(
-    k, p, ecc, inc, raan, argp, nu, tof, numiter=150, rtol=1e-8
-):
-    raise NotImplementedError(
-        "Parabolic/Hyperbolic cases still not implemented in gooding."
-    )
+def gooding_coe_hyperbolic(k, p, ecc, inc, raan, argp, nu, tof, numiter=150, rtol=1e-8):
+    raise NotImplementedError("Parabolic/Hyperbolic cases still not implemented in gooding.")
 
 
 @jit
-def gooding_coe_elliptic(
-    k, p, ecc, inc, raan, argp, nu, tof, numiter=150, rtol=1e-8
-):
+def gooding_coe_elliptic(k, p, ecc, inc, raan, argp, nu, tof, numiter=150, rtol=1e-8):
     """This function contains EKEPL1 from appendix A of :cite:t:`Walker1985`
     As mentioned in this paper, it uses a Legendre based starter and a
     Halley iterator
@@ -62,17 +52,11 @@ def gooding_coe(k, p, ecc, inc, raan, argp, nu, tof, numiter=150, rtol=1e-8):
     """This function is just a wrapper for the correct ecc handling."""
 
     if ecc < 1.0:
-        return gooding_coe_elliptic(
-            k, p, ecc, inc, raan, argp, nu, tof, numiter, rtol
-        )
+        return gooding_coe_elliptic(k, p, ecc, inc, raan, argp, nu, tof, numiter, rtol)
     if ecc == 1.0:
-        return gooding_coe_parabolic(
-            k, p, ecc, inc, raan, argp, nu, tof, numiter, rtol
-        )
+        return gooding_coe_parabolic(k, p, ecc, inc, raan, argp, nu, tof, numiter, rtol)
     if ecc > 1.0:
-        return gooding_coe_hyperbolic(
-            k, p, ecc, inc, raan, argp, nu, tof, numiter, rtol
-        )
+        return gooding_coe_hyperbolic(k, p, ecc, inc, raan, argp, nu, tof, numiter, rtol)
 
     raise NotImplementedError("Something is gone wrong.")
 

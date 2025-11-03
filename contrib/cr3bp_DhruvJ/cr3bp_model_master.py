@@ -151,18 +151,13 @@ class cr3bp_model:
         # Accept 6 states and append 36 inital states if stm_bool = 1
         # Runs even if all 42 sates are given
         if len(ic) == 6 and self.stm_bool == 1:
-            ic = np.concatenate(
-                (ic, np.identity(6).flatten())
-            )  # Appends the IC for STM: IC[6x1] + I_6x6
+            ic = np.concatenate((ic, np.identity(6).flatten()))  # Appends the IC for STM: IC[6x1] + I_6x6
         elif len(ic) == 42:
             self.stm_bool = 1  # To make sure stm_bool is set to 1 if all 42 states are passed
         if len(ic) == 6:
             stm_bool == 0
         elif len(ic) != 6 and len(ic) != 42:
-            print(
-                "Initial conditions are neither of length 6 nor 42, recheck the input, len is "
-                + str(len(ic))
-            )
+            print("Initial conditions are neither of length 6 nor 42, recheck the input, len is " + str(len(ic)))
             return 0
 
         # Events function setup
@@ -182,9 +177,7 @@ class cr3bp_model:
         ):  # Terminates integration when event encountered, solution is hit from from either direction: crossising -y to +y region or +y to -y region, that is crossing XZ or XY plane
             xcross.terminal = True
             xcross.direction = 0
-        elif (
-            self.xcross_cond == 2
-        ):  # Track events when crossing -y to +y region
+        elif self.xcross_cond == 2:  # Track events when crossing -y to +y region
             xcross.terminal = True
             xcross.direction = 1
         else:  # Does not track any events
@@ -192,10 +185,7 @@ class cr3bp_model:
 
         # Numerical Integration
         # Uses a custom events function during propagation
-        if (
-            self.custom_events_func is not None
-            and use_custom_events_func is True
-        ):
+        if self.custom_events_func is not None and use_custom_events_func is True:
             fun = solve_ivp(
                 self.__Nondim_DE_CR3BP_STM,
                 [t0, tf],
@@ -208,9 +198,7 @@ class cr3bp_model:
             )
         else:
             if use_custom_events_func is True:
-                print(
-                    "use_custom_events_func is set to be True but custom events func is not passed"
-                )
+                print("use_custom_events_func is set to be True but custom events func is not passed")
             fun = solve_ivp(
                 self.__Nondim_DE_CR3BP_STM,
                 [t0, tf],
@@ -244,9 +232,7 @@ class cr3bp_model:
         """
         dstate_stm = np.empty((len(state_stm),), dtype=self.datatype)
 
-        dist_p1_p3, dist_p2_p3 = self.rel_dist_cr3bp(
-            state_stm
-        )  # Relative position vectors
+        dist_p1_p3, dist_p2_p3 = self.rel_dist_cr3bp(state_stm)  # Relative position vectors
         _, _, _, ax, ay, az = self.ui_partials_acc_cr3bp(state_stm[0:6])
 
         # CR3BP: 6 states
@@ -372,12 +358,8 @@ class cr3bp_model:
         if state is None:
             state = self.ic
 
-        dist_p1_p3 = (
-            (state[0] + self.mu) ** 2 + state[1] ** 2 + state[2] ** 2
-        ) ** 0.5
-        dist_p2_p3 = (
-            (state[0] - 1 + self.mu) ** 2 + state[1] ** 2 + state[2] ** 2
-        ) ** 0.5
+        dist_p1_p3 = ((state[0] + self.mu) ** 2 + state[1] ** 2 + state[2] ** 2) ** 0.5
+        dist_p2_p3 = ((state[0] - 1 + self.mu) ** 2 + state[1] ** 2 + state[2] ** 2) ** 0.5
 
         return dist_p1_p3, dist_p2_p3
 
@@ -467,22 +449,12 @@ class cr3bp_model:
         x_plus_mu = state[0] + self.mu  # x+mu
         x_minus_1_plus_mu = state[0] - 1 + self.mu  # x-1+mu
 
-        one_minus_mu_dist_p1_p3_3 = (
-            one_minus_mu / dist_p1_p3**3
-        )  # (1-mu)/d13^3
+        one_minus_mu_dist_p1_p3_3 = one_minus_mu / dist_p1_p3**3  # (1-mu)/d13^3
         mu_dist_p2_p3_3 = self.mu / dist_p2_p3**3  # mu/d23^3
 
         # Calculate Ux, Uy, Uz, ax, ay, az
-        Ux = (
-            state[0]
-            - one_minus_mu_dist_p1_p3_3 * x_plus_mu
-            - mu_dist_p2_p3_3 * x_minus_1_plus_mu
-        )
-        Uy = (
-            state[1]
-            - one_minus_mu_dist_p1_p3_3 * state[1]
-            - mu_dist_p2_p3_3 * state[1]
-        )
+        Ux = state[0] - one_minus_mu_dist_p1_p3_3 * x_plus_mu - mu_dist_p2_p3_3 * x_minus_1_plus_mu
+        Uy = state[1] - one_minus_mu_dist_p1_p3_3 * state[1] - mu_dist_p2_p3_3 * state[1]
         Uz = -one_minus_mu_dist_p1_p3_3 * state[2] - mu_dist_p2_p3_3 * state[2]
         ax = 2 * state[4] + Ux
         ay = -2 * state[3] + Uy

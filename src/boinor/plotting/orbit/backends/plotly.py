@@ -73,9 +73,7 @@ class BasePlotly(OrbitPlotterBackend):
             The size of the marker.
 
         """
-        raise NotImplementedError(
-            "This method is expected to be overridden by a plotting backend class."
-        )
+        raise NotImplementedError("This method is expected to be overridden by a plotting backend class.")
 
     def draw_sphere(self, position, *, color, label, radius):
         """Draw an sphere into the scene.
@@ -92,9 +90,7 @@ class BasePlotly(OrbitPlotterBackend):
             The radius of the sphere.
 
         """
-        raise NotImplementedError(
-            "This method is expected to be overridden by a plotting backend class."
-        )
+        raise NotImplementedError("This method is expected to be overridden by a plotting backend class.")
 
     def draw_coordinates(self, coordinates, *, colors, label, size):
         """Draw desired coordinates into the scene.
@@ -111,9 +107,7 @@ class BasePlotly(OrbitPlotterBackend):
             The size of the marker for drawing the coordinates.
 
         """
-        raise NotImplementedError(
-            "This method is expected to be overridden by a specific plotting backend."
-        )
+        raise NotImplementedError("This method is expected to be overridden by a specific plotting backend.")
 
     def draw_axes_labels_with_length_scale_units(self, length_scale_units):
         """Draw the desired label into the specified axis.
@@ -124,9 +118,7 @@ class BasePlotly(OrbitPlotterBackend):
             Desired units of lenght used for representing distances.
 
         """
-        raise NotImplementedError(
-            "This method is expected to be overridden by a specific plotting backend."
-        )
+        raise NotImplementedError("This method is expected to be overridden by a specific plotting backend.")
 
     def update_layout(self, layout):
         """Update the layout of the figure scene.
@@ -182,9 +174,7 @@ class BasePlotly(OrbitPlotterBackend):
             An object representing the trace of the coordinates in the scene.
 
         """
-        return self.draw_sphere(
-            position, color=color, label=label, radius=size
-        )
+        return self.draw_sphere(position, color=color, label=label, radius=size)
 
     def draw_impulse(self, position, *, color, label, size):
         """Draw an impulse into the scene.
@@ -206,9 +196,7 @@ class BasePlotly(OrbitPlotterBackend):
             An object representing the trace of the impulse in the scene.
 
         """
-        return self.draw_marker(
-            position, color=color, label=label, marker_symbol="x", size=size
-        )
+        return self.draw_marker(position, color=color, label=label, marker_symbol="x", size=size)
 
     def update_legend(self):
         """Update the legend of the scene."""

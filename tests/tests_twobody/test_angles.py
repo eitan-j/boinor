@@ -195,9 +195,7 @@ def test_flight_path_angle():
     assert_quantity_allclose(gamma, expected_gamma, rtol=1e-3)
 
 
-@pytest.mark.parametrize(
-    "expected_nu", np.linspace(-1 / 3.0, 1 / 3.0, num=100) * np.pi * u.rad
-)
+@pytest.mark.parametrize("expected_nu", np.linspace(-1 / 3.0, 1 / 3.0, num=100) * np.pi * u.rad)
 @pytest.mark.parametrize("ecc", [3200 * u.one, 1.5 * u.one])
 def test_mean_to_true_hyperbolic_highecc(expected_nu, ecc):
     M = F_to_M(nu_to_F(expected_nu, ecc), ecc)

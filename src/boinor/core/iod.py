@@ -136,15 +136,8 @@ def vallado(k, r0, r, tof, M, prograde, lowpath, numiter, rtol):
             # Translated directly from Vallado
             while y < 0.0:
                 psi_low = psi
-                psi = (
-                    0.8
-                    * (1.0 / c3(psi))
-                    * (1.0 - norm_r0_times_norm_r * np.sqrt(c2(psi)) / A)
-                )
-                y = (
-                    norm_r0_plus_norm_r
-                    + A * (psi * c3(psi) - 1) / c2(psi) ** 0.5
-                )
+                psi = 0.8 * (1.0 / c3(psi)) * (1.0 - norm_r0_times_norm_r * np.sqrt(c2(psi)) / A)
+                y = norm_r0_plus_norm_r + A * (psi * c3(psi) - 1) / c2(psi) ** 0.5
 
         xi = np.sqrt(y / c2(psi))
         tof_new = (xi**3 * c3(psi) + A * np.sqrt(y)) / np.sqrt(k)
@@ -213,9 +206,7 @@ def izzo(k, r1, r2, tof, M, prograde, lowpath, numiter, rtol):
 
     # Check collinearity of r1 and r2
     if not cross(r1, r2).any():
-        raise ValueError(
-            "Lambert solution cannot be computed for collinear vectors"
-        )
+        raise ValueError("Lambert solution cannot be computed for collinear vectors")
 
     # Chord
     c = r2 - r1
@@ -254,9 +245,7 @@ def izzo(k, r1, r2, tof, M, prograde, lowpath, numiter, rtol):
     sigma = np.sqrt(1 - rho**2)
 
     # Compute the radial and tangential components at r0 and r
-    V_r1, V_r2, V_t1, V_t2 = _reconstruct(
-        x, y, r1_norm, r2_norm, ll, gamma, rho, sigma
-    )
+    V_r1, V_r2, V_t1, V_t2 = _reconstruct(x, y, r1_norm, r2_norm, ll, gamma, rho, sigma)
 
     # Solve for the initial and final velocity
     v1 = V_r1 * (r1 / r1_norm) + V_t1 * i_t1
@@ -366,16 +355,12 @@ def _tof_equation_p(x, y, T, ll):
 
 @jit
 def _tof_equation_p2(x, y, T, dT, ll):
-    return (3 * T + 5 * x * dT + 2 * (1 - ll**2) * ll**3 / y**3) / (
-        1 - x**2
-    )
+    return (3 * T + 5 * x * dT + 2 * (1 - ll**2) * ll**3 / y**3) / (1 - x**2)
 
 
 @jit
 def _tof_equation_p3(x, y, _, dT, ddT, ll):
-    return (
-        7 * x * ddT + 8 * dT - 6 * (1 - ll**2) * ll**5 * x / y**5
-    ) / (1 - x**2)
+    return (7 * x * ddT + 8 * dT - 6 * (1 - ll**2) * ll**5 * x / y**5) / (1 - x**2)
 
 
 @jit
@@ -420,19 +405,11 @@ def _initial_guess(T, ll, M, lowpath):
         return x_0
 
     # Multiple revolution
-    x_0l = (((M * pi + pi) / (8 * T)) ** (2 / 3) - 1) / (
-        ((M * pi + pi) / (8 * T)) ** (2 / 3) + 1
-    )
-    x_0r = (((8 * T) / (M * pi)) ** (2 / 3) - 1) / (
-        ((8 * T) / (M * pi)) ** (2 / 3) + 1
-    )
+    x_0l = (((M * pi + pi) / (8 * T)) ** (2 / 3) - 1) / (((M * pi + pi) / (8 * T)) ** (2 / 3) + 1)
+    x_0r = (((8 * T) / (M * pi)) ** (2 / 3) - 1) / (((8 * T) / (M * pi)) ** (2 / 3) + 1)
 
     # Select one of the solutions according to desired type of path
-    x_0 = (
-        np.max(np.array([x_0l, x_0r]))
-        if lowpath
-        else np.min(np.array([x_0l, x_0r]))
-    )
+    x_0 = np.max(np.array([x_0l, x_0r])) if lowpath else np.min(np.array([x_0l, x_0r]))
 
     return x_0
 
@@ -484,10 +461,7 @@ def _householder(p0, T0, ll, M, tol, maxiter):
         fder3 = _tof_equation_p3(p0, y, T, fder, fder2, ll)
 
         # Householder step (quartic)
-        p = p0 - fval * (
-            (fder**2 - fval * fder2 / 2)
-            / (fder * (fder**2 - fval * fder2) + fder3 * fval**2 / 6)
-        )
+        p = p0 - fval * ((fder**2 - fval * fder2 / 2) / (fder * (fder**2 - fval * fder2) + fder3 * fval**2 / 6))
 
         if abs(p - p0) < tol:
             return p

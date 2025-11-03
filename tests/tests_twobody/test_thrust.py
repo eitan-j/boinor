@@ -78,9 +78,7 @@ def test_leo_geo_numerical_fast(inc_0):
         du_ad = np.array([0, 0, 0, ax, ay, az])
         return du_kep + du_ad
 
-    sf = s0.propagate(
-        t_f * u.s, method=CowellPropagator(rtol=1e-6, f=f_leo_geo)
-    )
+    sf = s0.propagate(t_f * u.s, method=CowellPropagator(rtol=1e-6, f=f_leo_geo))
 
     assert_allclose(sf.a.to(u.km).value, a_f, rtol=1e-3)
     assert_allclose(sf.ecc.value, 0.0, atol=1e-2)
@@ -139,9 +137,7 @@ def test_sso_disposal_numerical(ecc_0, ecc_f):
         du_ad = np.array([0, 0, 0, ax, ay, az])
         return du_kep + du_ad
 
-    sf = s0.propagate(
-        t_f * u.s, method=CowellPropagator(rtol=1e-8, f=f_ss0_disposal)
-    )
+    sf = s0.propagate(t_f * u.s, method=CowellPropagator(rtol=1e-8, f=f_ss0_disposal))
 
     assert_allclose(sf.ecc.value, ecc_f, rtol=1e-4, atol=1e-4)
 
@@ -156,9 +152,7 @@ def test_sso_disposal_numerical(ecc_0, ecc_f):
         [0.8, 10.0, 16.304, 1.9799],
     ],
 )
-def test_geo_cases_beta_dnd_delta_v(
-    ecc_0, inc_f, expected_beta, expected_delta_V
-):
+def test_geo_cases_beta_dnd_delta_v(ecc_0, inc_f, expected_beta, expected_delta_V):
     a = 42164  # km
     ecc_f = 0.0
     inc_0 = 0.0  # rad, baseline
@@ -178,12 +172,8 @@ def test_geo_cases_beta_dnd_delta_v(
         nu=0 * u.deg,
     )
 
-    beta = beta_change_ecc_inc(
-        ecc_0=ecc_0, ecc_f=ecc_f, inc_0=inc_0, inc_f=inc_f, argp=argp
-    )
-    _, delta_V, _ = change_ecc_inc(
-        orb_0=s0, ecc_f=ecc_f, inc_f=inc_f * u.rad, f=f
-    )
+    beta = beta_change_ecc_inc(ecc_0=ecc_0, ecc_f=ecc_f, inc_0=inc_0, inc_f=inc_f, argp=argp)
+    _, delta_V, _ = change_ecc_inc(orb_0=s0, ecc_f=ecc_f, inc_f=inc_f * u.rad, f=f)
 
     assert_allclose(delta_V.to_value(u.km / u.s), expected_delta_V, rtol=1e-2)
     assert_allclose(beta, expected_beta, rtol=1e-2)

@@ -19,9 +19,7 @@ u_km3s2 = u.km**3 / u.s**2
 @u.quantity_input(k=u_km3s2, a=u.km)
 def circular_velocity(k, a):
     """Circular velocity for a given body (k) and semimajor axis (a)."""
-    return (
-        circular_velocity_fast(k.to_value(u_km3s2), a.to_value(u.km)) * u_kms
-    )
+    return circular_velocity_fast(k.to_value(u_km3s2), a.to_value(u.km)) * u_kms
 
 
 @u.quantity_input(k=u_km3s2, a=u.km)
@@ -46,12 +44,7 @@ def energy(k, r, v):
 @u.quantity_input(k=u_km3s2, r=u.km, v=u_kms)
 def eccentricity_vector(k, r, v):
     """Eccentricity vector."""
-    return (
-        eccentricity_vector_fast(
-            k.to_value(u_km3s2), r.to_value(u.km), v.to_value(u_kms)
-        )
-        * u.one
-    )
+    return eccentricity_vector_fast(k.to_value(u_km3s2), r.to_value(u.km), v.to_value(u_kms)) * u.one
 
 
 @u.quantity_input(nu=u.rad, ecc=u.one, k=u_km3s2, r_p=u.km)
@@ -82,35 +75,12 @@ def t_p(nu, ecc, k, r_p):
 def heliosynchronous(k, R, J2, n_sunsync, a=None, ecc=None, inc=None):
     with np.errstate(invalid="raise"):
         if a is None and (ecc is not None) and (inc is not None):
-            a = (
-                -3
-                * R**2
-                * J2
-                * np.sqrt(k)
-                / (2 * n_sunsync * (1 - ecc**2) ** 2)
-                * np.cos(inc)
-            ) ** (2 / 7)
+            a = (-3 * R**2 * J2 * np.sqrt(k) / (2 * n_sunsync * (1 - ecc**2) ** 2) * np.cos(inc)) ** (2 / 7)
         elif ecc is None and (a is not None) and (inc is not None):
-            ecc = np.sqrt(
-                1
-                - np.sqrt(
-                    -3
-                    * R**2
-                    * J2
-                    * np.sqrt(k)
-                    * np.cos(inc)
-                    / (2 * a ** (7 / 2) * n_sunsync)
-                )
-            )
+            ecc = np.sqrt(1 - np.sqrt(-3 * R**2 * J2 * np.sqrt(k) * np.cos(inc) / (2 * a ** (7 / 2) * n_sunsync)))
         elif inc is None and (ecc is not None) and (a is not None):
             # Inclination is the unknown variable
-            inc = np.arccos(
-                -2
-                * a ** (7 / 2)
-                * n_sunsync
-                * (1 - ecc**2) ** 2
-                / (3 * R**2 * J2 * np.sqrt(k))
-            )
+            inc = np.arccos(-2 * a ** (7 / 2) * n_sunsync * (1 - ecc**2) ** 2 / (3 * R**2 * J2 * np.sqrt(k)))
         else:
             raise ValueError("Two parameters of (a, ecc, inc) are required")
 

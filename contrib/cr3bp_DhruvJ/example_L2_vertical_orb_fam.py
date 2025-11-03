@@ -85,16 +85,10 @@ cb_label = "JC"
 title = "CR3BP: Earth-Moon L2 Vertical family :DJ"
 data_trace = []
 # Add L2
-data_trace.append(
-    go.Scatter3d(x=[li[0]], y=[0], z=[0], marker=dict(color="red", size=2))
-)
+data_trace.append(go.Scatter3d(x=[li[0]], y=[0], z=[0], marker=dict(color="red", size=2)))
 # Add Earth
-data_trace.append(
-    go.Scatter3d(x=[-mu], y=[0], z=[0], marker=dict(color="blue", size=10))
-)
-data_trace.append(
-    go.Scatter3d(x=[1 - mu], y=[0], z=[0], marker=dict(color="grey", size=7))
-)
+data_trace.append(go.Scatter3d(x=[-mu], y=[0], z=[0], marker=dict(color="blue", size=10)))
+data_trace.append(go.Scatter3d(x=[1 - mu], y=[0], z=[0], marker=dict(color="grey", size=7)))
 
 plot_orbits(
     mu,

@@ -109,9 +109,9 @@ def rv_pqw(k, p, ecc, nu):
     v = [-5753.30180931 -1328.66813933  0] [m]/[s]
 
     """
-    pqw = np.array(
-        [[cos(nu), sin(nu), 0], [-sin(nu), ecc + cos(nu), 0]]
-    ) * np.array([[p / (1 + ecc * cos(nu))], [sqrt(k / p)]])
+    pqw = np.array([[cos(nu), sin(nu), 0], [-sin(nu), ecc + cos(nu), 0]]) * np.array(
+        [[p / (1 + ecc * cos(nu))], [sqrt(k / p)]]
+    )
     return pqw
 
 
@@ -197,9 +197,7 @@ def coe2rv_many(k, p, ecc, inc, raan, argp, nu):
 
     # Disabling pylint warning, see https://github.com/PyCQA/pylint/issues/2910
     for i in prange(n):  # pylint: disable=not-an-iterable
-        rr[i, :], vv[i, :] = coe2rv(
-            k[i], p[i], ecc[i], inc[i], raan[i], argp[i], nu[i]
-        )
+        rr[i, :], vv[i, :] = coe2rv(k[i], p[i], ecc[i], inc[i], raan[i], argp[i], nu[i])
 
     return rr, vv
 
@@ -536,30 +534,12 @@ def mee2rv(mu, p, f, g, h, k, L):
     vx = (
         (-1 / s2)
         * (np.sqrt(mu / p))
-        * (
-            np.sin(L)
-            + alpha2 * np.sin(L)
-            - 2 * h * k * np.cos(L)
-            + g
-            - 2 * f * h * k
-            + alpha2 * g
-        )
+        * (np.sin(L) + alpha2 * np.sin(L) - 2 * h * k * np.cos(L) + g - 2 * f * h * k + alpha2 * g)
     )
     vy = (
         (-1 / s2)
         * (np.sqrt(mu / p))
-        * (
-            -np.cos(L)
-            + alpha2 * np.cos(L)
-            + 2 * h * k * np.sin(L)
-            - f
-            + 2 * g * h * k
-            + alpha2 * f
-        )
+        * (-np.cos(L) + alpha2 * np.cos(L) + 2 * h * k * np.sin(L) - f + 2 * g * h * k + alpha2 * f)
     )
-    vz = (
-        (2 / s2)
-        * (np.sqrt(mu / p))
-        * (h * np.cos(L) + k * np.sin(L) + f * h + g * k)
-    )
+    vz = (2 / s2) * (np.sqrt(mu / p)) * (h * np.cos(L) + k * np.sin(L) + f * h + g * k)
     return np.array([rx, ry, rz]), np.array([vx, vy, vz])

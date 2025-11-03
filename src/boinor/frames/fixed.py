@@ -67,12 +67,8 @@ class _PlanetaryFixed(BaseRADecFrame):
     obstime = TimeAttribute(default=DEFAULT_OBSTIME)
 
     def __new__(cls, *args, **kwargs):
-        frame_transform_graph.transform(
-            FunctionTransform, cls, cls.equatorial
-        )(cls.to_equatorial)
-        frame_transform_graph.transform(
-            FunctionTransform, cls.equatorial, cls
-        )(cls.from_equatorial)
+        frame_transform_graph.transform(FunctionTransform, cls, cls.equatorial)(cls.to_equatorial)
+        frame_transform_graph.transform(FunctionTransform, cls.equatorial, cls)(cls.from_equatorial)
 
         return super().__new__(cls)
 
@@ -80,14 +76,9 @@ class _PlanetaryFixed(BaseRADecFrame):
     def to_equatorial(fixed_coo, equatorial_frame):
         # TODO replace w/ something smart (Sun/Earth special cased)
         if fixed_coo.body == Sun and not isinstance(equatorial_frame, HCRS):
-            raise ValueError(
-                f"Equatorial coordinates must be of type `HCRS`, got `{type(equatorial_frame)}` instead."
-            )
+            raise ValueError(f"Equatorial coordinates must be of type `HCRS`, got `{type(equatorial_frame)}` instead.")
         # due to equatorial_frame not always having an attribute .body, this has to be the way it is
-        if (
-            fixed_coo.body != Sun  # pylint: disable=consider-using-in
-            and fixed_coo.body != equatorial_frame.body
-        ):
+        if fixed_coo.body != Sun and fixed_coo.body != equatorial_frame.body:  # pylint: disable=consider-using-in
             raise ValueError(
                 "Fixed and equatorial coordinates must have the same body if the fixed frame body is not Sun"
             )
@@ -107,14 +98,9 @@ class _PlanetaryFixed(BaseRADecFrame):
     def from_equatorial(equatorial_coo, fixed_frame):
         # TODO replace w/ something smart (Sun/Earth special cased)
         if fixed_frame.body == Sun and not isinstance(equatorial_coo, HCRS):
-            raise ValueError(
-                f"Equatorial coordinates must be of type `HCRS`, got `{type(equatorial_coo)}` instead."
-            )
+            raise ValueError(f"Equatorial coordinates must be of type `HCRS`, got `{type(equatorial_coo)}` instead.")
         # due to equatorial_frame not always having an attribute .body, this has to be the way it is
-        if (
-            fixed_frame.body != Sun  # pylint: disable=consider-using-in
-            and equatorial_coo.body != fixed_frame.body
-        ):
+        if fixed_frame.body != Sun and equatorial_coo.body != fixed_frame.body:  # pylint: disable=consider-using-in
             raise ValueError(
                 "Fixed and equatorial coordinates must have the same body if the fixed frame body is not Sun"
             )

@@ -18,11 +18,7 @@ from boinor.twobody.sampling import EpochBounds
 from boinor.util import norm, time_range
 
 
-class Trajectory(
-    namedtuple(
-        "Trajectory", ["coordinates", "position", "colors", "dashed", "label"]
-    )
-):
+class Trajectory(namedtuple("Trajectory", ["coordinates", "position", "colors", "dashed", "label"])):
     """A class for collecting all information of a body within a plotter.
 
     Information contains all the trajectory coordinates, the current position,
@@ -61,9 +57,7 @@ class OrbitPlotter:
         _
         """
         # Initialize the backend, number of points and length scale
-        self._backend = backend or orbit_plotter_backends.Matplotlib2D(
-            ax=None, use_dark_theme=False
-        )
+        self._backend = backend or orbit_plotter_backends.Matplotlib2D(ax=None, use_dark_theme=False)
         self._num_points = num_points
         self._length_scale_units = length_scale_units
 
@@ -143,9 +137,7 @@ class OrbitPlotter:
         if self._attractor is None:
             self._attractor = attractor
         elif attractor is not self._attractor:
-            raise NotImplementedError(
-                f"Attractor has already been set to {self._attractor.name}"
-            )
+            raise NotImplementedError(f"Attractor has already been set to {self._attractor.name}")
 
     def set_orbit_frame(self, orbit):
         """Set the perifocal frame based on an orbit.
@@ -163,9 +155,7 @@ class OrbitPlotter:
 
             if not np.allclose([norm(v) for v in (p_vec, q_vec, w_vec)], 1):
                 raise ValueError("Vectors must be unit.")
-            if not np.allclose(
-                [p_vec @ q_vec, q_vec @ w_vec, w_vec @ p_vec], 0
-            ):
+            if not np.allclose([p_vec @ q_vec, q_vec @ w_vec, w_vec @ p_vec], 0):
                 raise ValueError("Vectors must be mutually orthogonal.")
 
             self._frame = p_vec, q_vec, w_vec
@@ -240,10 +230,7 @@ class OrbitPlotter:
         """
         ref_len_units = self.length_scale_units
         min_distance = min(
-            [
-                coordinates.norm().min().to(ref_len_units)
-                for coordinates, *_ in self._trajectories
-            ]
+            [coordinates.norm().min().to(ref_len_units) for coordinates, *_ in self._trajectories]
             or [0 * ref_len_units]
         )
         self._attractor_radius = max(
@@ -267,9 +254,7 @@ class OrbitPlotter:
         for trajectory in self._trajectories:
             self._add_trajectory(trajectory)
 
-    def _create_trajectory(
-        self, coordinates, position, *, colors=None, dashed=False, label=None
-    ):
+    def _create_trajectory(self, coordinates, position, *, colors=None, dashed=False, label=None):
         """Create a new ``Trajectory`` instance.
 
         Parameters
@@ -326,9 +311,7 @@ class OrbitPlotter:
             coordinates is not None,
             position is not None,
         )
-        coordinates_label, position_label = self.backend.generate_labels(
-            label, has_coordinates, has_position
-        )
+        coordinates_label, position_label = self.backend.generate_labels(label, has_coordinates, has_position)
 
         # Project the coordinates into desired frame for 2D backends
         if self.backend.is_2D:
@@ -336,11 +319,7 @@ class OrbitPlotter:
             coordinates = self._project(rr)
             if position is not None:
                 position = (
-                    np.asarray(
-                        self._project(
-                            [position.to_value(self.length_scale_units)]
-                        )
-                    ).flatten()
+                    np.asarray(self._project([position.to_value(self.length_scale_units)])).flatten()
                     * self.length_scale_units
                 )
         else:
@@ -352,10 +331,7 @@ class OrbitPlotter:
 
         # Add the coordinates to the scene
         trace_coordinates = self.backend.draw_coordinates(
-            [
-                coords.to_value(self.length_scale_units)
-                for coords in coordinates
-            ],
+            [coords.to_value(self.length_scale_units) for coords in coordinates],
             colors=colors,
             dashed=dashed,
             label=coordinates_label,
@@ -387,15 +363,9 @@ class OrbitPlotter:
         self.backend.resize_limits()
 
         # Update the axis legends using the desired length scale units
-        self.backend.draw_axes_labels_with_length_scale_units(
-            self.length_scale_units
-        )
+        self.backend.draw_axes_labels_with_length_scale_units(self.length_scale_units)
 
-        return (
-            (trace_coordinates, trace_position)
-            if position is not None
-            else (trace_coordinates, None)
-        )
+        return (trace_coordinates, trace_position) if position is not None else (trace_coordinates, None)
 
     def plot(self, orbit, *, color=None, label=None, trail=False, dashed=True):
         """Plot state and osculating orbit in their plane.
@@ -474,25 +444,17 @@ class OrbitPlotter:
 
         # Get approximate, mean value for the period and generate ephemerides
         period = get_mean_elements(body, epoch).period
-        epochs = time_range(
-            epoch, num_values=self._num_points, end=epoch + period, scale="tdb"
-        )
-        ephem = Ephem.from_body(
-            body, epochs, attractor=body.parent, plane=self.plane
-        )
+        epochs = time_range(epoch, num_values=self._num_points, end=epoch + period, scale="tdb")
+        ephem = Ephem.from_body(body, epochs, attractor=body.parent, plane=self.plane)
 
         # Get body color and label
         if color is None:
             color = BODY_COLORS.get(body.name)
         label = generate_label(epoch, label or str(body))
 
-        return self.plot_ephem(
-            ephem, epoch, label=label, color=color, trail=trail
-        )
+        return self.plot_ephem(ephem, epoch, label=label, color=color, trail=trail)
 
-    def plot_ephem(
-        self, ephem, epoch=None, *, label=None, color=None, trail=False
-    ):
+    def plot_ephem(self, ephem, epoch=None, *, label=None, color=None, trail=False):
         """Plot ``Ephem`` object over its sampling period.
 
         Parameters
@@ -510,16 +472,10 @@ class OrbitPlotter:
 
         """
         if self.backend.is_2D and self._frame is None:
-            raise ValueError(
-                "A frame must be set up first, please use "
-                "set_orbit_frame(orbit) or plot(orbit)"
-            )
+            raise ValueError("A frame must be set up first, please use " "set_orbit_frame(orbit) or plot(orbit)")
 
         if self._attractor is None:
-            raise ValueError(
-                "An attractor must be set up first, please use "
-                "set_attractor(MajorBody) or plot(orbit)"
-            )
+            raise ValueError("An attractor must be set up first, please use " "set_attractor(MajorBody) or plot(orbit)")
 
         if ephem.plane is not self.plane:
             raise ValueError(
@@ -543,9 +499,7 @@ class OrbitPlotter:
             trail=trail,
         )
 
-    def plot_maneuver(
-        self, initial_orbit, maneuver, label=None, color=None, trail=False
-    ):
+    def plot_maneuver(self, initial_orbit, maneuver, label=None, color=None, trail=False):
         """Plot the maneuver trajectory applied to the provided initial orbit.
 
         Parameters
@@ -564,24 +518,17 @@ class OrbitPlotter:
         """
         if self._attractor is None:
             raise ValueError(
-                "An attractor must be set up first, please use "
-                "set_attractor(Major_Body) or plot(orbit)"
+                "An attractor must be set up first, please use " "set_attractor(Major_Body) or plot(orbit)"
             )
 
         # Apply the maneuver, collect all intermediate states and allocate the
         # final coordinates list array
-        *maneuver_phases, final_phase = initial_orbit.apply_maneuver(
-            maneuver, intermediate=True
-        )
+        *maneuver_phases, final_phase = initial_orbit.apply_maneuver(maneuver, intermediate=True)
 
         # Project the coordinates into desired frame for 2D backends
         if self.backend.is_2D:
             final_phase_position = (
-                np.asarray(
-                    self._project(
-                        [final_phase.r.to_value(self.length_scale_units)]
-                    )
-                ).flatten()
+                np.asarray(self._project([final_phase.r.to_value(self.length_scale_units)])).flatten()
                 * self.length_scale_units
             )
         else:
@@ -593,9 +540,7 @@ class OrbitPlotter:
             impulse_lines = (
                 [
                     self.backend.draw_impulse(
-                        position=final_phase_position.to_value(
-                            self.length_scale_units
-                        ),
+                        position=final_phase_position.to_value(self.length_scale_units),
                         color=color,
                         label=impulse_label,
                         size=None,
@@ -612,11 +557,7 @@ class OrbitPlotter:
             # Project the coordinates into desired frame for 2D backends
             if self.backend.is_2D:
                 orbit_phase_r = (
-                    np.asarray(
-                        self._project(
-                            [orbit_phase.r.to_value(self.length_scale_units)]
-                        )
-                    ).flatten()
+                    np.asarray(self._project([orbit_phase.r.to_value(self.length_scale_units)])).flatten()
                     * self.length_scale_units
                 )
             else:
@@ -661,9 +602,7 @@ class OrbitPlotter:
             # Finally, draw the impulse at the very beginning of the final phase
             impulse_label = f"Impulse {ith_impulse + 2} - {label}"
             impulse_lines = self.backend.draw_impulse(
-                position=final_phase_position.to_value(
-                    self.length_scale_units
-                ),
+                position=final_phase_position.to_value(self.length_scale_units),
                 color=color,
                 label=impulse_label,
                 size=None,
@@ -706,22 +645,16 @@ class OrbitPlotter:
         """
         # Check if a frame has been set
         if self.backend.is_2D and self._frame is None:
-            raise ValueError(
-                "A frame must be set up first, please use "
-                "set_orbit_frame(orbit) or plot(orbit)"
-            )
+            raise ValueError("A frame must be set up first, please use " "set_orbit_frame(orbit) or plot(orbit)")
 
         # Check if the attractor
         if self._attractor is None:
             raise ValueError(
-                "An attractor must be set up first, please use "
-                "set_attractor(Major_Body) or plot(orbit)"
+                "An attractor must be set up first, please use " "set_attractor(Major_Body) or plot(orbit)"
             )
 
         # Get orbit colors and label (protected function, use on your own risk
-        colors = self.backend._get_colors(  # pylint: disable=protected-access
-            color=color, trail=trail
-        )
+        colors = self.backend._get_colors(color=color, trail=trail)  # pylint: disable=protected-access
 
         # Force Cartesian representation for coordinates
         coordinates = coordinates.represent_as(CartesianRepresentation)

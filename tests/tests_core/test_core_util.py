@@ -83,9 +83,7 @@ def test_rotation_matrix_z():
             np.array([-0.25, -0.25, 0.35355339]),
         ),
         (
-            np.array(
-                [[0.5, np.pi / 4, -np.pi / 4], [0.5, -np.pi / 4, np.pi / 4]]
-            ),
+            np.array([[0.5, np.pi / 4, -np.pi / 4], [0.5, -np.pi / 4, np.pi / 4]]),
             np.array([[0.25, -0.25, 0.35355339], [-0.25, -0.25, 0.35355339]]),
         ),
         (

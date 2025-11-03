@@ -24,11 +24,7 @@ class CowellPropagator:
 
     """
 
-    kind = (
-        PropagatorKind.ELLIPTIC
-        | PropagatorKind.PARABOLIC
-        | PropagatorKind.HYPERBOLIC
-    )
+    kind = PropagatorKind.ELLIPTIC | PropagatorKind.PARABOLIC | PropagatorKind.HYPERBOLIC
 
     def __init__(self, rtol=1e-11, events=None, f=func_twobody):
         self._rtol = rtol

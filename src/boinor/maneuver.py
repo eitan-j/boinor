@@ -37,9 +37,7 @@ class Maneuver:
 
         """
         # Validate units of the impulses provided
-        self.impulses = [
-            self.impulse_has_valid_units(*impulse) for impulse in impulses
-        ]
+        self.impulses = [self.impulse_has_valid_units(*impulse) for impulse in impulses]
         self._dts, self._dvs = zip(*self.impulses)
 
         # Validate that all delta-V are three-dimensional vectors. Note that the
@@ -183,8 +181,7 @@ class Maneuver:
         tof = orbit_f.epoch - orbit_i.epoch
         if tof.to_value(u.s) < 0:
             raise ValueError(
-                "Epoch of initial orbit greater than epoch of final orbit, "
-                "causing a negative time of flight"
+                "Epoch of initial orbit greater than epoch of final orbit, " "causing a negative time of flight"
             )
 
         # Compute all possible solutions to the Lambert transfer
@@ -238,9 +235,7 @@ class Maneuver:
         """
         J2 = orbit.attractor.J2.value
         if J2 == 0.0:
-            raise NotImplementedError(
-                f"The correction maneuver is not yet supported for {orbit.attractor}"
-            )
+            raise NotImplementedError(f"The correction maneuver is not yet supported for {orbit.attractor}")
         if orbit.ecc > 0.001:
             raise NotImplementedError(
                 f"The correction maneuver is not yet supported with {orbit.ecc},it should be less than or equal to 0.001"
@@ -254,9 +249,7 @@ class Maneuver:
         ecc = orbit.ecc.value
         max_delta_r = max_delta_r.value
 
-        delta_t, vf_ = correct_pericenter_fast(
-            k, R, J2, max_delta_r, v, a, inc, ecc
-        )
+        delta_t, vf_ = correct_pericenter_fast(k, R, J2, max_delta_r, v, a, inc, ecc)
         delta_t = delta_t * u.s
         vf_ = vf_ * u.km / u.s
 

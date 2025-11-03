@@ -191,9 +191,7 @@ class periodic_orbit(cr3bp_model):
             constraints, results_stm, purpose="setup"
         )  # xconstraint and xdesired
         FX = self.__FX_setup_update(palc_args)  # FX = xconstraint - xdesired
-        self.DF, DG = self.__DF_DG_setup(
-            self.xfree, self.xconstraint, palc_args
-        )  # DF, DG
+        self.DF, DG = self.__DF_DG_setup(self.xfree, self.xconstraint, palc_args)  # DF, DG
 
         print(
             "FX:",
@@ -215,20 +213,14 @@ class periodic_orbit(cr3bp_model):
             # Update STM after each iteration to converge faster
 
             # Compute DF, Jacobian Matrix
-            self.__compute_DF(
-                free_vars, constraints, results_stm, identity_temp, palc_args
-            )
+            self.__compute_DF(free_vars, constraints, results_stm, identity_temp, palc_args)
 
             # Update Free variable vector, include PALC constraint if PALC is being used
             if palc_args is None:
-                self.xfree = self.newton_raphson_update(
-                    self.xfree, FX, self.DF
-                )
+                self.xfree = self.newton_raphson_update(self.xfree, FX, self.DF)
             else:
                 DG[:-1, :] = self.DF
-                DG[-1, :] = palc_args[
-                    "delta_X*_prev"
-                ]  # Augmented Jacobian matrix with PALC constraint
+                DG[-1, :] = palc_args["delta_X*_prev"]  # Augmented Jacobian matrix with PALC constraint
                 self.xfree = self.newton_raphson_update(self.xfree, FX, DG)
 
             # Update IC and tf using the updated xfree
@@ -254,9 +246,7 @@ class periodic_orbit(cr3bp_model):
 
         # Compute Jacobian if retargeted orbit cannot meet while loop condition, priimarily used for Pseudo-Arc Length Continuation
         if count == 0:
-            self.__compute_DF(
-                free_vars, constraints, results_stm, identity_temp, palc_args
-            )
+            self.__compute_DF(free_vars, constraints, results_stm, identity_temp, palc_args)
             # dxf_dt = self.compute_dxf_dt(results_stm)
             # # Setup DF, Jacobian Matrix
             # stm_temp = results_stm["stm"][self.stm_row_index, :, -1]
@@ -322,11 +312,7 @@ class periodic_orbit(cr3bp_model):
                 free_vars_index = self.map_vars_index_cr3bp(free_vars)
                 self.xfree = np.zeros(len(free_vars_index))
 
-                self.stm_col_index = [
-                    free_vars_index[i]
-                    for i in range(len(self.xfree))
-                    if free_vars_index[i] < 6
-                ]
+                self.stm_col_index = [free_vars_index[i] for i in range(len(self.xfree)) if free_vars_index[i] < 6]
                 self.stm_col_len = len(self.stm_col_index)
 
                 if "t" in free_vars:
@@ -343,9 +329,7 @@ class periodic_orbit(cr3bp_model):
                 else:
                     self.ic[self.stm_col_index] = self.xfree
 
-    def __constraints_setup_update(
-        self, constraints, results_stm, purpose="update"
-    ):
+    def __constraints_setup_update(self, constraints, results_stm, purpose="update"):
         """Computes intial xconstraint and xdesired Vector and Updates the two after computing a new xfree
         Parameters
         ----------
@@ -375,29 +359,21 @@ class periodic_orbit(cr3bp_model):
                 self.xconstraint = np.zeros(len(constraints_index))
                 self.xdesired = np.zeros(len(constraints_index))
                 self.stm_row_index = [
-                    constraints_index[i]
-                    for i in range(len(self.xconstraint))
-                    if constraints_index[i] < 6
+                    constraints_index[i] for i in range(len(self.xconstraint)) if constraints_index[i] < 6
                 ]
                 self.stm_row_len = len(self.stm_row_index)
 
             # Setup/Update Constraint Vector and Desired vector, xconstraint where FX = xconstraint - xdesired
             if "jc" in constraints:
-                self.xconstraint[:-1] = results_stm["states"][
-                    -1, self.stm_row_index
-                ]
+                self.xconstraint[:-1] = results_stm["states"][-1, self.stm_row_index]
                 self.xconstraint[-1] = self.JC(self.ic)  # JC of IC
                 self.xdesired[-1] = self.JCd  # Desired JC
             else:
-                self.xconstraint = results_stm["states"][
-                    -1, self.stm_row_index
-                ]
+                self.xconstraint = results_stm["states"][-1, self.stm_row_index]
 
             # Updated desired to be inital state of orbit
             if self.sym_period_targ == 1:
-                self.xdesired[: self.stm_row_len] = results_stm["states"][
-                    0, self.stm_row_index
-                ]
+                self.xdesired[: self.stm_row_len] = results_stm["states"][0, self.stm_row_index]
                 # Create identity like matrix to be subtracted from STM
                 identity_mat = np.eye(6)
                 temp = identity_mat[self.stm_row_index, :]
@@ -435,8 +411,7 @@ class periodic_orbit(cr3bp_model):
 
                 # Phase Constraint
                 FX[-2] = np.dot(
-                    self.ic[self.stm_col_index]
-                    - palc_args["prev_conv_soln"][self.stm_col_index],
+                    self.ic[self.stm_col_index] - palc_args["prev_conv_soln"][self.stm_col_index],
                     palc_args["dx/dtheta"],
                 )
 
@@ -457,9 +432,7 @@ class periodic_orbit(cr3bp_model):
 
     def __DF_DG_setup(self, xfree, xconstraint, palc_args):
         if palc_args is not None and self.sym_period_targ == 1:
-            DF = np.zeros(
-                (len(xconstraint) + 1, len(xfree))
-            )  # To account for phase constraint when PALC used
+            DF = np.zeros((len(xconstraint) + 1, len(xfree)))  # To account for phase constraint when PALC used
         else:
             DF = np.zeros((len(xconstraint), len(xfree)))
         DG = np.zeros((len(xfree), len(xfree)))  # DF for PALC
@@ -483,9 +456,7 @@ class periodic_orbit(cr3bp_model):
         """
         states_final = results_stm["states"][-1, :]
         Ux, Uy, Uz, ax, ay, az = self.ui_partials_acc_cr3bp(states_final)
-        dxf_dt = np.array(
-            [states_final[3], states_final[4], states_final[5], ax, ay, az]
-        )
+        dxf_dt = np.array([states_final[3], states_final[4], states_final[5], ax, ay, az])
         return dxf_dt
 
     def compute_dJC_dxi(self):
@@ -509,9 +480,7 @@ class periodic_orbit(cr3bp_model):
         )
         return dJC_dx
 
-    def __compute_DF(
-        self, free_vars, constraints, results_stm, identity_temp, palc_args
-    ):
+    def __compute_DF(self, free_vars, constraints, results_stm, identity_temp, palc_args):
         """Computes the Analytical Jacobian Matrix, "DF", for a PO targeter
         Parameters
         ----------
@@ -537,9 +506,7 @@ class periodic_orbit(cr3bp_model):
         stm_temp = results_stm["stm"][self.stm_row_index, :, -1]
 
         # Setup DF, Jacobian Matrix
-        self.DF[: self.stm_row_len, : self.stm_col_len] = stm_temp[
-            :, self.stm_col_index
-        ]
+        self.DF[: self.stm_row_len, : self.stm_col_len] = stm_temp[:, self.stm_col_index]
         if "jc" in constraints:
             self.DF[-1, : self.stm_col_len] = dJC_dx[self.stm_col_index]
         if "t" in free_vars:
@@ -550,9 +517,7 @@ class periodic_orbit(cr3bp_model):
             )
             # Account for Phase constraint with PALC
             if palc_args is not None:
-                self.DF[-1, : len(palc_args["dx/dtheta"])] = palc_args[
-                    "dx/dtheta"
-                ]
+                self.DF[-1, : len(palc_args["dx/dtheta"])] = palc_args["dx/dtheta"]
 
     def newton_raphson_update(self, xfree, FX, DG):
         """Multi-dimensional Newton-Raphson Method to update inital guess.
@@ -650,9 +615,7 @@ class periodic_orbit(cr3bp_model):
             Stores the time from one node to the next, t_node[-1]: time to reach the desired state (somekind of corrsing)
         """
         if node_place_opt != "time" and node_place_opt != "index":
-            print(
-                "Incorrect node placement option passed. Allowable options: time and index"
-            )
+            print("Incorrect node placement option passed. Allowable options: time and index")
             return 0
 
         self.stm_bool = 0
@@ -666,9 +629,7 @@ class periodic_orbit(cr3bp_model):
         if node_place_opt == "time":
             # Time of each segment
             ti = np.linspace(0, self.tf, n_node + 1)
-            ti = ti[
-                1:
-            ]  # As ti is the time from node_i to next node, omit the first time, i.e. 0
+            ti = ti[1:]  # As ti is the time from node_i to next node, omit the first time, i.e. 0
 
             for node_counter in range(1, n_node):
                 index = np.argmin(
@@ -679,15 +640,11 @@ class periodic_orbit(cr3bp_model):
                     results_stm["t"][index] - sum(t_node)
                 )  # t_node runs one node behind as it is the time to next node, subtract sum as ti+t2+t3 = tf
 
-            t_node.append(
-                self.tf - sum(t_node)
-            )  # Time from final node to vicinity of desired state
+            t_node.append(self.tf - sum(t_node))  # Time from final node to vicinity of desired state
 
         elif node_place_opt == "index":
             num_index = len(results_stm["t"])
-            indices = np.linsapce(
-                0, num_index, n_node, dtype="int"
-            )  # Linearly spaced indices
+            indices = np.linsapce(0, num_index, n_node, dtype="int")  # Linearly spaced indices
 
             for node_counter in range(1, n_node):
                 ic_node.append(results_stm["states"][indices[node_counter], :])
@@ -695,9 +652,7 @@ class periodic_orbit(cr3bp_model):
                     results_stm["t"][indices[node_counter]] - sum(t_node)
                 )  # t_node runs one node behind as it is the time to next node, subtract sum as ti+t2+t3 = tf
 
-            t_node.append(
-                self.tf - sum(t_node)
-            )  # Time from final node to vicinity of desired state
+            t_node.append(self.tf - sum(t_node))  # Time from final node to vicinity of desired state
 
         return ic_node, t_node
 
@@ -752,20 +707,14 @@ class periodic_orbit(cr3bp_model):
         if po_ic is None:
             po_ic = self.ic
 
-        dist = (
-            dist / self.sys_chars_vals.lstar
-        )  # Non-dimensionalize dist from km to [nd]
+        dist = dist / self.sys_chars_vals.lstar  # Non-dimensionalize dist from km to [nd]
 
-        manifold_step_off = (
-            dist * eigenvect_manifold / np.linalg.norm(eigenvect_manifold[:3])
-        )
+        manifold_step_off = dist * eigenvect_manifold / np.linalg.norm(eigenvect_manifold[:3])
         x_ic_manifold = po_ic + manifold_step_off
 
         if get_initial_states is False:
             local_manifold_states = np.zeros((teval_len, 6))
-            self.teval = np.linspace(0, abs(prop_time), teval_len) * np.sign(
-                prop_time
-            )
+            self.teval = np.linspace(0, abs(prop_time), teval_len) * np.sign(prop_time)
 
             int_method_orig = self.int_method
             self.int_method = "DOP853"
@@ -829,9 +778,7 @@ class periodic_orbit(cr3bp_model):
             # Obtain states at dififerent times along PO and STM(tf,0)
             int_method_orig = self.int_method
             self.int_method = "boost"
-            result_stm = self.propagate(
-                ic=po_ic, tf=tf_po_state[count_po_states]
-            )
+            result_stm = self.propagate(ic=po_ic, tf=tf_po_state[count_po_states])
 
             # eigenvect of nth invariant curve = STM(tf_i,0)*eigenvector of the first invar curve
             eigvector_tfi = np.real(
@@ -843,9 +790,7 @@ class periodic_orbit(cr3bp_model):
 
             self.int_method = int_method_orig
 
-            global_manifold_states[
-                count_po_states, :, :
-            ] = self.local_manifold_gen(
+            global_manifold_states[count_po_states, :, :] = self.local_manifold_gen(
                 dist=dist,
                 eigenvect_manifold=eigvector_tfi,
                 prop_time=prop_time,

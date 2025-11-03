@@ -75,9 +75,7 @@ def intersection_ellipsoid_line(x, y, z, u1, u2, u3, a, b, c):
             )
         )
     ) / (a**2 * b**2 * m**2 + a**2 * c**2 * k**2 + b**2 * c**2)
-    p0, p1 = np.array([x + t0, y + k * t0, z + m * t0]), np.array(
-        [x - t1, y - t1 * k, z - t1 * m]
-    )
+    p0, p1 = np.array([x + t0, y + k * t0, z + m * t0]), np.array([x - t1, y - t1 * k, z - t1 * m])
 
     return p0, p1
 

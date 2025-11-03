@@ -41,7 +41,5 @@ class GoodingPropagator:
             << u.rad
         )
 
-        new_state = ClassicalState(
-            state.attractor, state.to_tuple()[:5] + (nu,), state.plane
-        )
+        new_state = ClassicalState(state.attractor, state.to_tuple()[:5] + (nu,), state.plane)
         return new_state

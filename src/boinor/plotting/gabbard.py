@@ -14,9 +14,7 @@ from boinor.plotting.util import generate_label
 class GabbardPlotter:
     """GabbardPlotter class."""
 
-    def __init__(
-        self, ax=None, dark=False, altitude_unit=u.km, period_unit=u.min
-    ):
+    def __init__(self, ax=None, dark=False, altitude_unit=u.km, period_unit=u.min):
         self._ax = ax
         if not self._ax:
             if dark:
@@ -52,12 +50,8 @@ class GabbardPlotter:
         """
         apogees, perigees, periods = self._get_orbit_property_list(orbits)
 
-        apogee_paths = plt.scatter(
-            periods, apogees, marker="o", color="blue", label="Apogee"
-        )
-        perigee_paths = plt.scatter(
-            periods, perigees, marker="o", color="red", label="Perigee"
-        )
+        apogee_paths = plt.scatter(periods, apogees, marker="o", color="blue", label="Apogee")
+        perigee_paths = plt.scatter(periods, perigees, marker="o", color="red", label="Perigee")
 
         self._ax.set_xlabel(f"Period ({self._period_unit:s})")
         self._ax.set_ylabel(f"Altitude ({self._altitude_unit:s})")

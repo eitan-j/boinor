@@ -131,9 +131,7 @@ class sys_chars:
             temp1 = mu_body[p1]
             temp2 = mu_body[p2]
             if temp1 == temp2:
-                print(
-                    "Same bodies passed as P1 and P2. Please pass the secondary body of P1 as P2"
-                )
+                print("Same bodies passed as P1 and P2. Please pass the secondary body of P1 as P2")
                 return 0, 0, 0
         except KeyError:
             print("KeyError-> Incorrect/Does Not Exist Input Bodies name")
@@ -156,9 +154,7 @@ class sys_chars:
         try:
             dist = distances[bodies]
         except KeyError:
-            print(
-                "KeyError-> Error in combination of bodies P1-P2, typo/DNE/combo not created"
-            )
+            print("KeyError-> Error in combination of bodies P1-P2, typo/DNE/combo not created")
             return 0, 0, 0
         else:
             tstar = self.__tstar_calc(mu_pi, dist)

@@ -80,9 +80,7 @@ class AltitudeCrossEvent(Event):
         self._last_t = t
         r_norm = norm(uu[:3])
 
-        return (
-            r_norm - self._R - self._alt
-        )  # If this goes from +ve to -ve, altitude is decreasing.
+        return r_norm - self._R - self._alt  # If this goes from +ve to -ve, altitude is decreasing.
 
 
 class LithobrakeEvent(AltitudeCrossEvent):
@@ -129,9 +127,7 @@ class LatitudeCrossEvent(Event):
     def __call__(self, t, u_, k):
         self._last_t = t
         pos_on_body = (u_[:3] / norm(u_[:3])) * self._R
-        _, lat_, _ = cartesian_to_ellipsoidal_fast(
-            self._R, self._R_polar, *pos_on_body
-        )
+        _, lat_, _ = cartesian_to_ellipsoidal_fast(self._R, self._R_polar, *pos_on_body)
 
         return np.rad2deg(lat_) - self._lat
 
@@ -187,9 +183,7 @@ class PenumbraEvent(EclipseEvent):
     """
 
     # for better clarity we do want to keep this function here
-    def __init__(
-        self, orbit, terminal=False, direction=0
-    ):  # pylint: disable=useless-parent-delegation
+    def __init__(self, orbit, terminal=False, direction=0):  # pylint: disable=useless-parent-delegation
         super().__init__(orbit, terminal, direction)
 
     def __call__(self, t, u_, k):
@@ -224,18 +218,14 @@ class UmbraEvent(EclipseEvent):
     """
 
     # for better clarity we do want to keep this function here
-    def __init__(
-        self, orbit, terminal=False, direction=0
-    ):  # pylint: disable=useless-parent-delegation
+    def __init__(self, orbit, terminal=False, direction=0):  # pylint: disable=useless-parent-delegation
         super().__init__(orbit, terminal, direction)
 
     def __call__(self, t, u_, k):
         self._last_t = t
 
         r_sec = super().__call__(t, u_, k)
-        shadow_function = eclipse_function_fast(
-            self.k, u_, r_sec, self.R_sec, self.R_primary
-        )
+        shadow_function = eclipse_function_fast(self.k, u_, r_sec, self.R_sec, self.R_primary)
 
         return shadow_function
 
@@ -289,13 +279,9 @@ class LosEvent(Event):
         self._last_t = t
 
         if norm(u_[:3]) < self._R:
-            warn(
-                "The norm of the position vector of the primary body is less than the radius of the attractor."
-            )
+            warn("The norm of the position vector of the primary body is less than the radius of the attractor.")
 
-        pos_coord = (
-            self._pos_coords.pop(0) if self._pos_coords else self._last_coord
-        )
+        pos_coord = self._pos_coords.pop(0) if self._pos_coords else self._last_coord
 
         # Need to cast `pos_coord` to array since `norm` inside numba only works for arrays, not lists.
         delta_angle = line_of_sight_fast(u_[:3], np.array(pos_coord), self._R)

@@ -251,9 +251,7 @@ class RelativeOrb:
         # need perform the 313 Euler angle rotation in the following sequence:
         # Right Angle of Ascending Node -> Inclination -> Argument of Latitude.
         # Now, let us get us the DCM that converts to the hill-frame.
-        DCM_HN = np.matmul(
-            self._dcmZ(w), np.matmul(self._dcmX(i), self._dcmZ(R))
-        )
+        DCM_HN = np.matmul(self._dcmZ(w), np.matmul(self._dcmX(i), self._dcmZ(R)))
 
         # Notice that the hill frame computation does not include a rotation
         # of the true anomaly, and that's because the true anomaly has already
@@ -268,14 +266,10 @@ class RelativeOrb:
         # For the matrix multiplication below, we will
 
         # With the hill frame, we can now convert it to the ECI frame.
-        pos = np.matmul(
-            DCM_NH, np.array([pos_X.to_value(u.km), pos_Y.to_value(u.km), 0.0])
-        )
+        pos = np.matmul(DCM_NH, np.array([pos_X.to_value(u.km), pos_Y.to_value(u.km), 0.0]))
         vel = np.matmul(
             DCM_NH,
-            np.array(
-                [vel_X.to_value(u.km / u.s), vel_Y.to_value(u.km / u.s), 0.0]
-            ),
+            np.array([vel_X.to_value(u.km / u.s), vel_Y.to_value(u.km / u.s), 0.0]),
         )
 
         # Finally, let us not forget to compute the true anomaly.

@@ -130,9 +130,7 @@ class Body(
         return cls(parent, k, name, symbol, R, **kwargs)
 
     @classmethod
-    def from_relative(
-        cls, reference, parent, k, name, symbol=None, R=0, **kwargs
-    ):
+    def from_relative(cls, reference, parent, k, name, symbol=None, R=0, **kwargs):
         k = k * reference.k
         R = R * reference.R
         return cls(parent, k, name, symbol, R, **kwargs)
@@ -171,9 +169,7 @@ class SolarSystemPlanet(Body):
             OrbitPlotter,
         )
 
-        return OrbitPlotter(backend=backend, plane=plane).plot_body_orbit(
-            self, epoch=epoch, label=label
-        )
+        return OrbitPlotter(backend=backend, plane=plane).plot_body_orbit(self, epoch=epoch, label=label)
 
 
 Sun = Body(

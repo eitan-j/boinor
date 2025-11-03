@@ -29,19 +29,7 @@ def beta(ecc_0, ecc_f, inc_0, inc_f, argp):
             3
             * np.pi
             * (inc_f - inc_0)
-            / (
-                4
-                * np.cos(argp)
-                * (
-                    ecc_0
-                    - ecc_f
-                    + np.log(
-                        (1 + ecc_f)
-                        * (-1 + ecc_0)
-                        / ((1 + ecc_0) * (-1 + ecc_f))
-                    )
-                )
-            )
+            / (4 * np.cos(argp) * (ecc_0 - ecc_f + np.log((1 + ecc_f) * (-1 + ecc_0) / ((1 + ecc_0) * (-1 + ecc_f)))))
         )
     )
 
@@ -49,12 +37,7 @@ def beta(ecc_0, ecc_f, inc_0, inc_f, argp):
 @jit
 def delta_V(V_0, ecc_0, ecc_f, beta_):
     """Compute required increment of velocity."""
-    return (
-        2
-        * V_0
-        * np.abs(np.arcsin(ecc_0) - np.arcsin(ecc_f))
-        / (3 * np.cos(beta_))
-    )
+    return 2 * V_0 * np.abs(np.arcsin(ecc_0) - np.arcsin(ecc_f)) / (3 * np.cos(beta_))
 
 
 @jit
@@ -82,9 +65,7 @@ def change_ecc_inc(k, a, ecc_0, ecc_f, inc_0, inc_f, argp, r, v, f):
         r_ = u_[:3]
         v_ = u_[3:]
         nu = rv2coe(k_, r_, v_)[-1]
-        beta_ = beta_0 * np.sign(
-            np.cos(nu)
-        )  # The sign of ß reverses at minor axis crossings
+        beta_ = beta_0 * np.sign(np.cos(nu))  # The sign of ß reverses at minor axis crossings
 
         w_ = (cross(r_, v_) / norm(cross(r_, v_))) * np.sign(inc_f - inc_0)
         accel_v = f * (np.cos(beta_) * thrust_unit + np.sin(beta_) * w_)

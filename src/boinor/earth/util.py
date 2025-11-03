@@ -46,16 +46,10 @@ def raan_from_ltan(epoch, ltan=12.0):
 
     # Sun mean longitude
     l_sun = 280.460 * u.deg + 36000.771 * T_UT1
-    l_ecliptic_part2 = 1.914666471 * u.deg * np.sin(
-        M_sun
-    ) + 0.019994643 * u.deg * np.sin(2 * M_sun)
+    l_ecliptic_part2 = 1.914666471 * u.deg * np.sin(M_sun) + 0.019994643 * u.deg * np.sin(2 * M_sun)
     l_ecliptic = l_sun + l_ecliptic_part2
 
-    eq_time = (
-        -l_ecliptic_part2
-        + 2.466 * u.deg * np.sin(2 * l_ecliptic)
-        - 0.0053 * u.deg * np.sin(4 * l_ecliptic)
-    )
+    eq_time = -l_ecliptic_part2 + 2.466 * u.deg * np.sin(2 * l_ecliptic) - 0.0053 * u.deg * np.sin(4 * l_ecliptic)
 
     # Calculate sun mean local time
 

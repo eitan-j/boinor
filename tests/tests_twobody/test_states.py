@@ -28,9 +28,7 @@ def test_classical_state_has_elements_given_in_constructor():
     raan = 49.562 * u.deg
     argp = 286.537 * u.deg
     nu = 23.33 * u.deg
-    ss = ClassicalState(
-        Sun, (a * (1 - ecc**2), ecc, inc, raan, argp, nu), None
-    )
+    ss = ClassicalState(Sun, (a * (1 - ecc**2), ecc, inc, raan, argp, nu), None)
     assert ss.p == a * (1 - ecc**2)
     assert ss.ecc == ecc
     assert ss.inc == inc
@@ -59,9 +57,7 @@ def test_mean_motion():
     _argp = 200 * u.deg
     _nu = 20 * u.deg
 
-    ss = ClassicalState(
-        attractor, (a * (1 - _ecc**2), _ecc, _inc, _raan, _argp, _nu), None
-    )
+    ss = ClassicalState(attractor, (a * (1 - _ecc**2), _ecc, _inc, _raan, _argp, _nu), None)
 
     expected_mean_motion = (2 * np.pi / period) * u.rad
     n = ss.n
@@ -77,9 +73,7 @@ def test_coe_to_mee_raises_singularity_error_orbit_equatorial_and_retrograde():
     argp = 286.537 * u.deg
     nu = 23.33 * u.deg
 
-    ss = ClassicalState(
-        Sun, (a * (1 - ecc**2), ecc, inc, raan, argp, nu), None
-    )
+    ss = ClassicalState(Sun, (a * (1 - ecc**2), ecc, inc, raan, argp, nu), None)
     with pytest.raises(ValueError) as excinfo:
         ss.to_equinoctial()
     assert (
@@ -141,18 +135,12 @@ def test_state_methods():
 
     res_from_classical = mes.to_classical()
     value_res_from_classical = res_from_classical.to_value()
-    assert_quantity_allclose(
-        value_res_from_classical, expected_res_from_classical, rtol=1e-6
-    )
+    assert_quantity_allclose(value_res_from_classical, expected_res_from_classical, rtol=1e-6)
 
     res_from_equinoctial = res_from_classical.to_equinoctial()
     res_from_equinoctial.to_value()
-    assert_quantity_allclose(
-        value_res_from_classical, expected_res_from_classical, rtol=1e-6
-    )
+    assert_quantity_allclose(value_res_from_classical, expected_res_from_classical, rtol=1e-6)
 
     res_from_vectors = mes.to_vectors()
     value_res_from_vectors = res_from_vectors.to_value()
-    assert_quantity_allclose(
-        value_res_from_vectors, expected_res_from_vectors, rtol=1e-6
-    )
+    assert_quantity_allclose(value_res_from_vectors, expected_res_from_vectors, rtol=1e-6)

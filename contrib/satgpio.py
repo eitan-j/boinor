@@ -23,22 +23,12 @@ def _generate_url(catalog_number, international_designator, name):
         "INTDES": international_designator,
         "NAME": name,
     }
-    param_names = [
-        param_name
-        for param_name, param_value in params.items()
-        if param_value is not None
-    ]
+    param_names = [param_name for param_name, param_value in params.items() if param_value is not None]
     if len(param_names) != 1:
-        raise ValueError(
-            "Specify exactly one of catalog_number, international_designator, or name"
-        )
+        raise ValueError("Specify exactly one of catalog_number, international_designator, or name")
     param_name = param_names[0]
     param_value = params[param_name]
-    url = (
-        "https://celestrak.com/NORAD/elements/gp.php?"
-        f"{param_name}={param_value}"
-        "&FORMAT=XML"
-    )
+    url = "https://celestrak.com/NORAD/elements/gp.php?" f"{param_name}={param_value}" "&FORMAT=XML"
     return url
 
 
@@ -47,23 +37,17 @@ def _make_query(url):
     response.raise_for_status()
 
     if response.text == "No GP data found":
-        raise ValueError(
-            f"Query '{url}' did not return any results, try a different one"
-        )
+        raise ValueError(f"Query '{url}' did not return any results, try a different one")
     tree = ET.parse(io.StringIO(response.text))
     root = tree.getroot()
 
     if len(root) != 1:
-        raise ValueError(
-            f"Query '{url}' returned {len(root)} results, try a different one"
-        )
+        raise ValueError(f"Query '{url}' returned {len(root)} results, try a different one")
     fields = next(omm.parse_xml(io.StringIO(response.text)))
     return fields
 
 
-def load_gp_from_celestrak(
-    *, catalog_number=None, international_designator=None, name=None
-):
+def load_gp_from_celestrak(*, catalog_number=None, international_designator=None, name=None):
     """Load general perturbations orbital data from Celestrak.
 
     Returns

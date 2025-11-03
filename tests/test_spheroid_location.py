@@ -110,9 +110,7 @@ def test_cartesian_conversion_approximate():
 
 @settings(deadline=None)
 @given(
-    lat=with_units(
-        elements=st.floats(min_value=-1e-2, max_value=1e-2), unit=u.rad
-    ),
+    lat=with_units(elements=st.floats(min_value=-1e-2, max_value=1e-2), unit=u.rad),
 )
 def test_h_calculation_near_lat_singularity(lat):
     body = Earth

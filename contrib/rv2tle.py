@@ -121,9 +121,7 @@ def rvel(r, v):
         x3thm1 = 3 * theta2 - 1
         x1mth2 = 1 - theta2
         x7thm1 = 7 * theta2 - 1
-        r = (rk - 0.5 * temp1 * x1mth2 * cos2u) / (
-            1 - 1.5 * temp2 * betal * x3thm1
-        )
+        r = (rk - 0.5 * temp1 * x1mth2 * cos2u) / (1 - 1.5 * temp2 * betal * x3thm1)
         u = uk + 0.25 * temp2 * x7thm1 * sin2u
         xnodeo = xnodek - 1.5 * temp2 * cosio * sin2u
         xincl = xinck - 1.5 * temp2 * cosio * sinio * cos2u
@@ -254,9 +252,7 @@ def rv2el(rr, vv, epoch):
 
     # SPG4 propagation of k-elements to rr', vv'
     pos, vel = el2rv(inck, raank, ecck, argpk, mAnomalyk, mMotionk, epoch_time)
-    inc2, raan2, ecc2, argp2, mAnomaly2, mMotion2 = rvel(
-        pos, vel
-    )  # SPG4 x-elements from state vectors
+    inc2, raan2, ecc2, argp2, mAnomaly2, mMotion2 = rvel(pos, vel)  # SPG4 x-elements from state vectors
 
     # First correction
     incz = 2 * inck - inc2
@@ -301,15 +297,9 @@ if __name__ == "__main__":
     # Display differences
     print("                Poliastro(osc)              rv2el(mean)")
     print(f"Ecc            :    {iss.ecc:10.5f}{'':15}{ecc:10.5f}")
-    print(
-        f"Incl  [deg]    :    {math.degrees(iss.inc.value):10.5f}{'':15}{math.degrees(inc):10.5f}"
-    )
-    print(
-        f"n [deg/min]    :    {math.degrees(iss.n.to(u.rad/u.minute).value):10.5f}{'':15}{math.degrees(m_mot):10.5f}"
-    )
-    print(
-        f"RAAN  [deg]    :    {math.degrees(iss.raan.value):10.5f}{'':15}{math.degrees(raan):10.5f}"
-    )
+    print(f"Incl  [deg]    :    {math.degrees(iss.inc.value):10.5f}{'':15}{math.degrees(inc):10.5f}")
+    print(f"n [deg/min]    :    {math.degrees(iss.n.to(u.rad/u.minute).value):10.5f}{'':15}{math.degrees(m_mot):10.5f}")
+    print(f"RAAN  [deg]    :    {math.degrees(iss.raan.value):10.5f}{'':15}{math.degrees(raan):10.5f}")
     print(
         f"Argp + M [deg] :    {math.degrees(iss.argp.value+mean_anomaly.value):10.5f}{'':15}{math.degrees(argp+m_ano):10.5f}"
     )

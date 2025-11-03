@@ -27,11 +27,7 @@ class FarnocchiaPropagator:
 
     """
 
-    kind = (
-        PropagatorKind.ELLIPTIC
-        | PropagatorKind.PARABOLIC
-        | PropagatorKind.HYPERBOLIC
-    )
+    kind = PropagatorKind.ELLIPTIC | PropagatorKind.PARABOLIC | PropagatorKind.HYPERBOLIC
 
     def propagate(self, state, tof):
         state = state.to_classical()
@@ -45,9 +41,7 @@ class FarnocchiaPropagator:
             << u.rad
         )
 
-        new_state = ClassicalState(
-            state.attractor, state.to_tuple()[:5] + (nu,), state.plane
-        )
+        new_state = ClassicalState(state.attractor, state.to_tuple()[:5] + (nu,), state.plane)
         return new_state
 
     def propagate_many(self, state, tofs):
@@ -57,9 +51,7 @@ class FarnocchiaPropagator:
 
         # TODO: This should probably return a ClassicalStateArray instead,
         # see discussion at https://github.com/boinor/boinor/pull/1492
-        results = np.array(
-            [farnocchia_rv_fast(k, *rv0, tof) for tof in tofs.to_value(u.s)]
-        )
+        results = np.array([farnocchia_rv_fast(k, *rv0, tof) for tof in tofs.to_value(u.s)])
         return (
             results[:, 0] << u.km,
             results[:, 1] << (u.km / u.s),

@@ -87,11 +87,7 @@ def test_planetary_frames_have_proper_string_representations(body, frame):
 def test_planetary_icrs_frame_is_just_translation(body, frame):
     epoch = J2000
     vector = CartesianRepresentation(x=100 * u.km, y=100 * u.km, z=100 * u.km)
-    vector_result = (
-        frame(vector, obstime=epoch)
-        .transform_to(ICRS())
-        .represent_as(CartesianRepresentation)
-    )
+    vector_result = frame(vector, obstime=epoch).transform_to(ICRS()).represent_as(CartesianRepresentation)
 
     expected_result = get_body_barycentric(body.name, epoch) + vector
 
@@ -116,15 +112,9 @@ def test_icrs_body_position_to_planetary_frame_yields_zeros(body, frame):
     epoch = J2000
     vector = get_body_barycentric(body.name, epoch)
 
-    vector_result = (
-        ICRS(vector)
-        .transform_to(frame(obstime=epoch))
-        .represent_as(CartesianRepresentation)
-    )
+    vector_result = ICRS(vector).transform_to(frame(obstime=epoch)).represent_as(CartesianRepresentation)
 
-    assert_quantity_allclose(
-        vector_result.xyz, [0, 0, 0] * u.km, atol=1e-7 * u.km
-    )
+    assert_quantity_allclose(vector_result.xyz, [0, 0, 0] * u.km, atol=1e-7 * u.km)
 
 
 @pytest.mark.parametrize(
@@ -141,9 +131,7 @@ def test_icrs_body_position_to_planetary_frame_yields_zeros(body, frame):
         (Neptune, NeptuneFixed, NeptuneICRS),
     ],
 )
-def test_planetary_fixed_inertial_conversion(
-    body, fixed_frame, inertial_frame
-):
+def test_planetary_fixed_inertial_conversion(body, fixed_frame, inertial_frame):
     epoch = J2000
     fixed_position = fixed_frame(
         0 * u.deg,
@@ -152,15 +140,9 @@ def test_planetary_fixed_inertial_conversion(
         obstime=epoch,
         representation_type="spherical",
     )
-    inertial_position = fixed_position.transform_to(
-        inertial_frame(obstime=epoch)
-    )
-    assert_quantity_allclose(
-        fixed_position.spherical.distance, body.R, atol=1e-7 * u.km
-    )
-    assert_quantity_allclose(
-        inertial_position.spherical.distance, body.R, atol=1e-7 * u.km
-    )
+    inertial_position = fixed_position.transform_to(inertial_frame(obstime=epoch))
+    assert_quantity_allclose(fixed_position.spherical.distance, body.R, atol=1e-7 * u.km)
+    assert_quantity_allclose(inertial_position.spherical.distance, body.R, atol=1e-7 * u.km)
 
 
 @pytest.mark.parametrize(
@@ -177,9 +159,7 @@ def test_planetary_fixed_inertial_conversion(
         (Neptune, NeptuneFixed, NeptuneICRS),
     ],
 )
-def test_planetary_inertial_fixed_conversion(
-    body, fixed_frame, inertial_frame
-):
+def test_planetary_inertial_fixed_conversion(body, fixed_frame, inertial_frame):
     epoch = J2000
     inertial_position = inertial_frame(
         0 * u.deg,
@@ -189,12 +169,8 @@ def test_planetary_inertial_fixed_conversion(
         representation_type="spherical",
     )
     fixed_position = inertial_position.transform_to(fixed_frame(obstime=epoch))
-    assert_quantity_allclose(
-        fixed_position.spherical.distance, body.R, atol=1e-7 * u.km
-    )
-    assert_quantity_allclose(
-        inertial_position.spherical.distance, body.R, atol=1e-7 * u.km
-    )
+    assert_quantity_allclose(fixed_position.spherical.distance, body.R, atol=1e-7 * u.km)
+    assert_quantity_allclose(inertial_position.spherical.distance, body.R, atol=1e-7 * u.km)
 
 
 @pytest.mark.parametrize(
@@ -211,9 +187,7 @@ def test_planetary_inertial_fixed_conversion(
         (Neptune, NeptuneFixed, NeptuneICRS),
     ],
 )
-def test_planetary_inertial_roundtrip_vector(
-    body, fixed_frame, inertial_frame
-):
+def test_planetary_inertial_roundtrip_vector(body, fixed_frame, inertial_frame):
     epoch = J2000
     sampling_time = 10 * u.s
     fixed_position = fixed_frame(
@@ -223,9 +197,7 @@ def test_planetary_inertial_roundtrip_vector(
         representation_type="spherical",
         obstime=epoch + np.arange(1000) * sampling_time,
     )
-    inertial_position = fixed_position.transform_to(
-        inertial_frame(obstime=epoch + np.arange(1000) * sampling_time)
-    )
+    inertial_position = fixed_position.transform_to(inertial_frame(obstime=epoch + np.arange(1000) * sampling_time))
     fixed_position_roundtrip = inertial_position.transform_to(
         fixed_frame(obstime=epoch + np.arange(1000) * sampling_time)
     )
@@ -256,13 +228,8 @@ def test_GeocentricSolarEcliptic_against_data():
 def test_GeocentricSolarEcliptic_raises_error_nonscalar_obstime():
     with pytest.raises(ValueError) as excinfo:
         gcrs = GCRS(ra="02h31m49.09s", dec="+89d15m50.8s", distance=200 * u.km)
-        gcrs.transform_to(
-            GeocentricSolarEcliptic(obstime=Time(["J3200", "J2000"]))
-        )
-    assert (
-        "To perform this transformation the "
-        "obstime Attribute must be a scalar." in str(excinfo.value)
-    )
+        gcrs.transform_to(GeocentricSolarEcliptic(obstime=Time(["J3200", "J2000"])))
+    assert "To perform this transformation the " "obstime Attribute must be a scalar." in str(excinfo.value)
 
 
 @pytest.mark.parametrize(
@@ -307,9 +274,7 @@ def test_GeocentricSolarEcliptic_raises_error_nonscalar_obstime():
         ),
     ],
 )
-def test_fixed_frame_calculation_gives_expected_result(
-    body, fixed_frame, radecW
-):
+def test_fixed_frame_calculation_gives_expected_result(body, fixed_frame, radecW):
     epoch = J2000
     fixed_position = fixed_frame(
         0 * u.deg,
@@ -319,9 +284,7 @@ def test_fixed_frame_calculation_gives_expected_result(
         representation_type="spherical",
     )
 
-    assert_quantity_allclose(
-        fixed_position.rot_elements_at_epoch(), radecW, atol=1e-7 * u.deg
-    )
+    assert_quantity_allclose(fixed_position.rot_elements_at_epoch(), radecW, atol=1e-7 * u.deg)
 
 
 # the NotImplementedError raises only for the Sun, but maybe we want to check something different later
@@ -358,17 +321,13 @@ def test_planetary_fixed():
     sf_position = inertial_position.transform_to(sf)
 
     # do some strange things in order to get exceptions, this is not really meaningful
-    test_from_equ = _PlanetaryFixed.from_equatorial(
-        fixed_position, mf
-    )  # this should only work without exception
+    test_from_equ = _PlanetaryFixed.from_equatorial(fixed_position, mf)  # this should only work without exception
     with pytest.raises(
         ValueError,
         match="Fixed and equatorial coordinates must have the same body if the fixed frame body is not Sun",
     ):
         _PlanetaryFixed.from_equatorial(fixed_position, vf)
-    with pytest.raises(
-        ValueError, match="Equatorial coordinates must be of type `HCRS`, got"
-    ):
+    with pytest.raises(ValueError, match="Equatorial coordinates must be of type `HCRS`, got"):
         _PlanetaryFixed.from_equatorial(fixed_position, sf)
 
     test_to_equ = _PlanetaryFixed.to_equatorial(test_from_equ, mf)
@@ -377,9 +336,7 @@ def test_planetary_fixed():
         match="Fixed and equatorial coordinates must have the same body if the fixed frame body is not Sun",
     ):
         _PlanetaryFixed.to_equatorial(fixed_position, vf)
-    with pytest.raises(
-        ValueError, match="Equatorial coordinates must be of type `HCRS`, got"
-    ):
+    with pytest.raises(ValueError, match="Equatorial coordinates must be of type `HCRS`, got"):
         _PlanetaryFixed.to_equatorial(sf_position, mf)
 
     assert_quantity_allclose(fixed_position.ra, test_to_equ.ra)
@@ -405,9 +362,7 @@ def test_planetary_icrs_class():
     inertial_position.transform_to(sf)
 
     # do some strange things in order to get exceptions, this is not really meaningful
-    _PlanetaryICRS.from_icrs(
-        icrs_position, mf
-    )  # this should only work without exception
+    _PlanetaryICRS.from_icrs(icrs_position, mf)  # this should only work without exception
     #    with pytest.raises(ValueError, match="Fixed and equatorial coordinates must have the same body if the fixed frame body is not Sun"):
     _PlanetaryICRS.from_icrs(icrs_position, vf)
 

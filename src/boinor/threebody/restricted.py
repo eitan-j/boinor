@@ -95,9 +95,7 @@ def lagrange_points_vec(m1, r1, m2, r2, n):
         The positions are of type ~astropy.units.Quantity
     """
     # Check Body 1 is the main body
-    assert (
-        m1 > m2
-    ), "Body 1 is not the main body: it has less mass than the 'secondary' body"
+    assert m1 > m2, "Body 1 is not the main body: it has less mass than the 'secondary' body"
 
     # Define local frame of reference:
     # Center: main body, NOT the barycenter

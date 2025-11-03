@@ -138,31 +138,13 @@ def getUdiff_CR3BP(r_, mu):
 
     # computing the double derivates with position
     Uxx = 1 - (1 - mu) / r13**3 - mu / r23**3
-    (
-        +3 * (1 - mu) * (rx + mu) ** 2 / r13**5
-        + 3 * mu * (rx + mu - 1) ** 2 / r23**5
-    )
-    Uyy = (
-        1
-        - (1 - mu) / r13**3
-        - mu / r23**3
-        + 3 * (1 - mu) * ry**2 / r13**5
-    )
+    (+3 * (1 - mu) * (rx + mu) ** 2 / r13**5 + 3 * mu * (rx + mu - 1) ** 2 / r23**5)
+    Uyy = 1 - (1 - mu) / r13**3 - mu / r23**3 + 3 * (1 - mu) * ry**2 / r13**5
     +3 * mu * ry**2 / r23**5
-    Uzz = (
-        -(1 - mu) / r13**3
-        - mu / r23**3
-        + 3 * (1 - mu) * rz**2 / r13**5
-    )
+    Uzz = -(1 - mu) / r13**3 - mu / r23**3 + 3 * (1 - mu) * rz**2 / r13**5
     +3 * mu * rz**2 / r23**5
-    Uxy = (
-        3 * ry * (1 - mu) * (rx + mu) / r13**5
-        + 3 * ry * mu * (rx - (1 - mu)) / r23**5
-    )
-    Uxz = (
-        3 * rz * (1 - mu) * (rx + mu) / r13**5
-        + 3 * rz * mu * (rx - (1 - mu)) / r23**5
-    )
+    Uxy = 3 * ry * (1 - mu) * (rx + mu) / r13**5 + 3 * ry * mu * (rx - (1 - mu)) / r23**5
+    Uxz = 3 * rz * (1 - mu) * (rx + mu) / r13**5 + 3 * rz * mu * (rx - (1 - mu)) / r23**5
     Uyz = 3 * ry * rz * (1 - mu) / r13**5 + 3 * ry * rz * mu / r23**5
 
     # exploiting the symmetry
@@ -233,10 +215,7 @@ def func_CR3BP(t, u_, mu):
     r_dot = np.array([vx, vy, vz])
     v_dot = np.array(
         [
-            rx
-            + 2 * vy
-            - (1 - mu) * (rx + mu) / (r13**3)
-            - mu * (rx - 1 + mu) / (r23**3),
+            rx + 2 * vy - (1 - mu) * (rx + mu) / (r13**3) - mu * (rx - 1 + mu) / (r23**3),
             ry - 2 * vx - (1 - mu) * ry / (r13**3) - mu * ry / (r23**3),
             -(1 - mu) * rz / (r13**3) - mu * rz / (r23**3),
         ]

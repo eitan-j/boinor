@@ -103,9 +103,7 @@ class COESA76(COESA):
 
     def __init__(self):
         """Constructor for the class."""
-        super().__init__(
-            b_levels, zb_levels, hb_levels, Tb_levels, Lb_levels, pb_levels
-        )
+        super().__init__(b_levels, zb_levels, hb_levels, Tb_levels, Lb_levels, pb_levels)
 
     def _get_coefficients_avobe_86(self, z, table_coeff):
         """Returns corresponding coefficients for 4th order polynomial approximation.
@@ -175,9 +173,7 @@ class COESA76(COESA):
         else:
             T10 = 360.0 * u.K
             _gamma = self.Lb_levels[9] / (Tinf - T10)
-            epsilon = (
-                (z - self.zb_levels[10]) * (r0 + self.zb_levels[10]) / (r0 + z)
-            )
+            epsilon = (z - self.zb_levels[10]) * (r0 + self.zb_levels[10]) / (r0 + z)
             T = Tinf - (Tinf - T10) * np.exp(-_gamma * epsilon)
 
         return T.to(u.K)
@@ -226,9 +222,7 @@ class COESA76(COESA):
                 C,
                 D,
                 E,
-            ) = self._get_coefficients_avobe_86(
-                z, p_coeff
-            )
+            ) = self._get_coefficients_avobe_86(z, p_coeff)
 
             # Solve the polynomial
             z = z.to_value(u.km)
@@ -270,17 +264,11 @@ class COESA76(COESA):
                 C,
                 D,
                 E,
-            ) = self._get_coefficients_avobe_86(
-                z, rho_coeff
-            )
+            ) = self._get_coefficients_avobe_86(z, rho_coeff)
 
             # Solve the polynomial
             z = z.to_value(u.km)
-            rho = (
-                np.exp(A * z**4 + B * z**3 + C * z**2 + D * z + E)
-                * u.kg
-                / u.m**3
-            )
+            rho = np.exp(A * z**4 + B * z**3 + C * z**2 + D * z + E) * u.kg / u.m**3
 
         return rho.to(u.kg / u.m**3)
 
@@ -328,9 +316,7 @@ class COESA76(COESA):
         z, _h = self._check_altitude(alt, r0, geometric=geometric)
 
         if z > 86 * u.km:
-            raise ValueError(
-                "Speed of sound in COESA76 has just been implemented up to 86km."
-            )
+            raise ValueError("Speed of sound in COESA76 has just been implemented up to 86km.")
         T = self.temperature(alt, geometric).value
         # Using eqn-(50)
         Cs = ((gamma * R_air.value * T) ** 0.5) * (u.m / u.s)
@@ -356,9 +342,7 @@ class COESA76(COESA):
         z, _h = self._check_altitude(alt, r0, geometric=geometric)
 
         if z > 86 * u.km:
-            raise ValueError(
-                "Dynamic Viscosity in COESA76 has just been implemented up to 86km."
-            )
+            raise ValueError("Dynamic Viscosity in COESA76 has just been implemented up to 86km.")
         T = self.temperature(alt, geometric).value
         # Using eqn-(51)
         mu = (beta.value * T**1.5 / (T + S.value)) * (u.N * u.s / (u.m) ** 2)
@@ -384,13 +368,9 @@ class COESA76(COESA):
         z, _h = self._check_altitude(alt, r0, geometric=geometric)
 
         if z > 86 * u.km:
-            raise ValueError(
-                "Thermal conductivity in COESA76 has just been implemented up to 86km."
-            )
+            raise ValueError("Thermal conductivity in COESA76 has just been implemented up to 86km.")
         T = self.temperature(alt, geometric=geometric).value
         # Using eqn-(53)
-        kk = (2.64638e-3 * T**1.5 / (T + 245.4 * (10 ** (-12.0 / T)))) * (
-            u.J / u.m / u.s / u.K
-        )
+        kk = (2.64638e-3 * T**1.5 / (T + 245.4 * (10 ** (-12.0 / T)))) * (u.J / u.m / u.s / u.K)
 
         return kk

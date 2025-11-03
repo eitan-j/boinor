@@ -24,12 +24,8 @@ def test_conversions():
 
     p_coe, ecc_coe, inc_coe, raan_coe, argp_coe, nu_coe = rv2coe(k, r, v)
 
-    p_mee, f_mee, g_mee, h_mee, k_mee, L_mee = coe2mee(
-        p_coe, ecc_coe, inc_coe, raan_coe, argp_coe, nu_coe
-    )
-    p_coe2, ecc_coe2, inc_coe2, raan_coe2, argp_coe2, nu_coe2 = mee2coe(
-        p_mee, f_mee, g_mee, h_mee, k_mee, L_mee
-    )
+    p_mee, f_mee, g_mee, h_mee, k_mee, L_mee = coe2mee(p_coe, ecc_coe, inc_coe, raan_coe, argp_coe, nu_coe)
+    p_coe2, ecc_coe2, inc_coe2, raan_coe2, argp_coe2, nu_coe2 = mee2coe(p_mee, f_mee, g_mee, h_mee, k_mee, L_mee)
     assert_allclose(p_coe, p_coe2)
     assert_allclose(ecc_coe, ecc_coe2)
     assert_allclose(inc_coe, inc_coe2)
@@ -44,8 +40,6 @@ def test_conversions():
     assert_allclose(r, r_rv)
     assert_allclose(v, v_rv)
 
-    r_new, v_new = coe2rv(
-        k, p_coe, ecc_coe, inc_coe, raan_coe, argp_coe, nu_coe
-    )
+    r_new, v_new = coe2rv(k, p_coe, ecc_coe, inc_coe, raan_coe, argp_coe, nu_coe)
     assert_allclose(r, r_new)
     assert_allclose(v, v_new)

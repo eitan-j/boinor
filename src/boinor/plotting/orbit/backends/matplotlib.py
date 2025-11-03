@@ -78,16 +78,12 @@ class Matplotlib2D(OrbitPlotterBackend):
                 # for a generic itertools.cycle, and in particular
                 # for ax._get_lines.prop_cycler.
                 # there is no API available, so *meh*
-                color = (
-                    self.ax._get_lines.get_next_color()  # pylint: disable=protected-access
-                )
+                color = self.ax._get_lines.get_next_color()  # pylint: disable=protected-access
             except AttributeError:
                 # HACK: https://stackoverflow.com/a/13831816/554319
                 # there is no API available, so *meh*
                 # need to be two steps due to pylint
-                vtmp = (
-                    self.ax._get_lines.prop_cycler  # pylint: disable=protected-access
-                )
+                vtmp = self.ax._get_lines.prop_cycler  # pylint: disable=protected-access
                 color = next(vtmp)["color"]
 
         colors = [color, to_rgba(color, 0)] if trail else [color]
@@ -148,9 +144,7 @@ class Matplotlib2D(OrbitPlotterBackend):
             An object representing the trace of the coordinates in the scene.
 
         """
-        return self.draw_marker(
-            position, color=color, marker_symbol="o", label=label, size=None
-        )
+        return self.draw_marker(position, color=color, marker_symbol="o", label=label, size=None)
 
     def draw_impulse(self, position, *, color, label, size):
         """Draw an impulse into the scene.
@@ -173,9 +167,7 @@ class Matplotlib2D(OrbitPlotterBackend):
             An object representing the trace of the impulse in the scene.
 
         """
-        return self.draw_marker(
-            position, color=color, label=label, marker_symbol="x", size=size
-        )
+        return self.draw_marker(position, color=color, label=label, marker_symbol="x", size=size)
 
     def draw_sphere(self, position, *, color, label, radius):
         """Draw an sphere into the scene.
@@ -257,12 +249,8 @@ class Matplotlib2D(OrbitPlotterBackend):
         # Generate the colors if coordinates trail is required
         if len(colors) > 1:
             segments = _segments_from_arrays(x, y)
-            cmap = LinearSegmentedColormap.from_list(
-                f"{colors[0]}_to_alpha", colors  # Useless name
-            )
-            lc = LineCollection(
-                segments, linestyles=linestyle, cmap=cmap, label=label
-            )
+            cmap = LinearSegmentedColormap.from_list(f"{colors[0]}_to_alpha", colors)  # Useless name
+            lc = LineCollection(segments, linestyles=linestyle, cmap=cmap, label=label)
             lc.set_array(np.linspace(1, 0, len(x)))
 
             self.ax.add_collection(lc)

@@ -51,9 +51,7 @@ def min_and_max_ground_range(h, eta_fov, eta_center, R):
 
 
 @jit
-def ground_range_diff_at_azimuth(
-    h, eta_fov, eta_center, beta, phi_nadir, lambda_nadir, R
-):
+def ground_range_diff_at_azimuth(h, eta_fov, eta_center, beta, phi_nadir, lambda_nadir, R):
     """Calculates the difference in ground-range angles from the eta_center angle and the latitude and longitude of the target
     for a desired phase angle, beta, used to specify where the sensor is looking.
 
@@ -98,17 +96,10 @@ def ground_range_diff_at_azimuth(
 
     rho = R * np.cos(gamma) + r_sat * np.cos(eta_center)
     lambdaBig = np.arcsin(rho * np.sin(eta_center) / R)
-    phi_tgt = np.arcsin(
-        np.cos(beta) * np.cos(phi_nadir) * np.sin(lambdaBig)
-        + np.sin(phi_nadir) * np.cos(lambdaBig)
-    )
-    delta_lambdaBig = np.arcsin(
-        np.sin(beta) * np.sin(lambdaBig) / np.cos(phi_tgt)
-    )
+    phi_tgt = np.arcsin(np.cos(beta) * np.cos(phi_nadir) * np.sin(lambdaBig) + np.sin(phi_nadir) * np.cos(lambdaBig))
+    delta_lambdaBig = np.arcsin(np.sin(beta) * np.sin(lambdaBig) / np.cos(phi_tgt))
     lambda_tgt = lambda_nadir + delta_lambdaBig
-    lambdaBig_min, lambdaBig_max = min_and_max_ground_range(
-        h, eta_fov, eta_center, R
-    )
+    lambdaBig_min, lambdaBig_max = min_and_max_ground_range(h, eta_fov, eta_center, R)
     delta_lambda = (lambdaBig_max - lambdaBig_min) / 2
 
     return delta_lambda, phi_tgt, lambda_tgt

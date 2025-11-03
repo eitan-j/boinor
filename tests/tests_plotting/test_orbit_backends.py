@@ -30,9 +30,7 @@ def test_orbit_backends_plotly():
         NotImplementedError,
         match="This method is expected to be overridden by a plotting backend class.",
     ):
-        _ = bp.draw_impulse(
-            1, color=2, label=3, size=4
-        )  # just dummy parameter and not needed in this function
+        _ = bp.draw_impulse(1, color=2, label=3, size=4)  # just dummy parameter and not needed in this function
 
     x = (10.0, 11.1, 12.2)
     y = (20.1, 21.2, 22.3)
@@ -43,9 +41,7 @@ def test_orbit_backends_plotly():
     assert v.y == y
 
     p3d = Plotly3D()
-    v = p3d.draw_marker(
-        [x, y, z], color=2, label=None, marker_symbol="x", size=5
-    )
+    v = p3d.draw_marker([x, y, z], color=2, label=None, marker_symbol="x", size=5)
     assert v.x == x
     assert v.y == y
     assert v.z == z
@@ -54,9 +50,7 @@ def test_orbit_backends_plotly():
 def test_orbit_backends_base():
     dummyScene = 1
     wrongName = "nothing"
-    with pytest.raises(
-        ValueError, match="Backend name must end with '2D' or '3D'."
-    ):
+    with pytest.raises(ValueError, match="Backend name must end with '2D' or '3D'."):
         opb = OrbitPlotterBackend(dummyScene, wrongName)
 
     goodName = "Matplotlib2D"
@@ -67,9 +61,7 @@ def test_orbit_backends_base():
         NotImplementedError,
         match="This method is expected to be overridden by a plotting backend class.",
     ):
-        _ = opb._get_colors(
-            "0x000000", False
-        )  # just dummy parameter and not needed in this function
+        _ = opb._get_colors("0x000000", False)  # just dummy parameter and not needed in this function
 
     with pytest.raises(
         NotImplementedError,
@@ -83,25 +75,19 @@ def test_orbit_backends_base():
         NotImplementedError,
         match="This method is expected to be overridden by a plotting backend class.",
     ):
-        _ = opb.draw_position(
-            1, color=2, label=3, size=4
-        )  # just dummy parameter and not needed in this function
+        _ = opb.draw_position(1, color=2, label=3, size=4)  # just dummy parameter and not needed in this function
 
     with pytest.raises(
         NotImplementedError,
         match="This method is expected to be overridden by a plotting backend class.",
     ):
-        _ = opb.draw_impulse(
-            1, color=2, label=3, size=4
-        )  # just dummy parameter and not needed in this function
+        _ = opb.draw_impulse(1, color=2, label=3, size=4)  # just dummy parameter and not needed in this function
 
     with pytest.raises(
         NotImplementedError,
         match="This method is expected to be overridden by a plotting backend class.",
     ):
-        _ = opb.draw_sphere(
-            1, color=2, label=3, radius=4
-        )  # just dummy parameter and not needed in this function
+        _ = opb.draw_sphere(1, color=2, label=3, radius=4)  # just dummy parameter and not needed in this function
 
     with pytest.raises(
         NotImplementedError,
@@ -113,17 +99,13 @@ def test_orbit_backends_base():
         NotImplementedError,
         match="This method is expected to be overridden by a specific plotting backend.",
     ):
-        _ = opb.draw_coordinates(
-            1, colors=2, label=3, size=4
-        )  # just dummy parameter and not needed in this function
+        _ = opb.draw_coordinates(1, colors=2, label=3, size=4)  # just dummy parameter and not needed in this function
 
     with pytest.raises(
         NotImplementedError,
         match="This method is expected to be overridden by a specific plotting backend.",
     ):
-        _ = opb.draw_axes_labels_with_length_scale_units(
-            1
-        )  # just dummy parameter and not needed in this function
+        _ = opb.draw_axes_labels_with_length_scale_units(1)  # just dummy parameter and not needed in this function
 
     with pytest.raises(
         NotImplementedError,
@@ -141,9 +123,7 @@ def test_orbit_backends_base():
         NotImplementedError,
         match="This method is expected to be overridden by a specific plotting backend.",
     ):
-        _ = opb.generate_labels(
-            1, 2, 3
-        )  # just dummy parameter and not needed in this function
+        _ = opb.generate_labels(1, 2, 3)  # just dummy parameter and not needed in this function
 
     with pytest.raises(
         NotImplementedError,

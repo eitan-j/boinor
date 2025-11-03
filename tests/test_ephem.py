@@ -28,9 +28,7 @@ INCOMPLETE_INTERPOLATORS = [BaseInterpolator()]
 AVAILABLE_PLANES = Planes.__members__.values()
 
 
-def assert_coordinates_allclose(
-    actual, desired, rtol=1e-7, atol_scale=None, **kwargs
-):
+def assert_coordinates_allclose(actual, desired, rtol=1e-7, atol_scale=None, **kwargs):
     if atol_scale is None:
         atol_scale = 0
 
@@ -70,8 +68,7 @@ def coordinates():
         [(1, 0, 0), (0.9, 0.1, 0), (0.8, 0.2, 0), (0.7, 0.3, 0)] * u.au,
         xyz_axis=1,
         differentials=CartesianDifferential(
-            [(0, 1, 0), (-0.1, 0.9, 0), (-0.2, 0.8, 0), (-0.3, 0.7, 0)]
-            * (u.au / u.day),
+            [(0, 1, 0), (-0.1, 0.9, 0), (-0.2, 0.8, 0), (-0.3, 0.7, 0)] * (u.au / u.day),
             xyz_axis=1,
         ),
     )
@@ -88,16 +85,11 @@ def test_ephem_fails_if_dimensions_are_not_correct(epochs, coordinates):
     unused_plane = Planes.EARTH_EQUATOR
     with pytest.raises(ValueError) as excinfo:
         Ephem(epochs[0], coordinates, unused_plane)
-    assert (
-        "Coordinates and epochs must have dimension 1, got 0 and 1"
-        in excinfo.exconly()
-    )
+    assert "Coordinates and epochs must have dimension 1, got 0 and 1" in excinfo.exconly()
 
 
 @pytest.mark.parametrize("interpolator", AVAILABLE_INTERPOLATORS)
-def test_ephem_sample_no_arguments_returns_exactly_same_input(
-    epochs, coordinates, interpolator
-):
+def test_ephem_sample_no_arguments_returns_exactly_same_input(epochs, coordinates, interpolator):
     unused_plane = Planes.EARTH_EQUATOR
     ephem = Ephem(coordinates, epochs, unused_plane)
 
@@ -124,9 +116,7 @@ def test_ephem_sample_no_arguments_returns_exactly_same_input_incomplete_interpo
 
 
 @pytest.mark.parametrize("interpolator", AVAILABLE_INTERPOLATORS)
-def test_ephem_sample_scalar_epoch_returns_1_dimensional_coordinates(
-    epochs, coordinates, interpolator
-):
+def test_ephem_sample_scalar_epoch_returns_1_dimensional_coordinates(epochs, coordinates, interpolator):
     unused_plane = Planes.EARTH_EQUATOR
     ephem = Ephem(coordinates, epochs, unused_plane)
 
@@ -140,18 +130,13 @@ def test_ephem_str_matches_expected_representation(epochs, coordinates):
     plane = Planes.EARTH_EQUATOR
     ephem = Ephem(coordinates, epochs, plane)
 
-    expected_str = (
-        "Ephemerides at 4 epochs "
-        "from 2020-03-01 12:00:00.000 (TDB) to 2020-03-04 12:00:00.000 (TDB)"
-    )
+    expected_str = "Ephemerides at 4 epochs " "from 2020-03-01 12:00:00.000 (TDB) to 2020-03-04 12:00:00.000 (TDB)"
 
     assert repr(ephem) == str(ephem) == expected_str
 
 
 @pytest.mark.parametrize("interpolator", AVAILABLE_INTERPOLATORS)
-def test_ephem_sample_scalar_epoch_and_coordinates_returns_exactly_same_input(
-    epochs, coordinates, interpolator
-):
+def test_ephem_sample_scalar_epoch_and_coordinates_returns_exactly_same_input(epochs, coordinates, interpolator):
     unused_plane = Planes.EARTH_EQUATOR
     coordinates = coordinates[0].reshape(-1)
     epochs = epochs[0].reshape(-1)
@@ -164,33 +149,25 @@ def test_ephem_sample_scalar_epoch_and_coordinates_returns_exactly_same_input(
 
 
 @pytest.mark.parametrize("interpolator", AVAILABLE_INTERPOLATORS)
-def test_ephem_sample_same_epochs_returns_same_input(
-    epochs, coordinates, interpolator
-):
+def test_ephem_sample_same_epochs_returns_same_input(epochs, coordinates, interpolator):
     unused_plane = Planes.EARTH_EQUATOR
     ephem = Ephem(coordinates, epochs, unused_plane)
 
     result_coordinates = ephem.sample(epochs, interpolator=interpolator)
 
     # TODO: Should it return exactly the same?
-    assert_coordinates_allclose(
-        result_coordinates, coordinates, atol_scale=1e-17
-    )
+    assert_coordinates_allclose(result_coordinates, coordinates, atol_scale=1e-17)
 
 
 @pytest.mark.parametrize("interpolator", AVAILABLE_INTERPOLATORS)
-def test_ephem_sample_existing_epochs_returns_corresponding_input(
-    epochs, coordinates, interpolator
-):
+def test_ephem_sample_existing_epochs_returns_corresponding_input(epochs, coordinates, interpolator):
     unused_plane = Planes.EARTH_EQUATOR
     ephem = Ephem(coordinates, epochs, unused_plane)
 
     result_coordinates = ephem.sample(epochs[::2], interpolator=interpolator)
 
     # Exactly the same
-    assert_coordinates_allclose(
-        result_coordinates, coordinates[::2], atol_scale=1e-17
-    )
+    assert_coordinates_allclose(result_coordinates, coordinates[::2], atol_scale=1e-17)
 
 
 def test_rv_no_parameters_returns_input_vectors(coordinates, epochs):
@@ -227,9 +204,7 @@ def test_rv_scalar_epoch_returns_scalar_vectors(coordinates, epochs):
         (Planes.EARTH_ECLIPTIC, BarycentricMeanEcliptic, 1e-5),
     ],
 )
-def test_ephem_from_body_has_expected_properties(
-    interpolator, plane, FrameClass, rtol
-):
+def test_ephem_from_body_has_expected_properties(interpolator, plane, FrameClass, rtol):
     epochs = Time(
         [
             "2020-03-01 12:00:00",
@@ -316,9 +291,7 @@ def test_ephem_from_horizons_calls_horizons_with_correct_parameters(
     expected_coordinates = CartesianRepresentation(
         [(1, 0, 0)] * u.au,
         xyz_axis=1,
-        differentials=CartesianDifferential(
-            [(0, 1, 0)] * (u.au / u.day), xyz_axis=1
-        ),
+        differentials=CartesianDifferential([(0, 1, 0)] * (u.au / u.day), xyz_axis=1),
     )
 
     ephem = Ephem.from_horizons(

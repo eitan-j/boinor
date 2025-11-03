@@ -71,19 +71,11 @@ class SincInterpolator:
         y = _interp_1d(coordinates.y.value) << xyz_unit
         z = _interp_1d(coordinates.z.value) << xyz_unit
 
-        d_x = (
-            _interp_1d(coordinates.differentials["s"].d_x.value) << d_xyz_unit
-        )
-        d_y = (
-            _interp_1d(coordinates.differentials["s"].d_y.value) << d_xyz_unit
-        )
-        d_z = (
-            _interp_1d(coordinates.differentials["s"].d_z.value) << d_xyz_unit
-        )
+        d_x = _interp_1d(coordinates.differentials["s"].d_x.value) << d_xyz_unit
+        d_y = _interp_1d(coordinates.differentials["s"].d_y.value) << d_xyz_unit
+        d_z = _interp_1d(coordinates.differentials["s"].d_z.value) << d_xyz_unit
 
-        return CartesianRepresentation(
-            x, y, z, differentials=CartesianDifferential(d_x, d_y, d_z)
-        )
+        return CartesianRepresentation(x, y, z, differentials=CartesianDifferential(d_x, d_y, d_z))
 
 
 class SplineInterpolator:
@@ -115,9 +107,7 @@ class SplineInterpolator:
             << d_xyz_unit
         )
 
-        return CartesianRepresentation(
-            result_xyz, differentials=CartesianDifferential(result_d_xyz)
-        )
+        return CartesianRepresentation(result_xyz, differentials=CartesianDifferential(result_d_xyz))
 
 
 def _get_destination_frame(attractor, plane, epochs):
@@ -149,9 +139,7 @@ class Ephem:
 
     def __init__(self, coordinates, epochs, plane):
         if coordinates.ndim != 1 or epochs.ndim != 1:
-            raise ValueError(
-                f"Coordinates and epochs must have dimension 1, got {coordinates.ndim} and {epochs.ndim}"
-            )
+            raise ValueError(f"Coordinates and epochs must have dimension 1, got {coordinates.ndim} and {epochs.ndim}")
 
         self._epochs = epochs
         self._coordinates = coordinates
@@ -185,9 +173,7 @@ class Ephem:
         return self._plane
 
     @classmethod
-    def from_body(
-        cls, body, epochs, *, attractor=None, plane=Planes.EARTH_EQUATOR
-    ):
+    def from_body(cls, body, epochs, *, attractor=None, plane=Planes.EARTH_EQUATOR):
         """Return `Ephem` for a `SolarSystemPlanet` at certain epochs.
 
         Parameters
@@ -216,9 +202,7 @@ class Ephem:
             )
 
         r, v = get_body_barycentric_posvel(body.name, epochs)
-        coordinates = r.with_differentials(
-            v.represent_as(CartesianDifferential)
-        )
+        coordinates = r.with_differentials(v.represent_as(CartesianDifferential))
 
         destination_frame = _get_destination_frame(attractor, plane, epochs)
 
@@ -284,9 +268,7 @@ class Ephem:
         else:
             location = "@ssb"
 
-        obj = Horizons(
-            id=name, location=location, epochs=epochs.jd, id_type=id_type
-        ).vectors(refplane=refplane)
+        obj = Horizons(id=name, location=location, epochs=epochs.jd, id_type=id_type).vectors(refplane=refplane)
 
         x = obj["x"]
         y = obj["y"]
@@ -295,9 +277,7 @@ class Ephem:
         d_y = obj["vy"]
         d_z = obj["vz"]
 
-        coordinates = CartesianRepresentation(
-            x, y, z, differentials=CartesianDifferential(d_x, d_y, d_z)
-        )
+        coordinates = CartesianRepresentation(x, y, z, differentials=CartesianDifferential(d_x, d_y, d_z))
         return cls(coordinates, epochs, plane)
 
     @classmethod

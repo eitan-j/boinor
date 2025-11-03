@@ -34,9 +34,7 @@ def min_and_max_ground_range(altitude, fov, boresight, R):
     fov = fov.to_value(u.rad)
     boresight = boresight.to_value(u.rad)
     R = R.to_value(u.km)
-    lat_lon_min, lat_lon_max = min_and_max_ground_range_fast(
-        altitude, fov, boresight, R
-    )
+    lat_lon_min, lat_lon_max = min_and_max_ground_range_fast(altitude, fov, boresight, R)
 
     return lat_lon_min * u.rad, lat_lon_max * u.rad
 
@@ -50,9 +48,7 @@ def min_and_max_ground_range(altitude, fov, boresight, R):
     nadir_lon=u.rad,
     R=u.km,
 )
-def ground_range_diff_at_azimuth(
-    altitude, fov, boresight, azimuth, nadir_lat, nadir_lon, R
-):
+def ground_range_diff_at_azimuth(altitude, fov, boresight, azimuth, nadir_lat, nadir_lon, R):
     """Calculate the difference in ground-range angles.
 
     Use the boresight angle, the latitude and longitude of the target,
@@ -103,8 +99,6 @@ def ground_range_diff_at_azimuth(
         ground_range_diff,
         target_lat,
         target_lon,
-    ) = ground_range_diff_at_azimuth_fast(
-        altitude, fov, boresight, azimuth, nadir_lat, nadir_lon, R
-    )
+    ) = ground_range_diff_at_azimuth_fast(altitude, fov, boresight, azimuth, nadir_lat, nadir_lon, R)
 
     return ground_range_diff * u.rad, target_lat * u.rad, target_lon * u.rad

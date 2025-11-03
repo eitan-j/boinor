@@ -46,9 +46,7 @@ class TisserandPlotter:
         if self.kind == TisserandKind.APSIS:
             self.ax.set_yscale("log")
 
-    def _solve_tisserand(
-        self, body, vinf_span, num_contours, alpha_lim=(0, np.pi), N=100
-    ):
+    def _solve_tisserand(self, body, vinf_span, num_contours, alpha_lim=(0, np.pi), N=100):
         """Solves all possible Tisserand lines with a meshgrid workflow.
 
         Parameters
@@ -85,9 +83,7 @@ class TisserandPlotter:
 
         # Solving for non-dimensional a_sc and ecc_sc
         A_SC = 1 / np.abs(1 - V_INF**2 - 2 * V_INF * np.cos(ALPHA))
-        ECC_SC = np.sqrt(
-            1 - 1 / A_SC * ((3 - 1 / A_SC - V_INF**2) / (2)) ** 2
-        )
+        ECC_SC = np.sqrt(1 - 1 / A_SC * ((3 - 1 / A_SC - V_INF**2) / (2)) ** 2)
 
         # Compute main Tisserand variables
         RR_P = A_SC * R_body * (1 - ECC_SC)
@@ -118,9 +114,7 @@ class TisserandPlotter:
             lines = self.ax.plot(RR_A.to(u.AU), RR_P.to(u.AU), color=color)
         elif self.kind == TisserandKind.ENERGY:
             # Generate energy lines
-            lines = self.ax.plot(
-                RR_P.to(u.AU), EE.to(u.km**2 / u.s**2), color=color
-            )
+            lines = self.ax.plot(RR_P.to(u.AU), EE.to(u.km**2 / u.s**2), color=color)
         elif self.kind == TisserandKind.PERIOD:
             # Generate period lines
             lines = self.ax.plot(RR_P.to(u.AU), TT.to(u.year), color=color)
@@ -154,9 +148,7 @@ class TisserandPlotter:
         vinf_span = (vinf, vinf)
 
         # Solve Tisserand parameters
-        RR_P, RR_A, EE, TT = self._solve_tisserand(
-            body, vinf_span, num_contours=2, alpha_lim=alpha_lim
-        )
+        RR_P, RR_A, EE, TT = self._solve_tisserand(body, vinf_span, num_contours=2, alpha_lim=alpha_lim)
 
         # Check if color defined
         if not color:
@@ -188,9 +180,7 @@ class TisserandPlotter:
 
         """
         # Solve Tisserand parameters
-        RR_P, RR_A, EE, TT = self._solve_tisserand(
-            body, vinf_span, num_contours
-        )
+        RR_P, RR_A, EE, TT = self._solve_tisserand(body, vinf_span, num_contours)
 
         # Check if color defined
         if not color:

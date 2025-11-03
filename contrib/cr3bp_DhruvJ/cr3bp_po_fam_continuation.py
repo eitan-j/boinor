@@ -81,9 +81,7 @@ class periodic_orbit_fam_continuation(periodic_orbit):
         )
 
         # Initializes object attributes
-        self.targeted_po_fam = (
-            []
-        )  # Stores the targeted results of a periodic orbit as a list element
+        self.targeted_po_fam = []  # Stores the targeted results of a periodic orbit as a list element
         self.targeted_po_char = {
             "ic": [],
             "tf": [],
@@ -154,9 +152,7 @@ class periodic_orbit_fam_continuation(periodic_orbit):
             check_logic_val,
             free_vars,
             constraints,
-        ) = self.npc_po_logic_check_continueparam_update(
-            free_vars, constraints, param_continue
-        )
+        ) = self.npc_po_logic_check_continueparam_update(free_vars, constraints, param_continue)
         if check_logic_val is None:
             return None, None
 
@@ -185,16 +181,12 @@ class periodic_orbit_fam_continuation(periodic_orbit):
             # Targeter failed to converge, use line search to update step size or end the loop
             if iterflag is True and line_search is True:
                 # Use Line Search: Update Step size and reset recompute
-                iterflag, step_size = self.line_search(
-                    results, step_size, param_continue, line_search_params
-                )
+                iterflag, step_size = self.line_search(results, step_size, param_continue, line_search_params)
 
             # Targeter converged => save data and update the setup to compute the next family member
             elif iterflag is False:
                 print("# PO family member = ", count_fam_member + 1, "\n")
-                self.targeted_po_fam.append(
-                    results
-                )  # tf is updated at the end of the shooter function
+                self.targeted_po_fam.append(results)  # tf is updated at the end of the shooter function
                 self.ic = copy.deepcopy(
                     results["states"][0, :]
                 )  # To not update save data as values are passed as object reference
@@ -210,9 +202,7 @@ class periodic_orbit_fam_continuation(periodic_orbit):
                 print("Recheck targeter setup")
                 break
 
-    def npc_po_logic_check_continueparam_update(
-        self, free_vars, constraints, param_continue
-    ):
+    def npc_po_logic_check_continueparam_update(self, free_vars, constraints, param_continue):
         """Perform logical checks for Natural Parameter Continuation function and update free_vars and constraint based on param_continue.
 
         Parameters
@@ -338,9 +328,7 @@ class periodic_orbit_fam_continuation(periodic_orbit):
             'lower_lim_factor' = fraction of the initial step size till which the step size will be decreased
             The default is None.
         """
-        check_logic_val = self.palc_po_logic_check(
-            free_vars, constraints, sym_period_targ
-        )
+        check_logic_val = self.palc_po_logic_check(free_vars, constraints, sym_period_targ)
         if check_logic_val is None:
             return None, None
 
@@ -362,24 +350,18 @@ class periodic_orbit_fam_continuation(periodic_orbit):
 
         if sym_period_targ == 1:
             # Setup Phase Condition, all states are free variables
-            palc_args = self.palc_po_phase_constraint(
-                free_vars, retargeted_orbit, palc_args
-            )
+            palc_args = self.palc_po_phase_constraint(free_vars, retargeted_orbit, palc_args)
 
             palc_args["prev_conv_soln"] = retargeted_orbit["states"][0, :]
             # Assuming 7 free var, 6 states + time
             DF = np.zeros((len(free_vars) - 1, len(free_vars)))
             DF[:-1, :] = retargeted_orbit["DF"]
 
-            DF[-1, :-1] = palc_args[
-                "dx/dtheta"
-            ]  # Time phase constraint part is 0
+            DF[-1, :-1] = palc_args["dx/dtheta"]  # Time phase constraint part is 0
             retargeted_orbit["DF"] = copy.deepcopy(DF)
 
         # Compute null vector and palc constraint components
-        palc_args, null_vec = self.palc_null_vect_update(
-            free_vars, retargeted_orbit, null_vec, palc_args
-        )
+        palc_args, null_vec = self.palc_null_vect_update(free_vars, retargeted_orbit, null_vec, palc_args)
 
         # Setup line_search_params
         if line_search_params is None:
@@ -413,18 +395,14 @@ class periodic_orbit_fam_continuation(periodic_orbit):
 
             elif iterflag is False:
                 print("# PO family member = ", count_fam_member + 1, "\n")
-                self.targeted_po_fam.append(
-                    results
-                )  # tf is updated at the end of the shooter function
+                self.targeted_po_fam.append(results)  # tf is updated at the end of the shooter function
                 self.ic = copy.deepcopy(
                     results["states"][0, :]
                 )  # To not update save data as values are passed as object reference
                 palc_args, null_vec = self.palc_null_vect_update(
                     free_vars, results, null_vec, palc_args
                 )  # Compute null vector and palc constraint components
-                palc_args = self.palc_po_phase_constraint(
-                    free_vars, results, palc_args
-                )  # Compute Phase constraint
+                palc_args = self.palc_po_phase_constraint(free_vars, results, palc_args)  # Compute Phase constraint
                 self.save_targeted_po_char(results)
 
                 count_fam_member += 1
@@ -458,9 +436,7 @@ class periodic_orbit_fam_continuation(periodic_orbit):
             None -> NO
 
         """
-        print(
-            "\nAssumes the details of the orbit passed are that of a targeted Periodic Orbit\n"
-        )
+        print("\nAssumes the details of the orbit passed are that of a targeted Periodic Orbit\n")
         if "jc" in constraints:
             print("JC cannot be constrained when using PALC")
             return None
@@ -470,9 +446,7 @@ class periodic_orbit_fam_continuation(periodic_orbit):
         else:
             null_vect_dim_check = 1
         if len(free_vars) != len(constraints) + null_vect_dim_check:
-            print(
-                "Recheck Free variable and constraint setup as Null space needs to be exactly one"
-            )
+            print("Recheck Free variable and constraint setup as Null space needs to be exactly one")
             return None
 
         return 0
@@ -567,9 +541,7 @@ class periodic_orbit_fam_continuation(periodic_orbit):
             The default is None
         """
         # Phase constraint = dxi/dtheta  = dxi/dt*(Period/2pi)
-        _, _, _, ax, ay, az = self.ui_partials_acc_cr3bp(
-            results["states"][0, :]
-        )
+        _, _, _, ax, ay, az = self.ui_partials_acc_cr3bp(results["states"][0, :])
         palc_args["dx/dtheta"] = (
             np.array(
                 [
@@ -585,11 +557,7 @@ class periodic_orbit_fam_continuation(periodic_orbit):
             / (2 * np.pi)
         )
         free_vars_index = self.map_vars_index_cr3bp(free_vars)
-        stm_col_index = [
-            free_vars_index[i]
-            for i in range(len(free_vars))
-            if free_vars_index[i] < 6
-        ]
+        stm_col_index = [free_vars_index[i] for i in range(len(free_vars)) if free_vars_index[i] < 6]
         palc_args["dx/dtheta"] = palc_args["dx/dtheta"][stm_col_index]
 
         return palc_args
@@ -653,10 +621,7 @@ class periodic_orbit_fam_continuation(periodic_orbit):
             palc_args["delta_s"] = step_size
 
         # Check if step size is bigger than a given fraction of the initial step size
-        if abs(step_size) < abs(
-            line_search_params["step_size0"]
-            * line_search_params["lower_lim_factor"]
-        ):
+        if abs(step_size) < abs(line_search_params["step_size0"] * line_search_params["lower_lim_factor"]):
             print(
                 "Updated step size is too small compared to given step size. Rerun with smaller step size, attenuation factor or allowable lower limit"
             )
@@ -682,13 +647,9 @@ class periodic_orbit_fam_continuation(periodic_orbit):
         self.targeted_po_char["conv_tol"] = self.conv_tol
         self.targeted_po_char["int_tol"] = self.int_tol
 
-        self.targeted_po_char["ic"].append(
-            copy.deepcopy(results["states"][0, :])
-        )
+        self.targeted_po_char["ic"].append(copy.deepcopy(results["states"][0, :]))
         self.targeted_po_char["tf"].append(copy.deepcopy(results["t"][-1]))
-        self.targeted_po_char["jc"].append(
-            copy.deepcopy(self.JC(results["states"][0, :]))
-        )
+        self.targeted_po_char["jc"].append(copy.deepcopy(self.JC(results["states"][0, :])))
         self.targeted_po_char["monodromy"].append(results["stm"][:, :, -1])
         eigenvals, eigenvects = np.linalg.eig(results["stm"][:, :, -1])
         self.targeted_po_char["eigenvalues"].append(eigenvals)

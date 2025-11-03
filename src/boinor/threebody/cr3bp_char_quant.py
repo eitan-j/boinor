@@ -76,9 +76,7 @@ class SystemChars:
         """
         assert (
             p1 == p2.parent or p2 == p1.parent
-        ) is True, (
-            "P1 and P2 are not part of the same system. Recheck body.parent"
-        )
+        ) is True, "P1 and P2 are not part of the same system. Recheck body.parent"
 
         if p1.k < p2.k:
             # swap p1 and p2, as p1 should be the more massive body
@@ -86,9 +84,7 @@ class SystemChars:
 
         name = p1.name + p2.name
 
-        mu = calculate_mu(
-            p1.k.to(u.km**3 * u.s**-2), p2.k.to(u.km**3 * u.s**-2)
-        )
+        mu = calculate_mu(p1.k.to(u.km**3 * u.s**-2), p2.k.to(u.km**3 * u.s**-2))
         lstar = p2.mean_a
         tstar = calculate_tstar(
             p1.k.to(u.km**3 * u.s**-2),

@@ -87,15 +87,7 @@ def vallado(k, r0, v0, tof, numiter):
         xi_new = (
             np.sign(tof)
             * (-1 / alpha) ** 0.5
-            * np.log(
-                (-2 * k * alpha * tof)
-                / (
-                    dot_r0v0
-                    + np.sign(tof)
-                    * np.sqrt(-k / alpha)
-                    * (1 - norm_r0 * alpha)
-                )
-            )
+            * np.log((-2 * k * alpha * tof) / (dot_r0v0 + np.sign(tof) * np.sqrt(-k / alpha) * (1 - norm_r0 * alpha)))
         )
     else:
         # Parabolic orbit
@@ -109,11 +101,7 @@ def vallado(k, r0, v0, tof, numiter):
         psi = xi * xi * alpha
         c2_psi = c2(psi)
         c3_psi = c3(psi)
-        norm_r = (
-            xi * xi * c2_psi
-            + dot_r0v0 / sqrt_mu * xi * (1 - psi * c3_psi)
-            + norm_r0 * (1 - psi * c2_psi)
-        )
+        norm_r = xi * xi * c2_psi + dot_r0v0 / sqrt_mu * xi * (1 - psi * c3_psi) + norm_r0 * (1 - psi * c2_psi)
         xi_new = (
             xi
             + (

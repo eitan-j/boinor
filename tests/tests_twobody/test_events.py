@@ -33,9 +33,7 @@ def test_altitude_crossing():
 
     # Parameters of a body
     C_D = 2.2  # Dimensionless (any value would do)
-    A_over_m = ((np.pi / 4.0) * (u.m**2) / (100 * u.kg)).to_value(
-        u.km**2 / u.kg
-    )  # km^2/kg
+    A_over_m = ((np.pi / 4.0) * (u.m**2) / (100 * u.kg)).to_value(u.km**2 / u.kg)  # km^2/kg
 
     # Parameters of the atmosphere
     rho0 = rho0_earth.to(u.kg / u.km**3).value  # kg/km^3
@@ -49,9 +47,7 @@ def test_altitude_crossing():
 
     def f(t0, u_, k):
         du_kep = func_twobody(t0, u_, k)
-        ax, ay, az = atmospheric_drag_exponential(
-            t0, u_, k, R=R, C_D=C_D, A_over_m=A_over_m, H0=H0, rho0=rho0
-        )
+        ax, ay, az = atmospheric_drag_exponential(t0, u_, k, R=R, C_D=C_D, A_over_m=A_over_m, H0=H0, rho0=rho0)
         du_ad = np.array([0, 0, 0, ax, ay, az])
         return du_kep + du_ad
 
@@ -141,9 +137,7 @@ def test_umbra_event_not_triggering_is_ok():
 
 
 def test_umbra_event_crossing():
-    expected_umbra_t = Time(
-        "2020-01-01 00:04:51.328", scale="utc"
-    )  # From Orekit.
+    expected_umbra_t = Time("2020-01-01 00:04:51.328", scale="utc")  # From Orekit.
     attractor = Earth
     tof = 2 * u.d
     epoch = Time("2020-01-01", scale="utc")
@@ -170,9 +164,7 @@ def test_umbra_event_crossing():
 
 
 def test_penumbra_event_crossing():
-    expected_penumbra_t = Time(
-        "2020-01-01 00:04:26.060", scale="utc"
-    )  # From Orekit.
+    expected_penumbra_t = Time("2020-01-01 00:04:26.060", scale="utc")  # From Orekit.
     attractor = Earth
     tof = 2 * u.d
     epoch = Time("2020-01-01", scale="utc")
@@ -194,9 +186,7 @@ def test_penumbra_event_crossing():
         [tof] * u.s,
     )
 
-    assert expected_penumbra_t.isclose(
-        epoch + penumbra_event.last_t, atol=1 * u.s
-    )
+    assert expected_penumbra_t.isclose(epoch + penumbra_event.last_t, atol=1 * u.s)
 
 
 def test_node_cross_event():
@@ -241,9 +231,7 @@ def test_orbit_propagation_continues_if_events_terminal_is_False():
 
     thresh_lat = 60 * u.deg
     # Event occurs at ~1701.7 s.
-    latitude_cross_event = LatitudeCrossEvent(
-        orbit, thresh_lat, terminal=False
-    )
+    latitude_cross_event = LatitudeCrossEvent(orbit, thresh_lat, terminal=False)
     events = [latitude_cross_event]
 
     # The last two tofs are after the detection of the event.
@@ -277,9 +265,7 @@ def test_orbit_propagation_position_vector_does_not_repeat_if_events_terminal_is
     )
 
     # Check position vector doesn't repeat if terminal set to True.
-    assert (
-        len(rr) == 4
-    )  # From the 5th tof in tofs, position vector starts repeating.
+    assert len(rr) == 4  # From the 5th tof in tofs, position vector starts repeating.
 
 
 @pytest.mark.parametrize(
@@ -313,9 +299,7 @@ def test_propagation_stops_if_atleast_one_event_has_terminal_set_to_True(
     penumbra_event = PenumbraEvent(orbit, terminal=penumbra_terminal)
 
     thresh_lat = 30 * u.deg
-    latitude_cross_event = LatitudeCrossEvent(
-        orbit, thresh_lat, terminal=latitude_terminal
-    )
+    latitude_cross_event = LatitudeCrossEvent(orbit, thresh_lat, terminal=latitude_terminal)
     events = [penumbra_event, latitude_cross_event]
 
     method = CowellPropagator(events=events)
@@ -361,9 +345,7 @@ def test_LOS_event_raises_warning_if_norm_of_r1_less_than_attractor_radius_durin
     )
     pos_coords = rr  # Trajectory of the secondary body.
 
-    r1 = (
-        np.array([0, -5010.696, -5102.509]) << u.km
-    )  # This position vectors' norm gets less than attractor radius.
+    r1 = np.array([0, -5010.696, -5102.509]) << u.km  # This position vectors' norm gets less than attractor radius.
     v1 = np.array([736.138, 29899.7, 164.354]) << u.km / u.s
     orb = Orbit.from_vectors(Earth, r1, v1)
 

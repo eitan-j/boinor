@@ -62,11 +62,7 @@ def hyperbolic():
         -4.443716685978071e09,
         -1.747610548576734e09,
     ] * u.km
-    v = (
-        [5.540549267188614e00, -1.251544669134140e01, -4.848892572767733e00]
-        * u.km
-        / u.s
-    )
+    v = [5.540549267188614e00, -1.251544669134140e01, -4.848892572767733e00] * u.km / u.s
     epoch = Time("2015-07-14 07:59", scale="tdb")
     return Orbit.from_vectors(Sun, r, v, epoch)
 
@@ -85,9 +81,7 @@ def test_default_time_for_new_state():
     _a = 1.0 * u.deg  # Unused angle
     _body = Sun  # Unused body
     expected_epoch = J2000
-    ss = Orbit.from_classical(
-        attractor=_body, a=_d, ecc=_, inc=_a, raan=_a, argp=_a, nu=_a
-    )
+    ss = Orbit.from_classical(attractor=_body, a=_d, ecc=_, inc=_a, raan=_a, argp=_a, nu=_a)
     assert ss.epoch == expected_epoch
 
 
@@ -117,12 +111,8 @@ def test_orbit_from_classical_wraps_out_of_range_anomaly_and_warns():
     _ = 0.5 * u.one  # Unused dimensionless value
     _a = 1.0 * u.deg  # Unused angle
     out_angle = np.pi * u.rad
-    with pytest.warns(
-        UserWarning, match="Wrapping true anomaly to -π <= nu < π"
-    ):
-        Orbit.from_classical(
-            attractor=Sun, a=_d, ecc=_, inc=_a, raan=_a, argp=_a, nu=out_angle
-        )
+    with pytest.warns(UserWarning, match="Wrapping true anomaly to -π <= nu < π"):
+        Orbit.from_classical(attractor=Sun, a=_d, ecc=_, inc=_a, raan=_a, argp=_a, nu=out_angle)
 
 
 def test_state_raises_unitserror_if_rv_units_are_wrong():
@@ -142,13 +132,8 @@ def test_parabolic_elements_fail_early():
     _d = 1.0 * u.AU  # Unused distance
     _a = 1.0 * u.deg  # Unused angle
     with pytest.raises(ValueError) as excinfo:
-        Orbit.from_classical(
-            attractor=attractor, a=_d, ecc=ecc, inc=_a, raan=_a, argp=_a, nu=_a
-        )
-    assert (
-        "ValueError: For parabolic orbits use Orbit.parabolic instead"
-        in excinfo.exconly()
-    )
+        Orbit.from_classical(attractor=attractor, a=_d, ecc=ecc, inc=_a, raan=_a, argp=_a, nu=_a)
+    assert "ValueError: For parabolic orbits use Orbit.parabolic instead" in excinfo.exconly()
 
 
 def test_bad_inclination_raises_exception():
@@ -158,13 +143,8 @@ def test_bad_inclination_raises_exception():
     _body = Sun  # Unused body
     bad_inc = 200 * u.deg
     with pytest.raises(ValueError) as excinfo:
-        Orbit.from_classical(
-            attractor=_body, a=_d, ecc=_, inc=bad_inc, raan=_a, argp=_a, nu=_a
-        )
-    assert (
-        "ValueError: Inclination must be between 0 and 180 degrees"
-        in excinfo.exconly()
-    )
+        Orbit.from_classical(attractor=_body, a=_d, ecc=_, inc=bad_inc, raan=_a, argp=_a, nu=_a)
+    assert "ValueError: Inclination must be between 0 and 180 degrees" in excinfo.exconly()
 
 
 def test_bad_hyperbolic_raises_exception():
@@ -183,18 +163,14 @@ def test_bad_hyperbolic_raises_exception():
             argp=_a,
             nu=_a,
         )
-    assert (
-        "Hyperbolic orbits have negative semimajor axis" in excinfo.exconly()
-    )
+    assert "Hyperbolic orbits have negative semimajor axis" in excinfo.exconly()
 
 
 def test_apply_maneuver_changes_epoch():
     _d = 1.0 * u.AU  # Unused distance
     _ = 0.5 * u.one  # Unused dimensionless value
     _a = 1.0 * u.deg  # Unused angle
-    ss = Orbit.from_classical(
-        attractor=Sun, a=_d, ecc=_, inc=_a, raan=_a, argp=_a, nu=_a
-    )
+    ss = Orbit.from_classical(attractor=Sun, a=_d, ecc=_, inc=_a, raan=_a, argp=_a, nu=_a)
     dt = 1 * u.h
     dv = [0, 0, 0] * u.km / u.s
     orbit_new = ss.apply_maneuver([(dt, dv)])
@@ -205,9 +181,7 @@ def test_apply_maneuver_returns_intermediate_states_if_true():
     _d = 1.0 * u.AU  # Unused distance
     _ = 0.5 * u.one  # Unused dimensionless value
     _a = 1.0 * u.deg  # Unused angle
-    ss = Orbit.from_classical(
-        attractor=Sun, a=_d, ecc=_, inc=_a, raan=_a, argp=_a, nu=_a
-    )
+    ss = Orbit.from_classical(attractor=Sun, a=_d, ecc=_, inc=_a, raan=_a, argp=_a, nu=_a)
     dt1 = 0.5 * u.h
     dv1 = [5, 0, 10] * u.km / u.s
     dt2 = 0.5 * u.h
@@ -229,9 +203,7 @@ def test_circular_has_proper_semimajor_axis():
 
 def test_circular_raises_error_if_negative_altitude():
     with pytest.raises(ValueError) as excinfo:
-        Orbit.circular(
-            Earth, -1 * u.m, epoch=Time(0.0, format="jd", scale="tdb")
-        )
+        Orbit.circular(Earth, -1 * u.m, epoch=Time(0.0, format="jd", scale="tdb"))
     assert "Altitude of an orbit cannot be negative." in excinfo.exconly()
 
 
@@ -312,9 +284,7 @@ def test_frozen_orbit_argp(attractor, alt, argp, expected_argp, expected_inc):
         ),
     ],
 )
-def test_frozen_orbit_with_critical_argp_and_critical_inc(
-    attractor, alt, inc, argp, expected_inc, expected_argp
-):
+def test_frozen_orbit_with_critical_argp_and_critical_inc(attractor, alt, inc, argp, expected_inc, expected_argp):
     orbit = Orbit.frozen(attractor, alt, inc=inc, argp=argp)
     assert_allclose(orbit.argp, expected_argp)
     assert_allclose(orbit.inc, expected_inc)
@@ -356,20 +326,14 @@ def test_frozen_orbit_no_args(attractor, alt, expected_inc, expected_argp):
         ),
     ],
 )
-def test_frozen_orbit_with_non_critical_argp(
-    attractor, alt, argp, expected_inc, ecc, expected_ecc
-):
-    orbit = Orbit.frozen(
-        attractor, alt, argp=argp, ecc=ecc
-    )  # Non-critical value
+def test_frozen_orbit_with_non_critical_argp(attractor, alt, argp, expected_inc, ecc, expected_ecc):
+    orbit = Orbit.frozen(attractor, alt, argp=argp, ecc=ecc)  # Non-critical value
     assert_allclose(orbit.inc, expected_inc)
     assert_allclose(orbit.ecc, expected_ecc)
 
 
 def test_frozen_orbit_non_critical_inclination():
-    orbit = Orbit.frozen(
-        Earth, 1e3 * u.km, inc=0 * u.deg
-    )  # Non-critical value
+    orbit = Orbit.frozen(Earth, 1e3 * u.km, inc=0 * u.deg)  # Non-critical value
     assert orbit.argp in [np.pi / 2, 3 * np.pi / 2] * u.rad
 
 
@@ -384,10 +348,7 @@ def test_frozen_orbit_non_spherical_arguments():
     with pytest.raises(AttributeError) as excinfo:
         Orbit.frozen(Jupiter, 1 * u.m)
     assert excinfo.type is AttributeError
-    assert (
-        "Attractor Jupiter has not spherical harmonics implemented"
-        in excinfo.exconly()
-    )
+    assert "Attractor Jupiter has not spherical harmonics implemented" in excinfo.exconly()
 
 
 def test_frozen_orbit_altitude():
@@ -424,9 +385,7 @@ def test_sample_numpoints():
     _ = 0.5 * u.one  # Unused dimensionless value
     _a = 1.0 * u.deg  # Unused angle
     _body = Sun  # Unused body
-    ss = Orbit.from_classical(
-        attractor=_body, a=_d, ecc=_, inc=_a, raan=_a, argp=_a, nu=_a
-    )
+    ss = Orbit.from_classical(attractor=_body, a=_d, ecc=_, inc=_a, raan=_a, argp=_a, nu=_a)
     positions = ss.sample(values=50)
     assert len(positions) == 50
 
@@ -533,10 +492,7 @@ def test_orbit_from_custom_body_raises_error_when_asked_frame():
 
     with pytest.raises(NotImplementedError) as excinfo:
         ss.get_frame()
-    assert (
-        "Frames for orbits around custom bodies are not yet supported"
-        in excinfo.exconly()
-    )
+    assert "Frames for orbits around custom bodies are not yet supported" in excinfo.exconly()
 
 
 def test_orbit_accepts_ecliptic_plane():
@@ -545,9 +501,7 @@ def test_orbit_accepts_ecliptic_plane():
 
     ss = Orbit.from_vectors(Sun, r, v, plane=Planes.EARTH_ECLIPTIC)
 
-    assert ss.get_frame().is_equivalent_frame(
-        HeliocentricEclipticJ2000(obstime=J2000)
-    )
+    assert ss.get_frame().is_equivalent_frame(HeliocentricEclipticJ2000(obstime=J2000))
 
 
 def test_orbit_represent_as_produces_correct_data():
@@ -556,19 +510,14 @@ def test_orbit_represent_as_produces_correct_data():
 
     ss = Orbit.from_vectors(Sun, r, v)
 
-    expected_result = CartesianRepresentation(
-        *r, differentials=CartesianDifferential(*v)
-    )
+    expected_result = CartesianRepresentation(*r, differentials=CartesianDifferential(*v))
 
     result = ss.represent_as(CartesianRepresentation, CartesianDifferential)
 
     # We can't directly compare the objects, see
     # https://github.com/astropy/astropy/issues/7793
     assert (result.xyz == expected_result.xyz).all()
-    assert (
-        result.differentials["s"].d_xyz
-        == expected_result.differentials["s"].d_xyz
-    ).all()
+    assert (result.differentials["s"].d_xyz == expected_result.differentials["s"].d_xyz).all()
 
 
 def test_orbit_propagate_retains_plane():
@@ -621,9 +570,7 @@ def test_stationary_orbit(attractor, expected_a, expected_period):
         ),
     ],
 )
-def test_synchronous_orbit_without_ecc_and_inclination_given(
-    attractor, expected_a, expected_period
-):
+def test_synchronous_orbit_without_ecc_and_inclination_given(attractor, expected_a, expected_period):
     ss = Orbit.synchronous(attractor=attractor)
     assert_quantity_allclose(ss.a, expected_a, rtol=1.0e-4)
     assert_quantity_allclose(ss.period, expected_period, rtol=1.0e-4)
@@ -646,9 +593,7 @@ def test_synchronous_orbit_without_ecc_and_inclination_given(
         ),
     ],
 )
-def test_synchronous_orbit_without_inclination_given(
-    attractor, ecc, expected_a, expected_period
-):
+def test_synchronous_orbit_without_inclination_given(attractor, ecc, expected_a, expected_period):
     ss = Orbit.synchronous(attractor=attractor, ecc=ecc)
     assert_quantity_allclose(ss.ecc, ecc, rtol=1.0e-3)
     assert_quantity_allclose(ss.a, expected_a, rtol=1.0e-3)
@@ -666,15 +611,11 @@ def test_synchronous_orbit_without_inclination_given(
         )
     ],
 )
-def test_synchronous_orbit_pericenter_smaller_than_atractor_radius(
-    attractor, ecc, expected_a, expected_period
-):
+def test_synchronous_orbit_pericenter_smaller_than_atractor_radius(attractor, ecc, expected_a, expected_period):
     with pytest.raises(ValueError) as excinfo:
         Orbit.synchronous(attractor=attractor, ecc=ecc)
     assert excinfo.type is ValueError
-    assert (
-        "The orbit for the given parameters doesn't exist" in excinfo.exconly()
-    )
+    assert "The orbit for the given parameters doesn't exist" in excinfo.exconly()
 
 
 @pytest.mark.parametrize(
@@ -694,9 +635,7 @@ def test_synchronous_orbit_pericenter_smaller_than_atractor_radius(
         ),
     ],
 )
-def test_synchronous_orbit_supersynchronous(
-    attractor, ecc, expected_a, expected_period
-):
+def test_synchronous_orbit_supersynchronous(attractor, ecc, expected_a, expected_period):
     ss = Orbit.synchronous(attractor=attractor, ecc=ecc, period_mul=2 * u.one)
     assert_quantity_allclose(ss.ecc, ecc, rtol=1.0e-3)
     assert_quantity_allclose(ss.a, expected_a, rtol=1.0e-3)
@@ -720,12 +659,8 @@ def test_synchronous_orbit_supersynchronous(
         ),
     ],
 )
-def test_synchronous_orbit_semisynchronous(
-    attractor, ecc, expected_a, expected_period
-):
-    ss = Orbit.synchronous(
-        attractor=attractor, ecc=ecc, period_mul=0.5 * u.one
-    )
+def test_synchronous_orbit_semisynchronous(attractor, ecc, expected_a, expected_period):
+    ss = Orbit.synchronous(attractor=attractor, ecc=ecc, period_mul=0.5 * u.one)
     assert_quantity_allclose(ss.ecc, ecc, rtol=1.0e-3)
     assert_quantity_allclose(ss.a, expected_a, rtol=1.0e-3)
     assert_quantity_allclose(ss.period, expected_period, rtol=1.0e-3)
@@ -782,9 +717,7 @@ def test_heliosynchronous_orbit_raises_floating_point_error_if_invalid_input():
 
     with pytest.raises(ValueError) as excinfo:
         Orbit.heliosynchronous(Earth, a=a, inc=inc)
-    assert (
-        "No SSO orbit with given parameters can be found." in excinfo.exconly()
-    )
+    assert "No SSO orbit with given parameters can be found." in excinfo.exconly()
 
 
 def test_perigee_and_apogee():
@@ -793,9 +726,7 @@ def test_perigee_and_apogee():
     a = (expected_r_a + expected_r_p) / 2
     ecc = expected_r_a / a - 1
     _a = 1.0 * u.deg  # Unused angle
-    ss = Orbit.from_classical(
-        attractor=Earth, a=a, ecc=ecc, inc=_a, raan=_a, argp=_a, nu=_a
-    )
+    ss = Orbit.from_classical(attractor=Earth, a=a, ecc=ecc, inc=_a, raan=_a, argp=_a, nu=_a)
     assert_allclose(ss.r_a.to(u.km).value, expected_r_a.to(u.km).value)
     assert_allclose(ss.r_p.to(u.km).value, expected_r_p.to(u.km).value)
 
@@ -811,9 +742,7 @@ def test_expected_mean_anomaly():
     ecc = 0.37255 * u.one
     nu = 120 * u.deg
 
-    orbit = Orbit.from_classical(
-        attractor=attractor, a=a, ecc=ecc, inc=_a, raan=_a, argp=_a, nu=nu
-    )
+    orbit = Orbit.from_classical(attractor=attractor, a=a, ecc=ecc, inc=_a, raan=_a, argp=_a, nu=nu)
     orbit_M = E_to_M(nu_to_E(orbit.nu, orbit.ecc), orbit.ecc)
 
     assert_quantity_allclose(orbit_M, expected_mean_anomaly, rtol=1e-2)
@@ -830,14 +759,10 @@ def test_expected_angular_momentum():
     ecc = 0.37255 * u.one
     nu = 120 * u.deg
 
-    orbit = Orbit.from_classical(
-        attractor=attractor, a=a, ecc=ecc, inc=_a, raan=_a, argp=_a, nu=nu
-    )
+    orbit = Orbit.from_classical(attractor=attractor, a=a, ecc=ecc, inc=_a, raan=_a, argp=_a, nu=nu)
     orbit_h_mag = orbit.h_mag
 
-    assert_quantity_allclose(
-        orbit_h_mag.value, expected_ang_mag.value, rtol=1e-2
-    )
+    assert_quantity_allclose(orbit_h_mag.value, expected_ang_mag.value, rtol=1e-2)
 
 
 def test_expected_last_perifocal_passage():
@@ -851,9 +776,7 @@ def test_expected_last_perifocal_passage():
     ecc = 0.37255 * u.one
     nu = 120 * u.deg
 
-    orbit = Orbit.from_classical(
-        attractor=attractor, a=a, ecc=ecc, inc=_a, raan=_a, argp=_a, nu=nu
-    )
+    orbit = Orbit.from_classical(attractor=attractor, a=a, ecc=ecc, inc=_a, raan=_a, argp=_a, nu=nu)
     orbit_t_p = orbit.t_p
 
     assert_quantity_allclose(orbit_t_p, expected_t_p, rtol=1e-2)
@@ -917,15 +840,11 @@ def test_perifocal_points_to_perigee():
     _ = 0.5 * u.one  # Unused dimensionless value
     _a = 1.0 * u.deg  # Unused angle
     pOne = [1, 0, 0] * u.one
-    ss = Orbit.from_classical(
-        attractor=Sun, a=_d, ecc=_, inc=_a, raan=_a, argp=_a, nu=_a
-    )
+    ss = Orbit.from_classical(attractor=Sun, a=_d, ecc=_, inc=_a, raan=_a, argp=_a, nu=_a)
     p, _, _ = ss.pqw()
     assert_allclose(p, ss.e_vec / ss.ecc)
 
-    ss = Orbit.from_classical(
-        attractor=Sun, a=-_d, ecc=2.0 * u.one, inc=_a, raan=_a, argp=_a, nu=_a
-    )
+    ss = Orbit.from_classical(attractor=Sun, a=-_d, ecc=2.0 * u.one, inc=_a, raan=_a, argp=_a, nu=_a)
     p, _, _ = ss.pqw()
     assert_allclose(p, ss.e_vec / ss.ecc)
 
@@ -970,10 +889,7 @@ def test_from_coord_fails_if_no_time_differential():
     # respect to time
     with pytest.raises(ValueError) as excinfo:
         Orbit.from_coords(Earth, SkyCoord(cartrep))
-    assert (
-        "ValueError: Coordinate instance doesn't have a differential with respect to time"
-        in excinfo.exconly()
-    )
+    assert "ValueError: Coordinate instance doesn't have a differential with respect to time" in excinfo.exconly()
 
 
 @pytest.mark.parametrize(
@@ -990,17 +906,11 @@ def test_orbit_creation_using_skycoord(attractor):
     coord = SkyCoord(cartrep, frame="icrs")
     o = Orbit.from_coords(attractor, coord)
 
-    inertial_frame_at_body_centre = get_frame(
-        attractor, Planes.EARTH_EQUATOR, obstime=coord.obstime
-    )
+    inertial_frame_at_body_centre = get_frame(attractor, Planes.EARTH_EQUATOR, obstime=coord.obstime)
 
-    coord_transformed_to_irf = coord.transform_to(
-        inertial_frame_at_body_centre
-    )
+    coord_transformed_to_irf = coord.transform_to(inertial_frame_at_body_centre)
     pos_transformed_to_irf = coord_transformed_to_irf.cartesian.xyz
-    vel_transformed_to_irf = coord_transformed_to_irf.cartesian.differentials[
-        "s"
-    ].d_xyz
+    vel_transformed_to_irf = coord_transformed_to_irf.cartesian.differentials["s"].d_xyz
 
     assert (o.r == pos_transformed_to_irf).all()
     assert (o.v == vel_transformed_to_irf).all()
@@ -1023,55 +933,34 @@ def test_orbit_creation_using_frame_obj(attractor, frame, obstime):
     coord = frame(cartrep, obstime=obstime)
     o = Orbit.from_coords(attractor, coord)
 
-    inertial_frame_at_body_centre = get_frame(
-        attractor, Planes.EARTH_EQUATOR, obstime=coord.obstime
-    )
+    inertial_frame_at_body_centre = get_frame(attractor, Planes.EARTH_EQUATOR, obstime=coord.obstime)
 
-    coord_transformed_to_irf = coord.transform_to(
-        inertial_frame_at_body_centre
-    )
+    coord_transformed_to_irf = coord.transform_to(inertial_frame_at_body_centre)
 
     pos_transformed_to_irf = coord_transformed_to_irf.cartesian.xyz
-    vel_transformed_to_irf = coord_transformed_to_irf.cartesian.differentials[
-        "s"
-    ].d_xyz
+    vel_transformed_to_irf = coord_transformed_to_irf.cartesian.differentials["s"].d_xyz
 
     assert_quantity_allclose(o.r, pos_transformed_to_irf, atol=1e-5 * u.km)
-    assert_quantity_allclose(
-        o.v, vel_transformed_to_irf, atol=1e-5 * u.km / u.s
-    )
+    assert_quantity_allclose(o.v, vel_transformed_to_irf, atol=1e-5 * u.km / u.s)
 
 
 @pytest.mark.parametrize("obstime", [J2000, J2000_TDB])
 def test_from_coord_fails_for_multiple_positions(obstime):
-    cartdiff = CartesianDifferential(
-        [[0, 1, 0], [-0.1, 0.9, 0]] * u.km / u.s, xyz_axis=1
-    )
-    cartrep = CartesianRepresentation(
-        [[1, 0, 0], [0.9, 0.1, 0]] * u.km, differentials=cartdiff, xyz_axis=1
-    )
-    coords = GCRS(
-        cartrep, representation_type=CartesianRepresentation, obstime=obstime
-    )
+    cartdiff = CartesianDifferential([[0, 1, 0], [-0.1, 0.9, 0]] * u.km / u.s, xyz_axis=1)
+    cartrep = CartesianRepresentation([[1, 0, 0], [0.9, 0.1, 0]] * u.km, differentials=cartdiff, xyz_axis=1)
+    coords = GCRS(cartrep, representation_type=CartesianRepresentation, obstime=obstime)
 
     with pytest.raises(ValueError) as excinfo:
         Orbit.from_coords(Earth, coords)
-    assert (
-        "ValueError: Coordinate instance must represents exactly 1 position, found: 2"
-        in excinfo.exconly()
-    )
+    assert "ValueError: Coordinate instance must represents exactly 1 position, found: 2" in excinfo.exconly()
 
 
 def test_from_coord_if_coord_is_not_of_shape_zero():
     pos = [0, 1, 0]
     vel = [1, 0, 0]
     cartdiff = CartesianDifferential([vel] * u.km / u.s, xyz_axis=1)
-    cartrep = CartesianRepresentation(
-        [pos] * u.km, differentials=cartdiff, xyz_axis=1
-    )
-    coords = GCRS(
-        cartrep, representation_type=CartesianRepresentation, obstime=J2000
-    )
+    cartrep = CartesianRepresentation([pos] * u.km, differentials=cartdiff, xyz_axis=1)
+    coords = GCRS(cartrep, representation_type=CartesianRepresentation, obstime=J2000)
 
     ss = Orbit.from_coords(Earth, coords)
 
@@ -1089,9 +978,7 @@ def test_propagate_to_anomaly_gives_expected_result():
     )
     ic1_end = ic1.propagate_to_anomaly(180.0 * u.deg)
 
-    assert_quantity_allclose(
-        (ic1_end.epoch - ic1.epoch).to(u.s), ic1.period / 2, rtol=1e-2
-    )
+    assert_quantity_allclose((ic1_end.epoch - ic1.epoch).to(u.s), ic1.period / 2, rtol=1e-2)
 
 
 def test_sample_with_out_of_range_anomaly_works():
@@ -1099,18 +986,13 @@ def test_sample_with_out_of_range_anomaly_works():
     ic1 = Orbit.from_vectors(
         Sun,
         [1.02465527e08, -1.02313505e08, -4.43533465e07] << u.km,
-        [2198705.82621226, 1897186.74383856, 822370.88977487]
-        << (u.km / u.day),
+        [2198705.82621226, 1897186.74383856, 822370.88977487] << (u.km / u.day),
         Time("2011-08-05 16:26:06.183", scale="tdb"),
     )
-    coordinates = ic1.to_ephem(
-        TrueAnomalyBounds(max_nu=180.0 << u.deg, num_values=3)
-    ).sample()
+    coordinates = ic1.to_ephem(TrueAnomalyBounds(max_nu=180.0 << u.deg, num_values=3)).sample()
 
     assert_quantity_allclose(coordinates[0].get_xyz(), ic1.r)
-    assert_quantity_allclose(
-        coordinates[-1].get_xyz(), ic1.propagate_to_anomaly(180.0 << u.deg).r
-    )
+    assert_quantity_allclose(coordinates[-1].get_xyz(), ic1.propagate_to_anomaly(180.0 << u.deg).r)
 
 
 @pytest.mark.remote_data
@@ -1118,10 +1000,7 @@ def test_from_sbdb_raise_valueerror():
     with pytest.raises(ValueError) as excinfo:
         Orbit.from_sbdb(name="Halley")
 
-    assert (
-        "2 different objects found: \n2688 Halley (1982 HG1)\n1P/Halley"
-        in excinfo.exconly()
-    )
+    assert "2 different objects found: \n2688 Halley (1982 HG1)\n1P/Halley" in excinfo.exconly()
 
 
 def test_from_ephem_has_expected_properties():
@@ -1160,10 +1039,7 @@ def test_from_vectors_wrong_dimensions_fails():
 
     with pytest.raises(ValueError) as excinfo:
         Orbit.from_vectors(Earth, bad_r, bad_v)
-    assert (
-        "ValueError: Vectors must have dimension 1, got 2 and 3"
-        in excinfo.exconly()
-    )
+    assert "ValueError: Vectors must have dimension 1, got 2 and 3" in excinfo.exconly()
 
 
 def test_from_classical_wrong_dimensions_fails():
@@ -1172,12 +1048,8 @@ def test_from_classical_wrong_dimensions_fails():
     _a = 1.0 * u.deg  # Unused angle
 
     with pytest.raises(ValueError) as excinfo:
-        Orbit.from_classical(
-            attractor=Earth, a=bad_a, ecc=_, inc=_a, raan=_a, argp=_a, nu=_a
-        )
-    assert (
-        "ValueError: Elements must be scalar, got [1.] AU" in excinfo.exconly()
-    )
+        Orbit.from_classical(attractor=Earth, a=bad_a, ecc=_, inc=_a, raan=_a, argp=_a, nu=_a)
+    assert "ValueError: Elements must be scalar, got [1.] AU" in excinfo.exconly()
 
 
 def test_orbit_change_attractor_returns_self():
@@ -1194,9 +1066,7 @@ def test_orbit_change_attractor_out_of_SOI():
 
     with pytest.raises(ValueError) as excinfo:
         ss.change_attractor(Earth)
-    assert (
-        "ValueError: Orbit is out of new attractor's SOI" in excinfo.exconly()
-    )
+    assert "ValueError: Orbit is out of new attractor's SOI" in excinfo.exconly()
 
 
 def test_orbit_change_attractor_force():
@@ -1206,9 +1076,7 @@ def test_orbit_change_attractor_force():
         v=[-13.30694373, 25.15256978, 11.59846936] * u.km / u.s,
         epoch=J2000,
     )
-    with pytest.warns(
-        PatchedConicsWarning, match="Leaving the SOI of the current attractor"
-    ):
+    with pytest.warns(PatchedConicsWarning, match="Leaving the SOI of the current attractor"):
         orb_new_attractor = ss.change_attractor(Earth, force=True)
     assert orb_new_attractor.attractor == Earth
 
@@ -1216,18 +1084,13 @@ def test_orbit_change_attractor_force():
 def test_orbit_change_attractor_unrelated_body():
     with pytest.raises(ValueError) as excinfo:
         iss.change_attractor(Mars)
-    assert (
-        "ValueError: Cannot change to unrelated attractor" in excinfo.exconly()
-    )
+    assert "ValueError: Cannot change to unrelated attractor" in excinfo.exconly()
 
 
 def test_orbit_change_attractor_closed():
     with pytest.raises(ValueError) as excinfo:
         iss.change_attractor(Sun)
-    assert (
-        "ValueError: Orbit will never leave the SOI of its current attractor"
-        in excinfo.exconly()
-    )
+    assert "ValueError: Orbit will never leave the SOI of its current attractor" in excinfo.exconly()
 
 
 def test_orbit_change_attractor_open():
@@ -1235,15 +1098,11 @@ def test_orbit_change_attractor_open():
     v = [-15.457, 6.618, 2.533] * u.km / u.s
     ss = Orbit.from_vectors(Earth, r, v)
 
-    with pytest.warns(
-        PatchedConicsWarning, match="Leaving the SOI of the current attractor"
-    ):
+    with pytest.warns(PatchedConicsWarning, match="Leaving the SOI of the current attractor"):
         ss.change_attractor(Sun)
 
 
-@pytest.mark.parametrize(
-    "expected_plane", [Planes.EARTH_ECLIPTIC, Planes.EARTH_EQUATOR]
-)
+@pytest.mark.parametrize("expected_plane", [Planes.EARTH_ECLIPTIC, Planes.EARTH_EQUATOR])
 def test_change_plane_sets_correct_plane(expected_plane):
     new_ss = iss.change_plane(expected_plane)
 
@@ -1269,15 +1128,11 @@ def with_units(draw, elements, unit):
     return value * unit
 
 
-angles = partial(
-    st.floats, min_value=-np.pi, max_value=np.pi, exclude_max=True
-)
+angles = partial(st.floats, min_value=-np.pi, max_value=np.pi, exclude_max=True)
 angles_q = partial(with_units, elements=angles(), unit=u.rad)
 
 
-@pytest.mark.xfail(
-    reason="Some corner cases around the circle boundary need closer inspection"
-)
+@pytest.mark.xfail(reason="Some corner cases around the circle boundary need closer inspection")
 @settings(deadline=None)
 @given(expected_nu=angles_q())
 @example(1e-13 * u.rad)
@@ -1290,9 +1145,7 @@ def test_time_to_anomaly(expected_nu):
     # we will wait until we remove the round tripping,
     # see https://github.com/poliastro/poliastro/issues/921
     # FIXME: Add test that verifies that `orbit.nu` is always within range
-    assert_quantity_allclose(
-        iss_propagated.nu, expected_nu, atol=1e-12 * u.rad
-    )
+    assert_quantity_allclose(iss_propagated.nu, expected_nu, atol=1e-12 * u.rad)
 
 
 @pytest.mark.xfail
@@ -1349,9 +1202,7 @@ def test_propagation_near_parabolic_orbits_does_not_hang(near_parabolic):
 
     # Smoke test
     assert_quantity_allclose(orb_final.nu, near_parabolic.nu)
-    assert_quantity_allclose(
-        (orb_final.epoch - near_parabolic.epoch).to(u.s), near_parabolic.period
-    )
+    assert_quantity_allclose((orb_final.epoch - near_parabolic.epoch).to(u.s), near_parabolic.period)
 
 
 def test_orbit_elevation():

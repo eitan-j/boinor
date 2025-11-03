@@ -64,9 +64,7 @@ def test_groundtrack_general():
     )
     testOrbit1 = CheckEarthSatellite(testBody1, None)
 
-    t_span = time_range(
-        iss.epoch - 1.5 * u.h, num_values=150, end=iss.epoch + 1.5 * u.h
-    )
+    t_span = time_range(iss.epoch - 1.5 * u.h, num_values=150, end=iss.epoch + 1.5 * u.h)
 
     # Plot previously defined EarthSatellite object, no error should occur
     gp.plot(

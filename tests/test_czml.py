@@ -17,9 +17,7 @@ try:
 except ImportError:
     pass
 
-pytestmark = pytest.mark.skipif(
-    "czml3" not in sys.modules, reason="requires czml3"
-)
+pytestmark = pytest.mark.skipif("czml3" not in sys.modules, reason="requires czml3")
 
 
 def test_czml_get_document():
@@ -344,10 +342,7 @@ def test_czml_add_orbit_negative_rtol_raises_error_if_beyond_range():
             label_text="Molniya",
             label_fill_color=[125, 80, 120, 255],
         )
-    assert (
-        "The relative tolerance must be a value in the range (0, 1)"
-        in excinfo.exconly()
-    )
+    assert "The relative tolerance must be a value in the range (0, 1)" in excinfo.exconly()
 
 
 @pytest.fixture()
@@ -471,9 +466,7 @@ def test_czml_add_trajectory(expected_doc_add_trajectory):
 
     extractor = CZMLExtractor(start_epoch, end_epoch, sample_points)
 
-    extractor.add_trajectory(
-        positions, epochs, label_text="Test", path_color=color
-    )
+    extractor.add_trajectory(positions, epochs, label_text="Test", path_color=color)
 
     assert repr(extractor.packets) == expected_doc_add_trajectory
 
@@ -495,9 +488,7 @@ def test_czml_raises_error_if_length_of_points_and_epochs_not_same():
     extractor = CZMLExtractor(start_epoch, end_epoch, sample_points)
 
     with pytest.raises(ValueError) as excinfo:
-        extractor.add_trajectory(
-            positions, epochs, label_text="Test", path_color=color
-        )
+        extractor.add_trajectory(positions, epochs, label_text="Test", path_color=color)
     assert "Number of Points and Epochs must be equal." in excinfo.exconly()
 
 
@@ -820,9 +811,7 @@ def test_czml_ground_station():
         label_text="GS test",
     )
 
-    extractor.add_ground_station(
-        [0.70930 * u.rad, 0.40046 * u.rad], label_show=False
-    )
+    extractor.add_ground_station([0.70930 * u.rad, 0.40046 * u.rad], label_show=False)
     assert repr(extractor.packets) == expected_doc
 
 
@@ -880,10 +869,7 @@ def test_czml_invalid_orbit_epoch_error():
 
     with pytest.raises(ValueError) as excinfo:
         extractor.add_orbit(iss, label_text="ISS", path_show=False)
-    assert (
-        "ValueError: The orbit's epoch cannot exceed the constructor's ending epoch"
-        in excinfo.exconly()
-    )
+    assert "ValueError: The orbit's epoch cannot exceed the constructor's ending epoch" in excinfo.exconly()
 
 
 def test_czml_add_ground_station_raises_error_if_invalid_coordinates():
@@ -897,8 +883,7 @@ def test_czml_add_ground_station_raises_error_if_invalid_coordinates():
         extractor.add_ground_station([0.70930 * u.rad])
 
     assert (
-        "Invalid coordinates. Coordinates must be of the form [u, v] where u, v are astropy units"
-        in excinfo.exconly()
+        "Invalid coordinates. Coordinates must be of the form [u, v] where u, v are astropy units" in excinfo.exconly()
     )
 
 
@@ -924,7 +909,4 @@ def test_czml_add_trajectory_raises_error_for_groundtrack_show():
 
     with pytest.raises(NotImplementedError) as excinfo:
         extractor.add_trajectory(positions, epochs, groundtrack_show=True)
-    assert (
-        "Ground tracking for trajectory not implemented yet"
-        in excinfo.exconly()
-    )
+    assert "Ground tracking for trajectory not implemented yet" in excinfo.exconly()

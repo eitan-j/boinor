@@ -83,8 +83,7 @@ def test_plot_coordinates_without_attractor_raises_error(Backend):
         plotter._frame = 1  # Set it to something not None to skip frame check
         plotter.plot_coordinates({})
     assert (
-        "An attractor must be set up first, please use "
-        "set_attractor(Major_Body) or plot(orbit)" in excinfo.exconly()
+        "An attractor must be set up first, please use " "set_attractor(Major_Body) or plot(orbit)" in excinfo.exconly()
     )
 
 
@@ -95,10 +94,7 @@ def test_plot_2d_trajectory_without_frame_raises_error(Backend):
     with pytest.raises(ValueError) as excinfo:
         plotter.set_attractor(Sun)
         plotter.plot_coordinates({})
-    assert (
-        "A frame must be set up first, please use "
-        "set_orbit_frame(orbit) or plot(orbit)" in excinfo.exconly()
-    )
+    assert "A frame must be set up first, please use " "set_orbit_frame(orbit) or plot(orbit)" in excinfo.exconly()
 
 
 def test_ephem_without_frame_raises_error():
@@ -109,10 +105,7 @@ def test_ephem_without_frame_raises_error():
     with pytest.raises(ValueError) as excinfo:
         plotter.set_attractor(Sun)
         plotter.plot_ephem(earth)
-    assert (
-        "A frame must be set up first, please use "
-        "set_orbit_frame(orbit) or plot(orbit)" in excinfo.exconly()
-    )
+    assert "A frame must be set up first, please use " "set_orbit_frame(orbit) or plot(orbit)" in excinfo.exconly()
 
 
 @pytest.mark.parametrize("Backend", DEFAULT_ORBIT_PLOTTER_BACKENDS_3D.values())
@@ -159,9 +152,7 @@ def test_set_view(Backend):
     [(True, (0.0, 0.0, 0.0, 1.0)), (False, (1.0, 1.0, 1.0, 1))],
 )
 @pytest.mark.parametrize("MatplotlibBackend", [Matplotlib2D])
-def test_dark_theme_backend_matplotlib(
-    MatplotlibBackend, is_dark, expected_bg
-):
+def test_dark_theme_backend_matplotlib(MatplotlibBackend, is_dark, expected_bg):
     backend = MatplotlibBackend(use_dark_theme=is_dark)
     plotter = OrbitPlotter(backend=backend)
     assert plotter.backend.scene.get_facecolor() == expected_bg
@@ -262,23 +253,16 @@ def test_plot_ephem_different_plane_raises_error():
     unused_coordinates = CartesianRepresentation(
         [(1, 0, 0)] * u.au,
         xyz_axis=1,
-        differentials=CartesianDifferential(
-            [(0, 1, 0)] * (u.au / u.day), xyz_axis=1
-        ),
+        differentials=CartesianDifferential([(0, 1, 0)] * (u.au / u.day), xyz_axis=1),
     )
 
     op = OrbitPlotter(plane=Planes.EARTH_ECLIPTIC)
     op.set_attractor(Sun)
     op.set_body_frame(Earth)
     with pytest.raises(ValueError) as excinfo:
-        op.plot_ephem(
-            Ephem(unused_epochs, unused_coordinates, Planes.EARTH_EQUATOR)
-        )
+        op.plot_ephem(Ephem(unused_epochs, unused_coordinates, Planes.EARTH_EQUATOR))
 
-    assert (
-        "sample the ephemerides using a different plane or create a new plotter"
-        in excinfo.exconly()
-    )
+    assert "sample the ephemerides using a different plane or create a new plotter" in excinfo.exconly()
 
 
 @pytest.mark.mpl_image_compare
@@ -352,9 +336,7 @@ def test_plot_ephem_epoch():
     epoch = Time("2020-02-14 00:00:00")
     ephem = Ephem.from_horizons(
         "2020 CD3",
-        time_range(
-            Time("2020-02-13 12:00:00"), end=Time("2020-02-14 12:00:00")
-        ),
+        time_range(Time("2020-02-13 12:00:00"), end=Time("2020-02-14 12:00:00")),
         attractor=Earth,
     )
 
@@ -375,9 +357,7 @@ def test_plot_ephem_no_epoch():
     epoch = Time("2020-02-14 00:00:00")
     ephem = Ephem.from_horizons(
         "2020 CD3",
-        time_range(
-            Time("2020-02-13 12:00:00"), end=Time("2020-02-14 12:00:00")
-        ),
+        time_range(Time("2020-02-13 12:00:00"), end=Time("2020-02-14 12:00:00")),
         attractor=Earth,
     )
 
@@ -409,9 +389,7 @@ def test_body_frame_raises_warning_if_time_is_not_tdb_with_proper_time(
     assert expected_epoch_string in str(w.message)
 
 
-@pytest.mark.xfail(
-    sys.maxsize < 2**32, reason="not supported for 32 bit systems"
-)
+@pytest.mark.xfail(sys.maxsize < 2**32, reason="not supported for 32 bit systems")
 @pytest.mark.mpl_image_compare
 def test_plot_maneuver_using_matplotlib2D_backend():
     # Data from Vallado, example 6.1
@@ -467,17 +445,11 @@ def test_plotter_methods_parameter():
 
     orb._attractror = None
     plotter.set_orbit_frame(orb)
-    with pytest.raises(
-        ValueError, match="An attractor must be set up first, please use"
-    ):
+    with pytest.raises(ValueError, match="An attractor must be set up first, please use"):
         plotter.plot_ephem(ephem)
 
-    with pytest.raises(
-        ValueError, match="An attractor must be set up first, please use"
-    ):
+    with pytest.raises(ValueError, match="An attractor must be set up first, please use"):
         plotter.plot_maneuver(orb, maneuver)
 
-    with pytest.raises(
-        AttributeError, match="View can only be in 3D backends."
-    ):
+    with pytest.raises(AttributeError, match="View can only be in 3D backends."):
         plotter.set_view(0.5 * u.rad, 0.5 * u.rad)

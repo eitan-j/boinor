@@ -45,21 +45,12 @@ R = 8314.32  # Units: u.J / (u.kg * u.mol)
 @jit
 def _O_and_O2_correction(alt, Texo, Z, CN2, CO2, CO, CAr, CHe, CH, CM, WM):
     for iz in range(90, alt):
-        CO2[iz] = CO2[iz] * (
-            10.0 ** (-0.07 * (1.0 + np.tanh(0.18 * (Z[iz] - 111.0))))
-        )
-        CO[iz] = CO[iz] * (
-            10.0 ** (-0.24 * np.exp(-0.009 * (Z[iz] - 97.7) ** 2))
-        )
+        CO2[iz] = CO2[iz] * (10.0 ** (-0.07 * (1.0 + np.tanh(0.18 * (Z[iz] - 111.0)))))
+        CO[iz] = CO[iz] * (10.0 ** (-0.24 * np.exp(-0.009 * (Z[iz] - 97.7) ** 2)))
         CM[iz] = CN2[iz] + CO2[iz] + CO[iz] + CAr[iz] + CHe[iz] + CH[iz]
-        WM[iz] = (
-            wmN2 * CN2[iz]
-            + wmO2 * CO2[iz]
-            + wmO * CO[iz]
-            + wmAr * CAr[iz]
-            + wmHe * CHe[iz]
-            + wmH * CH[iz]
-        ) / CM[iz]
+        WM[iz] = (wmN2 * CN2[iz] + wmO2 * CO2[iz] + wmO * CO[iz] + wmAr * CAr[iz] + wmHe * CHe[iz] + wmH * CH[iz]) / CM[
+            iz
+        ]
 
 
 @jit
@@ -98,27 +89,18 @@ def _H_correction(alt, Texo, x, y, Z, CN2, CO2, CO, CAr, CHe, CH, CM, WM, T):
 
     for iz in range(150, alt):
         CM[iz] = CN2[iz] + CO2[iz] + CO[iz] + CAr[iz] + CHe[iz] + CH[iz]
-        WM[iz] = (
-            wmN2 * CN2[iz]
-            + wmO2 * CO2[iz]
-            + wmO * CO[iz]
-            + wmAr * CAr[iz]
-            + wmHe * CHe[iz]
-            + wmH * CH[iz]
-        ) / CM[iz]
+        WM[iz] = (wmN2 * CN2[iz] + wmO2 * CO2[iz] + wmO * CO[iz] + wmAr * CAr[iz] + wmHe * CHe[iz] + wmH * CH[iz]) / CM[
+            iz
+        ]
 
 
 @jit
 def _altitude_profile(alt, Texo, x, y, E5M, E6P):
     # Raise Value Error if alt < 90 km or alt > 2500 km.
     if alt < 90 or 2500 < alt:
-        raise ValueError(
-            "Jacchia77 has been implemented in range 90km - 2500km."
-        )
+        raise ValueError("Jacchia77 has been implemented in range 90km - 2500km.")
 
-    alt = int(
-        alt + 1
-    )  # in fortran the upper limits are included. in python are not.
+    alt = int(alt + 1)  # in fortran the upper limits are included. in python are not.
     Texo = int(Texo)
 
     Z = [0.0 for _ in range(alt)]
@@ -146,25 +128,16 @@ def _altitude_profile(alt, Texo, x, y, E5M, E6P):
             Gx = pi2 * 1.9 * (Tx - 188.0) / (125.0 - 90.0)
             if iz <= 125:
                 T[iz] = Tx + ((Tx - 188.0) / pi2) * np.arctan(
-                    (Gx / (Tx - 188.0))
-                    * (Z[iz] - 125.0)
-                    * (1.0 + 1.7 * ((Z[iz] - 125.0) / (Z[iz] - 90.0)) ** 2)
+                    (Gx / (Tx - 188.0)) * (Z[iz] - 125.0) * (1.0 + 1.7 * ((Z[iz] - 125.0) / (Z[iz] - 90.0)) ** 2)
                 )
             else:
                 T[iz] = Tx + ((Texo - Tx) / pi2) * np.arctan(
-                    (Gx / (Texo - Tx))
-                    * (Z[iz] - 125.0)
-                    * (1.0 + 5.5e-5 * (Z[iz] - 125.0) ** 2)
+                    (Gx / (Texo - Tx)) * (Z[iz] - 125.0) * (1.0 + 5.5e-5 * (Z[iz] - 125.0) ** 2)
                 )
         if iz <= 100:
             x = iz - 90
             E5M[iz - 90] = 28.89122 + x * (
-                -2.83071e-2
-                + x
-                * (
-                    -6.59924e-3
-                    + x * (-3.39574e-4 + x * (+6.19256e-5 + x * (-1.84796e-6)))
-                )
+                -2.83071e-2 + x * (-6.59924e-3 + x * (-3.39574e-4 + x * (+6.19256e-5 + x * (-1.84796e-6))))
             )
             if iz <= 90:
                 E6P[0] = 7.145e13 * T[90]
@@ -172,11 +145,7 @@ def _altitude_profile(alt, Texo, x, y, E5M, E6P):
                 G0 = (1 + Z[iz - 1] / R0) ** (-2)
                 G1 = (1 + Z[iz] / R0) ** (-2)
                 E6P[iz - 90] = E6P[iz - 91] * np.exp(
-                    -0.5897446
-                    * (
-                        G1 * E5M[iz - 90] / T[iz]
-                        + G0 * E5M[iz - 91] / T[iz - 1]
-                    )
+                    -0.5897446 * (G1 * E5M[iz - 90] / T[iz] + G0 * E5M[iz - 91] / T[iz - 1])
                 )
 
             x = E5M[iz - 90] / wm0
@@ -204,9 +173,7 @@ def _altitude_profile(alt, Texo, x, y, E5M, E6P):
     _O_and_O2_correction(alt, Texo, Z, CN2, CO2, CO, CAr, CHe, CH, CM, WM)
 
     if 500 <= alt:
-        _H_correction(
-            alt, Texo, x, y, Z, CN2, CO2, CO, CAr, CHe, CH, CM, WM, T
-        )
+        _H_correction(alt, Texo, x, y, Z, CN2, CO2, CO, CAr, CHe, CH, CM, WM, T)
 
     return (
         Z,

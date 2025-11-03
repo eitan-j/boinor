@@ -48,21 +48,9 @@ ALL_PROPAGATORS = [
     RecseriesPropagator,
     ValladoPropagator,
 ]
-ELLIPTIC_PROPAGATORS = [
-    propagator
-    for propagator in ALL_PROPAGATORS
-    if propagator.kind & PropagatorKind.ELLIPTIC
-]
-PARABOLIC_PROPAGATORS = [
-    propagator
-    for propagator in ALL_PROPAGATORS
-    if propagator.kind & PropagatorKind.PARABOLIC
-]
-HYPERBOLIC_PROPAGATORS = [
-    propagator
-    for propagator in ALL_PROPAGATORS
-    if propagator.kind & PropagatorKind.HYPERBOLIC
-]
+ELLIPTIC_PROPAGATORS = [propagator for propagator in ALL_PROPAGATORS if propagator.kind & PropagatorKind.ELLIPTIC]
+PARABOLIC_PROPAGATORS = [propagator for propagator in ALL_PROPAGATORS if propagator.kind & PropagatorKind.PARABOLIC]
+HYPERBOLIC_PROPAGATORS = [propagator for propagator in ALL_PROPAGATORS if propagator.kind & PropagatorKind.HYPERBOLIC]
 
 
 __all__ = [item.__name__ for item in ALL_PROPAGATORS] + ["propagate"]

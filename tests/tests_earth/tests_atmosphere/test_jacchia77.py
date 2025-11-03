@@ -290,10 +290,7 @@ def test_outside_upper_limit_coesa76():
         alt = 2501.0 * u.km
         Texo = 1000 * u.K
         Jacchia77(Texo).altitude_profile(alt)
-    assert (
-        "ValueError: Jacchia77 has been implemented in range 90km - 2500km."
-        in excinfo.exconly()
-    )
+    assert "ValueError: Jacchia77 has been implemented in range 90km - 2500km." in excinfo.exconly()
 
 
 def test_outside_lower_limit_coesa76():
@@ -301,7 +298,4 @@ def test_outside_lower_limit_coesa76():
         alt = 89.0 * u.km
         Texo = 1000 * u.K
         Jacchia77(Texo).altitude_profile(alt)
-    assert (
-        "ValueError: Jacchia77 has been implemented in range 90km - 2500km."
-        in excinfo.exconly()
-    )
+    assert "ValueError: Jacchia77 has been implemented in range 90km - 2500km." in excinfo.exconly()

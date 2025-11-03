@@ -42,9 +42,7 @@ def newton_factory(func, fprime):
 
 
 _newton_elliptic = newton_factory(_kepler_equation, _kepler_equation_prime)
-_newton_hyperbolic = newton_factory(
-    _kepler_equation_hyper, _kepler_equation_prime_hyper
-)
+_newton_hyperbolic = newton_factory(_kepler_equation_hyper, _kepler_equation_prime_hyper)
 
 
 @jit

@@ -27,17 +27,11 @@ def orbit_from_sbdb(name, **kwargs):
         # No error till now ---> more than one object has been found
         # Contains all the name of the objects
         objects_name = obj["list"]["name"]
-        objects_name_in_str = (
-            ""  # Used to store them in string form each in new line
-        )
+        objects_name_in_str = ""  # Used to store them in string form each in new line
         for i in objects_name:
             objects_name_in_str += i + "\n"
 
-        raise ValueError(
-            str(obj["count"])
-            + " different objects found: \n"
-            + objects_name_in_str
-        )
+        raise ValueError(str(obj["count"]) + " different objects found: \n" + objects_name_in_str)
 
     if "object" not in obj.keys():
         raise ValueError(f"Object {name} not found")

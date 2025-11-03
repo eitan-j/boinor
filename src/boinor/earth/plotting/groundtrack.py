@@ -210,9 +210,7 @@ class GroundtrackPlotter:
 
         return trace
 
-    def plot(
-        self, earth_orb, t_span, label, color, line_style=None, marker=None
-    ):
+    def plot(self, earth_orb, t_span, label, color, line_style=None, marker=None):
         """Plots desired Earth satellite orbit for a given time span.
 
         Parameters
@@ -245,9 +243,7 @@ class GroundtrackPlotter:
         # Retrieve basic parameters and check for proper attractor
         orb = earth_orb.orbit
         if orb.attractor != Earth:
-            raise ValueError(
-                f"Satellite should be orbiting Earth, not {orb.attractor}."
-            )
+            raise ValueError(f"Satellite should be orbiting Earth, not {orb.attractor}.")
 
         t_deltas = t_span - orb.epoch
 

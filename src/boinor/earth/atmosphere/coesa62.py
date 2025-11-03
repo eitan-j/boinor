@@ -93,9 +93,7 @@ class COESA62(COESA):
 
     def __init__(self):
         """Constructor for the class."""
-        super().__init__(
-            b_levels, zb_levels, hb_levels, Tb_levels, Lb_levels, pb_levels
-        )
+        super().__init__(b_levels, zb_levels, hb_levels, Tb_levels, Lb_levels, pb_levels)
 
     def temperature(self, alt, geometric=True):
         """Solves for temperature at given altitude.
@@ -179,8 +177,7 @@ class COESA62(COESA):
             # Putting g = (g0*(r0/(r0 +z))**2) in (g * dz / z - zb + Tb/Lb)
             # and integrating it.
             integrand = quad(
-                lambda x: (g0_v * (r0_v / (r0_v + x)) ** 2)
-                / (x - zb_v + Tb_v / Lb_v),
+                lambda x: (g0_v * (r0_v / (r0_v + x)) ** 2) / (x - zb_v + Tb_v / Lb_v),
                 zb_v,
                 z_v,
             )
@@ -259,9 +256,7 @@ class COESA62(COESA):
         z, _h = self._check_altitude(alt, r0, geometric=geometric)
 
         if z > 90 * u.km:
-            raise ValueError(
-                "Speed of sound in COESA62 has just been implemented up to 90km."
-            )
+            raise ValueError("Speed of sound in COESA62 has just been implemented up to 90km.")
         T = self.temperature(alt, geometric).value
         # Using eqn-1.3.7-(1)
         Cs = ((_gamma * R_air.value * T) ** 0.5) * (u.m / u.s)
@@ -287,9 +282,7 @@ class COESA62(COESA):
         z, _h = self._check_altitude(alt, r0, geometric=geometric)
 
         if z > 90 * u.km:
-            raise ValueError(
-                "Dynamic Viscosity in COESA62 has just been implemented up to 90km."
-            )
+            raise ValueError("Dynamic Viscosity in COESA62 has just been implemented up to 90km.")
         T = self.temperature(alt, geometric).value
         # Using eqn-1.3.8-(1)
         mu = (beta.value * T**1.5 / (T + S.value)) * (u.kg / u.m / u.s)
@@ -315,14 +308,10 @@ class COESA62(COESA):
         z, _h = self._check_altitude(alt, r0, geometric=geometric)
 
         if z > 90 * u.km:
-            raise ValueError(
-                "Thermal conductivity in COESA62 has just been implemented up to 90km."
-            )
+            raise ValueError("Thermal conductivity in COESA62 has just been implemented up to 90km.")
 
         T = self.temperature(alt, geometric=geometric).value
         # Using eqn-1.3.10-(1)
-        k = (6.325e-7 * T**1.5 / (T + 245.4 * (10 ** (-12.0 / T)))) * (
-            imperial.kcal / u.m / u.s / u.K
-        )
+        k = (6.325e-7 * T**1.5 / (T + 245.4 * (10 ** (-12.0 / T)))) * (imperial.kcal / u.m / u.s / u.K)
 
         return k

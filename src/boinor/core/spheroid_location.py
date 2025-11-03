@@ -183,12 +183,8 @@ def cartesian_to_ellipsoidal(a, c, x, y, z):
     e2_ = e2 / (1 - e2)
     p = np.sqrt(x**2 + y**2)
     th = np.arctan(z * a / (p * c))
-    lon = np.arctan2(
-        y, x
-    )  # Use `arctan2` so that lon lies in the range: [-pi, +pi]
-    lat = np.arctan(
-        (z + e2_ * c * np.sin(th) ** 3) / (p - e2 * a * np.cos(th) ** 3)
-    )
+    lon = np.arctan2(y, x)  # Use `arctan2` so that lon lies in the range: [-pi, +pi]
+    lat = np.arctan((z + e2_ * c * np.sin(th) ** 3) / (p - e2 * a * np.cos(th) ** 3))
 
     v = a / np.sqrt(1 - e2 * np.sin(lat) ** 2)
     h = (

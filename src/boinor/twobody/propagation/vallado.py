@@ -17,9 +17,7 @@ def vallado(k, r0, v0, tof, *, numiter):
     # Compute Lagrange coefficients
     f, g, fdot, gdot = vallado_fast(k, r0, v0, tof, numiter)
 
-    assert (
-        np.abs(f * gdot - fdot * g - 1) < 1e-5
-    ), "Internal error, solution is not consistent"  # Fixed tolerance
+    assert np.abs(f * gdot - fdot * g - 1) < 1e-5, "Internal error, solution is not consistent"  # Fixed tolerance
 
     # Return position and velocity vectors
     r = f * r0 + g * v0
@@ -40,11 +38,7 @@ class ValladoPropagator:
 
     """
 
-    kind = (
-        PropagatorKind.ELLIPTIC
-        | PropagatorKind.PARABOLIC
-        | PropagatorKind.HYPERBOLIC
-    )
+    kind = PropagatorKind.ELLIPTIC | PropagatorKind.PARABOLIC | PropagatorKind.HYPERBOLIC
 
     def __init__(self, numiter=350):
         self._numiter = numiter

@@ -56,12 +56,8 @@ def _targetting(departure_body, target_body, t_launch, t_arrival):
 
     # Transform into Orbit objects
     attractor = departure_body.parent
-    orb_dpt = Orbit.from_vectors(
-        attractor, rr_dpt_body, vv_dpt_body, epoch=t_launch
-    )
-    orb_arr = Orbit.from_vectors(
-        attractor, rr_arr_body, vv_arr_body, epoch=t_arrival
-    )
+    orb_dpt = Orbit.from_vectors(attractor, rr_dpt_body, vv_dpt_body, epoch=t_launch)
+    orb_arr = Orbit.from_vectors(attractor, rr_arr_body, vv_arr_body, epoch=t_arrival)
 
     # Define time of flight
     tof = orb_arr.epoch - orb_dpt.epoch
@@ -190,9 +186,7 @@ class PorkchopPlotter:
         else:
             fig = self.ax.figure
 
-        c3_levels = np.linspace(
-            0, self.max_c3.to_value(u.km**2 / u.s**2), 30
-        )
+        c3_levels = np.linspace(0, self.max_c3.to_value(u.km**2 / u.s**2), 30)
 
         c = self.ax.contourf(
             [D.to_datetime() for D in self.launch_span],
@@ -227,9 +221,7 @@ class PorkchopPlotter:
                 linewidths=3.5,
             )
 
-            self.ax.clabel(
-                tfl_contour, inline=1, fmt="%1.1f", colors="r", fontsize=14
-            )
+            self.ax.clabel(tfl_contour, inline=1, fmt="%1.1f", colors="r", fontsize=14)
 
         if self.vhp:
             vhp_levels = np.linspace(0, self.max_vhp.to_value(u.km / u.s), 5)
@@ -243,9 +235,7 @@ class PorkchopPlotter:
                 linewidths=2.0,
             )
 
-            self.ax.clabel(
-                vhp_contour, inline=1, fmt="%1.1f", colors="navy", fontsize=12
-            )
+            self.ax.clabel(vhp_contour, inline=1, fmt="%1.1f", colors="navy", fontsize=12)
 
         self.ax.grid()
         fig.autofmt_xdate()

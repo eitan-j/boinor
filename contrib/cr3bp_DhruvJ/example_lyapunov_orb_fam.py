@@ -36,9 +36,7 @@ constraints = [
     "vx",
 ]  # All constraints, 'jc' can be added explicity or will be added in npc_fam_fam_cr3bp if to be continued in 'jc'
 
-orb_fam_obj = periodic_orbit_fam_continuation(
-    sys_p1p2, initial_guess, tf=tf_guess
-)
+orb_fam_obj = periodic_orbit_fam_continuation(sys_p1p2, initial_guess, tf=tf_guess)
 
 # Target Lyapunov orbit using Single Shooter Variable Time setup
 #         Exploits XZ plane symmetry(sym_perioid_targ set to 1/2)
@@ -132,9 +130,7 @@ colourmap = "plasma"
 cb_label = "JC"
 title = "EM_L1_Lyapunov_family"
 data_trace = []
-data_trace.append(
-    go.Scatter3d(x=[1 - mu], y=[0], z=[0], marker=dict(color="grey", size=7))
-)
+data_trace.append(go.Scatter3d(x=[1 - mu], y=[0], z=[0], marker=dict(color="grey", size=7)))
 
 plot_orbits(
     mu,
