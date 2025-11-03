@@ -43,6 +43,12 @@ class Event:
     def last_t(self):
         return self._last_t << u.s
 
+    # at some point last_t is needed without unit
+    # instead of needing to shove units back and forth, we introduce a new property: last_t without unit
+    @property
+    def last_t_without_unit(self):
+        return self._last_t
+
     def __call__(self, t, uu, k):
         raise NotImplementedError
 
