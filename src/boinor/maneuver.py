@@ -181,7 +181,7 @@ class Maneuver:
         tof = orbit_f.epoch - orbit_i.epoch
         if tof.to_value(u.s) < 0:
             raise ValueError(
-                "Epoch of initial orbit greater than epoch of final orbit, " "causing a negative time of flight"
+                "Epoch of initial orbit greater than epoch of final orbit, causing a negative time of flight"
             )
 
         # Compute all possible solutions to the Lambert transfer

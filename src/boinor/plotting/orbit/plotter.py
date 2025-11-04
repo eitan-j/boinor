@@ -472,10 +472,10 @@ class OrbitPlotter:
 
         """
         if self.backend.is_2D and self._frame is None:
-            raise ValueError("A frame must be set up first, please use " "set_orbit_frame(orbit) or plot(orbit)")
+            raise ValueError("A frame must be set up first, please use set_orbit_frame(orbit) or plot(orbit)")
 
         if self._attractor is None:
-            raise ValueError("An attractor must be set up first, please use " "set_attractor(MajorBody) or plot(orbit)")
+            raise ValueError("An attractor must be set up first, please use set_attractor(MajorBody) or plot(orbit)")
 
         if ephem.plane is not self.plane:
             raise ValueError(
@@ -517,9 +517,7 @@ class OrbitPlotter:
 
         """
         if self._attractor is None:
-            raise ValueError(
-                "An attractor must be set up first, please use " "set_attractor(Major_Body) or plot(orbit)"
-            )
+            raise ValueError("An attractor must be set up first, please use set_attractor(Major_Body) or plot(orbit)")
 
         # Apply the maneuver, collect all intermediate states and allocate the
         # final coordinates list array
@@ -645,13 +643,11 @@ class OrbitPlotter:
         """
         # Check if a frame has been set
         if self.backend.is_2D and self._frame is None:
-            raise ValueError("A frame must be set up first, please use " "set_orbit_frame(orbit) or plot(orbit)")
+            raise ValueError("A frame must be set up first, please use set_orbit_frame(orbit) or plot(orbit)")
 
         # Check if the attractor
         if self._attractor is None:
-            raise ValueError(
-                "An attractor must be set up first, please use " "set_attractor(Major_Body) or plot(orbit)"
-            )
+            raise ValueError("An attractor must be set up first, please use set_attractor(Major_Body) or plot(orbit)")
 
         # Get orbit colors and label (protected function, use on your own risk
         colors = self.backend._get_colors(color=color, trail=trail)  # pylint: disable=protected-access
