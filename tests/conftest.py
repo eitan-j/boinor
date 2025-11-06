@@ -1,3 +1,4 @@
+"""module to create some configurations for testing"""
 from astropy import units as u
 from astropy.coordinates import solar_system_ephemeris
 from astropy.time import Time
