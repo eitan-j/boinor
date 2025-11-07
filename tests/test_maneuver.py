@@ -1,3 +1,4 @@
+"""module to test orbital maneuvers"""
 import warnings
 
 from astropy import units as u

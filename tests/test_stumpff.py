@@ -1,3 +1,4 @@
+"""module to test Stumpff functions from _math.special"""
 from numpy import cos, cosh, sin, sinh
 from numpy.testing import assert_allclose
 
