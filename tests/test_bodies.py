@@ -1,3 +1,4 @@
+"""tests related to module bodies"""
 import pickle
 
 from astropy import units as u

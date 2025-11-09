@@ -1,3 +1,4 @@
+"""tests related to module io"""
 from unittest.mock import patch
 
 from astropy import units as u

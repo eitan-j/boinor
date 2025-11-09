@@ -1,3 +1,4 @@
+"""tests related to module ephem"""
 from unittest import mock
 
 from astropy import units as u

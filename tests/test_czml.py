@@ -1,3 +1,4 @@
+"""tests related to module czml"""
 import sys
 
 from astropy import units as u
