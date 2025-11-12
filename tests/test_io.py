@@ -8,6 +8,7 @@ from boinor.io import orbit_from_sbdb
 
 
 def patch_sbdb_getData(name, **kwargs):
+    rc = {}
     if name == "test1":
         rc = {
             "object": {"shortname": "test1", "neo": True, "moid": 0.334},

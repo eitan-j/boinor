@@ -227,8 +227,6 @@ debris_orbits_list.append(
         nu=-42.74160359135228 * u.deg,
     )
 )
-"""Orbit List of COSMOS 1408 Debris Orbits Example
-
-COSMOS 1408 Debris Data Taken from https://celestrak.com/NORAD/
-
-"""
+# Orbit List of COSMOS 1408 Debris Orbits Example
+#
+# COSMOS 1408 Debris Data Taken from https://celestrak.com/NORAD/

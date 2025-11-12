@@ -2,7 +2,9 @@
 import pickle
 
 from astropy import units as u
-from astropy.constants import G as G_import
+from astropy.constants import (
+    G as G_import,  # pylint: disable=no-name-in-module  # pylint is wrong here
+)
 from astropy.tests.helper import assert_quantity_allclose
 import pytest
 

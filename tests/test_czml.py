@@ -14,7 +14,9 @@ from boinor.examples import iss, molniya
 try:
     from czml3.core import Document
 
-    from boinor.czml.extract_czml import CZMLExtractor
+    from boinor.czml.extract_czml import (
+        CZMLExtractor,  # pylint: disable=ungrouped-imports # this is intentional here
+    )
 except ImportError:
     pass
 
