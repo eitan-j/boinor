@@ -50,9 +50,11 @@ def test_curtis53(lambert):
 
     # ERRATA: j component is positive
     expected_va = [-2.4356, 0.26741, 0.0] * u.km / u.s
+    expected_vb = [-2.9108837, 0.24666989, 0.0] * u.km / u.s
 
     va, vb = lambert(k, r0, r, tof, numiter=numiter)
     assert_quantity_allclose(va, expected_va, rtol=1e-4)
+    assert_quantity_allclose(vb, expected_vb, rtol=1e-4)
 
 
 @pytest.mark.parametrize("lambert", [izzo.lambert])
@@ -119,6 +121,8 @@ def test_collinear_vectors_input(lambert):
 @pytest.mark.parametrize("M", [1, 2, 3])
 def test_minimum_time_of_flight_convergence(M):
     ll = -1
+    # even internal stuff needs to be tested
+    # pylint: disable=protected-access
     x_T_min_expected, T_min_expected = iod._compute_T_min(ll, M, numiter=10, rtol=1e-8)
     y = iod._compute_y(x_T_min_expected, ll)
     T_min = iod._tof_equation_y(x_T_min_expected, y, 0.0, ll, M)
