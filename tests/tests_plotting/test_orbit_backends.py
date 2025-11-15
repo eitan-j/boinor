@@ -9,6 +9,9 @@ from boinor.plotting.orbit.backends.plotly import (
     Plotly3D,
 )
 
+# even internal stuff needs to be tested
+# pylint: disable=protected-access
+
 
 class Dummy2D(BasePlotly):
     def __init__(self, figure):

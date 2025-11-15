@@ -8,6 +8,9 @@ from boinor.earth.atmosphere import COESA62
 
 coesa62 = COESA62()
 
+# even internal stuff needs to be tested
+# pylint: disable=protected-access
+
 
 def test_outside_altitude_range_coesa62():
     with pytest.raises(ValueError) as excinfo:

@@ -6,6 +6,9 @@ import pytest
 
 from boinor.earth.atmosphere.jacchia import Jacchia77
 
+# even internal stuff needs to be tested
+# pylint: disable=protected-access
+
 # SOLUTIONS DIRECTLY TAKEN FROM JACCHIA77 REPORT AND
 # https://git.mysmce.com/ccmc-share/modelwebarchive/-/raw/main/Jacchi-Reference-Atmosphere/t1000.out
 jacchia77_solutions = {

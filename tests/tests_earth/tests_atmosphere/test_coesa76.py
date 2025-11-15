@@ -8,6 +8,9 @@ from boinor.earth.atmosphere.coesa76 import p_coeff, rho_coeff
 
 coesa76 = COESA76()
 
+# even internal stuff needs to be tested
+# pylint: disable=protected-access
+
 
 def test_outside_altitude_range_coesa76():
     with pytest.raises(ValueError) as excinfo:
