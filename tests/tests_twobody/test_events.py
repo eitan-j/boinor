@@ -73,7 +73,8 @@ def test_altitude_cross_not_happening_is_ok():
     events = [altitude_cross_event]
 
     method = CowellPropagator(events=events)
-    rr, _ = method.propagate_many(
+    # we don't need rr here as first result
+    _, _ = method.propagate_many(
         orbit.state,
         tofs,
     )
@@ -93,7 +94,8 @@ def test_latitude_cross_event():
     tofs = [5] * u.d
 
     method = CowellPropagator(events=[latitude_cross_event])
-    rr, _ = method.propagate_many(
+    # we don't need rr here as first result
+    _, _ = method.propagate_many(
         orbit.state,
         tofs,
     )

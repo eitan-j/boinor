@@ -14,6 +14,8 @@ from boinor.plotting.orbit.backends.plotly import (
 
 
 class Dummy2D(BasePlotly):
+    """dummy class to help with 2D plotting"""
+
     def __init__(self, figure):
         theme = "plotly_dark"
 
