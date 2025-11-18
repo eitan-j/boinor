@@ -214,6 +214,7 @@ jacchia77_solutions = {
 @pytest.mark.parametrize("z", jacchia77_solutions.keys())
 def test_jacchia77(z):
     #  Z, T, CN2, CO2, CO, CAr, CHe, CH, CM, WM)
+    expected_T = jacchia77_solutions[z][0] << (u.K)
     expected_CN2 = jacchia77_solutions[z][1] << (u.m**-3)
     expected_CO2 = jacchia77_solutions[z][2] << (u.m**-3)
     expected_CO = jacchia77_solutions[z][3] << (u.m**-3)
@@ -233,6 +234,8 @@ def test_jacchia77(z):
 
     Z, T, CN2, CO2, CO, CAr, CHe, CH, CM, WM = properties
 
+    assert_quantity_allclose(z, Z, rtol=1e-4)
+    assert_quantity_allclose(T, expected_T, rtol=1e-4)
     assert_quantity_allclose(CN2, expected_CN2, rtol=1e-4)
     assert_quantity_allclose(CO2, expected_CO2, rtol=1e-4)
     assert_quantity_allclose(CO, expected_CO, rtol=1e-4)

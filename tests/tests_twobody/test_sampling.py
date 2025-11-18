@@ -100,6 +100,6 @@ def test_sample_hyperbolic_limits(hyperbolic, min_anomaly, max_anomaly):
 
 def test_sample_returns_monotonic_increasing_epochs():
     strategy = TrueAnomalyBounds(num_values=10)
-    coords, epochs = strategy.sample(iss)
+    _, epochs = strategy.sample(iss)
 
     assert (np.diff(epochs.jd) > 0).all()

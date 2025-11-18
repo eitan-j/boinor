@@ -131,7 +131,7 @@ def test_ephem_str_matches_expected_representation(epochs, coordinates):
     plane = Planes.EARTH_EQUATOR
     ephem = Ephem(coordinates, epochs, plane)
 
-    expected_str = "Ephemerides at 4 epochs " "from 2020-03-01 12:00:00.000 (TDB) to 2020-03-04 12:00:00.000 (TDB)"
+    expected_str = "Ephemerides at 4 epochs from 2020-03-01 12:00:00.000 (TDB) to 2020-03-04 12:00:00.000 (TDB)"
 
     assert repr(ephem) == str(ephem) == expected_str
 

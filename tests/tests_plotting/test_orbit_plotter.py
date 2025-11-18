@@ -424,7 +424,7 @@ def test_plot_maneuver_using_matplotlib2D_backend():
 
 
 def test_plotter_methods_parameter():
-    fig, ax = plt.subplots()
+    _, ax = plt.subplots()
     backend = Matplotlib2D(ax=ax)
     plotter = OrbitPlotter(backend=backend)
     epochs = time.Time("2020-04-29 10:43", scale="tdb")
