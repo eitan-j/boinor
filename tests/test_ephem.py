@@ -50,8 +50,14 @@ def assert_coordinates_allclose(actual, desired, rtol=1e-7, atol_scale=None, **k
         )
 
 
-@pytest.fixture
-def epochs():
+# pylint and fixtures are not a good team:
+#    If a fixture is used in the same module in which it is defined, the function
+#    name of the fixture will be shadowed by the function arg that requests the
+#    fixture; one way to resolve this is to name the decorated function fixture
+#    and then use @pytest.fixture(name='').
+# https://github.com/pylint-dev/pylint/issues/6531#issuecomment-1120068369
+@pytest.fixture(name="epochs")
+def fixture_epochs():
     return Time(
         [
             "2020-03-01 12:00:00",
@@ -63,8 +69,8 @@ def epochs():
     )
 
 
-@pytest.fixture
-def coordinates():
+@pytest.fixture(name="coordinates")
+def fixture_coordinates():
     return CartesianRepresentation(
         [(1, 0, 0), (0.9, 0.1, 0), (0.8, 0.2, 0), (0.7, 0.3, 0)] * u.au,
         xyz_axis=1,

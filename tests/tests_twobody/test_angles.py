@@ -38,8 +38,14 @@ ELLIPTIC_ANGLES_DATA = [
 ]
 
 
-@pytest.fixture()
-def classical():
+# pylint and fixtures are not a good team:
+#    If a fixture is used in the same module in which it is defined, the function
+#    name of the fixture will be shadowed by the function arg that requests the
+#    fixture; one way to resolve this is to name the decorated function fixture
+#    and then use @pytest.fixture(name='').
+# https://github.com/pylint-dev/pylint/issues/6531#issuecomment-1120068369
+@pytest.fixture(name="classical")
+def fixture_classical():
     p = 11067.790  # u.km
     ecc = 0.83285  # u.one
     inc = np.deg2rad(87.87)  # u.rad
@@ -50,8 +56,8 @@ def classical():
     return expected_res
 
 
-@pytest.fixture()
-def circular():
+@pytest.fixture(name="circular")
+def fixture_circular():
     k = 3.9860047e14
     p = 24464560.0
     ecc = 0.0
@@ -63,8 +69,8 @@ def circular():
     return k, expected_res
 
 
-@pytest.fixture()
-def hyperbolic():
+@pytest.fixture(name="hyperbolic")
+def fixture_hyperbolic():
     k = 3.9860047e14
     p = 4.884856334147761e7
     ecc = 1.7311
@@ -76,8 +82,8 @@ def hyperbolic():
     return k, expected_res
 
 
-@pytest.fixture()
-def equatorial():
+@pytest.fixture(name="equatorial")
+def fixture_equatorial():
     k = 3.9860047e14
     p = 1.13880762905224e7
     ecc = 0.7311
@@ -89,8 +95,8 @@ def equatorial():
     return k, expected_res
 
 
-@pytest.fixture()
-def circular_equatorial():
+@pytest.fixture(name="circular_equatorial")
+def fixture_circular_equatorial():
     k = 3.9860047e14
     p = 1.13880762905224e7
     ecc = 0.0

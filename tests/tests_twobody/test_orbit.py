@@ -55,8 +55,14 @@ from boinor.twobody.sampling import TrueAnomalyBounds
 from boinor.warnings import PatchedConicsWarning
 
 
-@pytest.fixture()
-def hyperbolic():
+# pylint and fixtures are not a good team:
+#    If a fixture is used in the same module in which it is defined, the function
+#    name of the fixture will be shadowed by the function arg that requests the
+#    fixture; one way to resolve this is to name the decorated function fixture
+#    and then use @pytest.fixture(name='').
+# https://github.com/pylint-dev/pylint/issues/6531#issuecomment-1120068369
+@pytest.fixture(name="hyperbolic")
+def fixture_hyperbolic():
     r = [
         1.197659243752796e09,
         -4.443716685978071e09,
@@ -67,8 +73,8 @@ def hyperbolic():
     return Orbit.from_vectors(Sun, r, v, epoch)
 
 
-@pytest.fixture()
-def near_parabolic():
+@pytest.fixture(name="near_parabolic")
+def fixture_near_parabolic():
     r = [8.0e3, 1.0e3, 0.0] * u.km
     v = [-0.5, -0.5, 0.0] * u.km / u.s
 
