@@ -119,6 +119,7 @@ def test_h_calculation_near_lat_singularity(lat):
     h = 5 * u.m
     p = SpheroidLocation(lon, lat, h, body)
     cartesian_coords = p.cartesian_cords
-    lon_, lat_, h_ = p.cartesian_to_ellipsoidal(*cartesian_coords)
+    # original: lon_, lat_, h_ = p.cartesian_to_ellipsoidal(*cartesian_coords)
+    _, _, h_ = p.cartesian_to_ellipsoidal(*cartesian_coords)
 
     assert_quantity_allclose(h_, h)

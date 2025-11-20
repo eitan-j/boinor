@@ -1164,9 +1164,9 @@ def test_can_set_iss_attractor_to_earth():
         attractor=Sun,
         id_type=None,
     )
-    iss = Orbit.from_ephem(Sun, ephem, epoch)
-    iss = iss.change_attractor(Earth)
-    assert iss.attractor == Earth
+    flying_iss = Orbit.from_ephem(Sun, ephem, epoch)
+    flying_iss = flying_iss.change_attractor(Earth)
+    assert flying_iss.attractor == Earth
 
 
 @mock.patch("astroquery.jplsbdb.SBDB.query")

@@ -559,8 +559,8 @@ def test_3rd_body_Curtis(test_params):
     )
 
 
-@pytest.fixture(scope="module")
-def sun_r():
+@pytest.fixture(scope="module", name="sun_r")
+def fixture_sun_r():
     j_date = 2_438_400.5 * u.day
     tof = 600 * u.day
     epoch = Time(j_date, format="jd", scale="tdb")

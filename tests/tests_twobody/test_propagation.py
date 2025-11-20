@@ -31,8 +31,8 @@ from boinor.twobody.propagation import (
 from boinor.util import norm
 
 
-@pytest.fixture(scope="module")
-def halley():
+@pytest.fixture(scope="module", name="halley")
+def fixture_halley():
     return Orbit.from_vectors(
         Sun,
         [-9018878.63569932, -94116054.79839276, 22619058.69943215] * u.km,
