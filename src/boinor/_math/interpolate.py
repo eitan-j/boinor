@@ -29,6 +29,11 @@ def sinc_interp(y, x, u):
     T = x[1] - x[0]
 
     sincM = np.tile(u, (len(x), 1)) - np.tile(x[:, np.newaxis], (1, len(u)))
+
+    # we have rounding problems here, which results in a failing test in tests/test_ephem.py
+    # set to 0 in case it is below some tol
     y_u = y @ np.sinc(sincM / T)
+    tol = 1e-17
+    y_u[np.abs(y_u) < tol] = 0.0
 
     return y_u

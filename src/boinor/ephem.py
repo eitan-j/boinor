@@ -324,7 +324,6 @@ class Ephem:
         """
         if epochs is None or epochs.isscalar and (epochs == self.epochs).all():
             return self._coordinates
-
         coordinates = interpolator.interpolate(
             epochs.reshape(-1),
             self.epochs,
