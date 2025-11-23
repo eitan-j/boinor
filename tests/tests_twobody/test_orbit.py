@@ -1,3 +1,4 @@
+"""tests related to module orbit of sub-package twobody"""
 from collections import OrderedDict
 from functools import partial
 import pickle

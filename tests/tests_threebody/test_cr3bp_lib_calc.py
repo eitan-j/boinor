@@ -1,3 +1,4 @@
+"""tests related to module cr3bp_lib_calc of sub-package threebody"""
 # from astropy import units as u
 # from astropy.units import L_ND
 from astropy.tests.helper import assert_quantity_allclose
