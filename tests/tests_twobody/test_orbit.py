@@ -1,4 +1,6 @@
 """tests related to module orbit of sub-package twobody"""
+# there are lots of things to test, so this is large
+# pylint: disable=too-many-lines
 from collections import OrderedDict
 from functools import partial
 import pickle

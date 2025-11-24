@@ -22,8 +22,8 @@ class Dummy2D(BasePlotly):
         # Declare the layout and attach it to the figure
         layout = go.Layout(
             autosize=True,
-            xaxis=dict(constrain="domain"),
-            yaxis=dict(scaleanchor="x"),
+            xaxis={"constrain": "domain"},
+            yaxis={"scaleanchor": "x"},
             template=theme,
         )
         super().__init__(figure, layout)
