@@ -5,6 +5,7 @@ import pytest
 
 from boinor.core.elements import coe2rv
 from boinor.core.propagation import (
+    cowell,
     danby,
     danby_coe,
     farnocchia,
@@ -18,7 +19,6 @@ from boinor.core.propagation import (
     pimienta_coe,
     recseries,
     vallado,
-    #    cowell,
 )
 from boinor.core.propagation.farnocchia import (
     M_to_D_near_parabolic,
@@ -153,8 +153,8 @@ def test_kepler_algorithm():
     assert_quantity_allclose(expected_v, value[1], rtol=1e-06)
 
     f, g, fdot, gdot = vallado(k, r0, v0, tof, numiter)
-    print("vallado: ", f, g, fdot, gdot)
-    assert_quantity_allclose(expected_r, value[0], rtol=1e-06)
+    # print("vallado: ", f, g, fdot, gdot)
+    assert_quantity_allclose(expected_r, value[0])
     assert_quantity_allclose(expected_v, value[1], rtol=1e-06)
 
     value_danby = danby(k, r0, v0, tof)
@@ -182,8 +182,10 @@ def test_kepler_algorithm():
     assert_quantity_allclose(expected_r, value_farnocchia[0])
     assert_quantity_allclose(expected_v, value_farnocchia[1], rtol=1e-06)
 
-    # todo: does not work
-    # value_cowell_r, value_cowell_v=cowell(k, r0, v0, tof)
+    # we are using the propagator from core
+    # in this case the cowell propagator needs a list of tofs
+    cowell_tofs = tof.reshape(-1)
+    value_cowell_r, value_cowell_v = cowell(k, r0, v0, cowell_tofs)
     # print("cowell: ", value_cowell_r, value_cowell_v)
-    # assert_quantity_allclose(expected_r, value_cowell_r)
-    # assert_quantity_allclose(expected_v, value_cowell_v)
+    assert_quantity_allclose(expected_r, value_cowell_r[0])
+    assert_quantity_allclose(expected_v, value_cowell_v[0], rtol=1e-06)
