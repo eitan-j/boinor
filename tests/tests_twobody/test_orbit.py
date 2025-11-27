@@ -6,7 +6,7 @@ from functools import partial
 import pickle
 from unittest import mock
 
-from astropy import units as u
+from astropy import constants as c, units as u
 from astropy.coordinates import (
     ITRS,
     CartesianDifferential,
@@ -34,6 +34,7 @@ from boinor.bodies import (
     Venus,
 )
 from boinor.constants import J2000, J2000_TDB
+from boinor.core.elements import rv2coe
 from boinor.ephem import Ephem
 from boinor.examples import iss
 from boinor.frames.ecliptic import HeliocentricEclipticJ2000
@@ -1442,21 +1443,21 @@ def test_apply_impulse():
 
 # todo: this test works locally but does not work on circleci!?
 #       the coverage test fails due to incompatible units
-# def test_orbit_from_equinoctial():
-#    r = [-2032.4, 4591.2, -4544.8] << u.km
-#    v = [100, 50, 100] << u.km / u.s
-#    Time("2022-01-01")  # Not relevant.
-#
-#    k = GM_earth.value
-#    p, ecc, inc, raan, argp, nu = rv2coe(k, r, v)
-#
-#    # TODO: check whether this Orbit contains reasonable values
-#    Orbit.from_equinoctial(
-#        attractor=Earth,
-#        p=p * u.km,
-#        f=ecc,
-#        g=inc * u.rad,
-#        h=inc * u.rad,
-#        k=argp * u.rad,
-#        L=nu * u.rad,
-#    )
+def test_orbit_from_equinoctial():
+    r = [-2032.4, 4591.2, -4544.8] << u.km
+    v = [100, 50, 100] << u.km / u.s
+    Time("2022-01-01")  # Not relevant.
+
+    k = c.GM_earth.value
+    p, ecc, inc, raan, argp, nu = rv2coe(k, r, v)
+
+    # TODO: check whether this Orbit contains reasonable values
+    Orbit.from_equinoctial(
+        attractor=Earth,
+        p=p * u.km,
+        f=ecc,
+        g=inc * u.rad,
+        h=inc * u.rad,
+        k=argp * u.rad,
+        L=nu * u.rad,
+    )
