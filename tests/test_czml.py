@@ -4,8 +4,6 @@ import sys
 from astropy import units as u
 from astropy.coordinates.representation import CartesianRepresentation
 from astropy.time import Time
-
-# TODO: Should we have way to handle this configuration without importing numba?
 import pytest
 
 from boinor.bodies import Mars
