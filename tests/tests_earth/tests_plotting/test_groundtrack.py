@@ -17,7 +17,7 @@ class CheckEarthSatellite(EarthSatellite):
 
     # we need a __init__() here, as the EarthSatellite checks whether the orbit is around
     # Earth
-    def __init__(self, orbit, spacecraft):
+    def __init__(self, orbit, spacecraft):  # pylint: disable=super-init-not-called
         """Constructor.
 
         Parameters
