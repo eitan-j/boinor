@@ -17,6 +17,7 @@ from boinor.twobody.angles import (
     M_to_D,
     M_to_E,
     M_to_E_scalar,
+    M_to_E_scavec,
     M_to_E_vector,
     M_to_F,
     fp_angle,
@@ -302,12 +303,29 @@ def test_M_to_E():
     expected_E_array = np.full_like(M_array, expected_E)
 
     E = M_to_E(M, ecc)
-    assert_allclose(expected_E, E, atol=1e-8)
+    assert_allclose(E, expected_E, atol=1e-8)
 
     E = M_to_E_scalar(M, ecc)
-    assert_allclose(expected_E, E, atol=1e-8)
+    assert_allclose(E, expected_E, atol=1e-8)
 
     E_array = M_to_E_vector(M_array, ecc_array)
+    assert_allclose(E_array, expected_E_array, atol=1e-8)
+
+    # test scavev with
+    #   (scalar, scalar) result is scalar
+    #   (scalar, vector) result is vector
+    #   (vector, scalar) result is vector
+    #   (vector, vector) result is vector
+    E = M_to_E_scavec(M, ecc)
+    assert_allclose(E, expected_E, atol=1e-8)
+
+    E_array = M_to_E_scavec(M_array, ecc_array)
+    assert_allclose(E_array, expected_E_array, atol=1e-8)
+
+    E_array = M_to_E_scavec(M, ecc_array)
+    assert_allclose(E_array, expected_E_array, atol=1e-8)
+
+    E_array = M_to_E_scavec(M_array, ecc)
     assert_allclose(E_array, expected_E_array, atol=1e-8)
 
 
@@ -323,3 +341,67 @@ def test_M_to_E_scalar_benchmark(benchmark):
     M = 65.0 * u.deg
 
     benchmark.pedantic(M_to_E_scalar, args=(M, ecc))
+
+
+def test_M_to_E_vector_benchmark(benchmark):
+    ecc = 0.35 * u.one
+    M_no_unit = 65.0
+
+    ecc_array = np.array([ecc, ecc, ecc, ecc, ecc, ecc, ecc, ecc, ecc, ecc, ecc, ecc])
+    M_array = (
+        np.array(
+            [
+                M_no_unit,
+                M_no_unit,
+                M_no_unit,
+                M_no_unit,
+                M_no_unit,
+                M_no_unit,
+                M_no_unit,
+                M_no_unit,
+                M_no_unit,
+                M_no_unit,
+                M_no_unit,
+                M_no_unit,
+            ]
+        )
+        * u.deg
+    )
+
+    benchmark.pedantic(M_to_E_vector, args=(M_array, ecc_array))
+
+
+def test_M_to_E_scavec_vector_benchmark(benchmark):
+    ecc = 0.35 * u.one
+    M_no_unit = 65.0
+
+    ecc_array = np.array([ecc, ecc, ecc, ecc, ecc, ecc, ecc, ecc, ecc, ecc, ecc, ecc])
+    M_array = (
+        np.array(
+            [
+                M_no_unit,
+                M_no_unit,
+                M_no_unit,
+                M_no_unit,
+                M_no_unit,
+                M_no_unit,
+                M_no_unit,
+                M_no_unit,
+                M_no_unit,
+                M_no_unit,
+                M_no_unit,
+                M_no_unit,
+            ]
+        )
+        * u.deg
+    )
+
+    benchmark.pedantic(M_to_E_scavec, args=(M_array, ecc_array))
+
+
+def test_M_to_E_scavec_scalar_benchmark(benchmark):
+    ecc = 0.35 * u.one
+    M_no_unit = 65.0
+    M = M_no_unit * u.deg
+
+    benchmark.pedantic(M_to_E_scavec, args=(M, ecc))

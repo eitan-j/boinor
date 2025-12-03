@@ -1,5 +1,6 @@
 """Angles and anomalies."""
 from astropy import units as u
+import numpy as np
 
 from boinor.core.angles import (
     D_to_M as D_to_M_fast,
@@ -10,7 +11,7 @@ from boinor.core.angles import (
     F_to_nu as F_to_nu_fast,
     M_to_D as M_to_D_fast,
     M_to_E as M_to_E_fast,
-    M_to_E_scavec as M_to_E_scavec_fast,
+    M_to_E_scalar as M_to_E_scalar_fast,
     M_to_E_vector as M_to_E_vector_fast,
     M_to_F as M_to_F_fast,
     fp_angle as fp_angle_fast,
@@ -191,7 +192,7 @@ def M_to_E_scalar(M, ecc):
         Eccentric anomaly.
 
     """
-    return (M_to_E_fast(M.to_value(u.rad), ecc.value) * u.rad).to(M.unit)
+    return (M_to_E_scalar_fast(M.to_value(u.rad), ecc.value) * u.rad).to(M.unit)
 
 
 @u.quantity_input(M=u.rad, ecc=u.one)
@@ -235,7 +236,22 @@ def M_to_E_scavec(M, ecc):
         Eccentric anomaly.
 
     """
-    return (M_to_E_scavec_fast(M.to_value(u.rad), ecc.value) * u.rad).to(M.unit)
+
+    m_is_scalar = np.ndim(M) == 0
+    ecc_is_scalar = np.ndim(ecc) == 0
+    if m_is_scalar and ecc_is_scalar:
+        return (M_to_E_scalar_fast(M.to_value(u.rad), ecc.value) * u.rad).to(M.unit)
+        # return M_to_E_scalar(M, ecc)
+
+    if m_is_scalar:
+        M_array = np.full_like(ecc, M.value) * M.unit
+        return (M_to_E_vector_fast(M_array.to_value(u.rad), ecc) * u.rad).to(M.unit)
+
+    if ecc_is_scalar:
+        ecc_array = np.full_like(M.to_value(), ecc)
+        return (M_to_E_vector_fast(M.to_value(u.rad), ecc_array) * u.rad).to(M.unit)
+
+    return (M_to_E_vector_fast(M.to_value(u.rad), ecc) * u.rad).to(M.unit)
 
 
 @u.quantity_input(M=u.rad, ecc=u.one)

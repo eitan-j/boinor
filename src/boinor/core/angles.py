@@ -315,32 +315,6 @@ def M_to_E_vector(M, ecc):
 
 
 @jit
-def M_to_E_scavec(M, ecc):
-    """Eccentric anomaly from mean anomaly (parameter is scalar or vector).
-
-    .. versionadded:: 0.4.0
-
-    Parameters
-    ----------
-    M : float or np.array(float)
-        Mean anomaly in radians.
-    ecc : float or np.array(float)
-        Eccentricity.
-
-    Returns
-    -------
-    E : float or np.array(float)
-        Eccentric anomaly.
-
-    Notes
-    -----
-    This uses a Newton iteration on the Kepler equation.
-
-    """
-    raise NotImplementedError("This function is not yet implemented.")
-
-
-@jit
 def M_to_E(M, ecc):
     """Eccentric anomaly from mean anomaly.
 
