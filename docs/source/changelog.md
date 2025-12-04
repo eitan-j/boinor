@@ -8,6 +8,7 @@
 - orbit._state now is public available as orbit.state
 - instead of needing to shovel units back and forth, a new property exists: Event.last_t_without_unit
 
+
 ### Coverage
 
 New tests have been added or improved all over the code.
@@ -15,7 +16,8 @@ The code coverage increased from 96.47% to XX.XX%.
 
 ### Bugs fixed
 
--
+- M_to_E is not vectorized ({github}`poliastro issue #1340 <poliastro/poliastro#1340>`).
+
 
 ### Pull requests
 
