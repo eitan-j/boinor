@@ -7,7 +7,7 @@
 - pylint no longer complains about missing docstrings
 - orbit._state now is public available as orbit.state
 - instead of needing to shovel units back and forth, a new property exists: Event.last_t_without_unit
-
+- make all functions in twobody/angles.py usable with vectors, especially M_to_E() and M_to_F()
 
 ### Coverage
 
@@ -17,6 +17,9 @@ The code coverage increased from 96.47% to XX.XX%.
 ### Bugs fixed
 
 - M_to_E is not vectorized ({github}`poliastro issue #1340 <poliastro/poliastro#1340>`).
+- mee2rv code is broken {github}`poliastro issue #1564 <poliastro/poliastro#1564>`).
+  This was already fixed in version 0.18.6, but for the sake of completeness should be mentioned
+  here as well, so that nobody wonders why it disappeared from misc/issues.json.open.
 
 
 ### Pull requests

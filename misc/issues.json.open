@@ -91,11 +91,6 @@
   },
   {
     "state": "OPEN",
-    "title": "`poliastro.core.elements.mee2rv` code is broken",
-    "url": "https://github.com/poliastro/poliastro/issues/1564"
-  },
-  {
-    "state": "OPEN",
     "title": "Ability to retrieve mean elements of any pair of bodies",
     "url": "https://github.com/poliastro/poliastro/issues/1558"
   },
