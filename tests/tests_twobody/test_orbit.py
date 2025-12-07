@@ -2,6 +2,7 @@
 # there are lots of things to test, so this is large
 # pylint: disable=too-many-lines
 from collections import OrderedDict
+import cProfile
 from functools import partial
 import pickle
 from unittest import mock
@@ -34,6 +35,7 @@ from boinor.bodies import (
     Venus,
 )
 from boinor.constants import J2000, J2000_TDB
+from boinor.core import elements
 from boinor.core.elements import rv2coe
 from boinor.ephem import Ephem
 from boinor.examples import iss
@@ -1458,3 +1460,52 @@ def test_orbit_from_equinoctial():
         k=argp * u.rad,
         L=nu * u.rad,
     )
+
+
+# poliastro:#1006, functions taken from Jupyter Notebook of Turakar
+# this is how it started
+# --------------------------------------------------------------------------------------------------------------- benchmark: 2 tests --------------------------------------------------------------------------------------------------------------
+# Name (time in ns)                          Min                        Max                      Mean                     StdDev                 Median                       IQR            Outliers             OPS            Rounds  Iterations
+# -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# test_benchmark_orbit_rv2coe           799.4473 (1.0)             988.8411 (1.0)            841.3792 (1.0)              82.5330 (1.0)         806.4508 (1.0)             53.2717 (1.0)           1;1  1,188,524.7946 (1.0)           5          50
+# test_benchmark_orbit_classical     60,551.0175 (75.74)    23,769,566.8638 (>1000.0)  4,802,635.7293 (>1000.0)  10,602,836.8382 (>1000.0)  61,082.5419 (75.74)    5,927,536.9346 (>1000.0)       1;1        208.2190 (0.00)          5          50
+# -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+def test_benchmark_orbit_classical(benchmark):
+    # Data from Curtis, example 4.3
+    r = [-6045, -3490, 2500] * u.km
+    v = [-3.457, 6.618, 2.533] * u.km / u.s
+
+    orb = Orbit.from_vectors(Earth, r, v)
+    benchmark.pedantic(orb.classical, iterations=50, rounds=5)
+
+
+def test_benchmark_orbit_rv2coe(benchmark):
+    # Data from Curtis, example 4.3
+    r = [-6045, -3490, 2500] * u.km
+    v = [-3.457, 6.618, 2.533] * u.km / u.s
+
+    orb = Orbit.from_vectors(Earth, r, v)
+    benchmark.pedantic(
+        elements.rv2coe, args=(orb.attractor.k.value * 1e-9, orb.r.value, orb.v.value), iterations=50, rounds=5
+    )
+
+
+def test_profile_orbit_classical_execute():
+    # Data from Curtis, example 4.3
+    r = [-6045, -3490, 2500] * u.km
+    v = [-3.457, 6.618, 2.533] * u.km / u.s
+
+    orb = Orbit.from_vectors(Earth, r, v)
+    orb.classical()
+
+
+def test_profile_orbit_classical():
+    """adding profiling for orb.classical()"""
+    profiler = cProfile.Profile()
+    profiler.enable()
+    for _ in range(10):
+        test_profile_orbit_classical_execute()
+    profiler.disable()
+    profiler.print_stats(sort="time")

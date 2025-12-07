@@ -323,6 +323,7 @@ class Orbit(OrbitCreationMixin):
 
     def classical(self):
         """Classical orbital elements."""
+
         return (
             self.a,
             self.ecc,
@@ -331,6 +332,35 @@ class Orbit(OrbitCreationMixin):
             self.argp.to(u.deg),
             self.nu.to(u.deg),
         )
+
+        # though not correct, this improves things just a bit: OPS 208.2190 -> 211.4453
+        # return (
+        #     self.a,
+        #     self.ecc,
+        #     self.inc,
+        #     self.raan,
+        #     self.argp,
+        #     self.nu,
+        # )
+
+        # this does not make things better
+        # selfstate=self.state.to_classical()
+        # return (
+        #     selfstate.a,
+        #     selfstate.ecc,
+        #     selfstate.inc.to(u.deg),
+        #     selfstate.raan.to(u.deg),
+        #     selfstate.argp.to(u.deg),
+        #     selfstate.nu.to(u.deg),
+        # )
+        # return (
+        #     self.a,
+        #     self.ecc,
+        #     self.inc.to(u.deg),
+        #     self.raan.to(u.deg),
+        #     self.argp.to(u.deg),
+        #     self.nu.to(u.deg),
+        # )
 
     def pqw(self):
         """Perifocal frame (PQW) vectors."""
