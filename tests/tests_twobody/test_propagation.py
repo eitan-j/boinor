@@ -476,3 +476,30 @@ def test_propagator_with_zero_eccentricity(propagator):
     assert_quantity_allclose(orbit.inc, res.inc)
     assert_quantity_allclose(orbit.raan, res.raan)
     assert_quantity_allclose(orbit.argp, res.argp)
+
+
+def test_propagation_many():
+    # Data from Vallado, example 2.4
+    r0 = np.array([1131.340, -2282.343, 6672.423]) * u.km
+    v0 = np.array([-5.64305, 4.30333, 2.42879]) * u.km / u.s
+    tofs = [40 * 60.0] * u.s
+
+    orbit = Orbit.from_vectors(Earth, r0, v0)
+
+    expected_r = np.array([-4219.7527, 4363.0292, -3958.7666]) * u.km
+    expected_v = np.array([3.689866, -1.916735, -6.112511]) * u.km / u.s
+
+    method = CowellPropagator()
+    rrs_cowell, vvs_cowell = method.propagate_many(orbit.state, tofs)
+    assert_quantity_allclose(rrs_cowell[0], expected_r, rtol=1e-5)
+    assert_quantity_allclose(vvs_cowell[0], expected_v, rtol=1e-4)
+
+    method = FarnocchiaPropagator()
+    rrs_farnocchia, vvs_farnocchia = method.propagate_many(orbit.state, tofs)
+    assert_quantity_allclose(rrs_farnocchia[0], expected_r, rtol=1e-5)
+    assert_quantity_allclose(vvs_farnocchia[0], expected_v, rtol=1e-4)
+
+    method = ValladoPropagator()
+    rrs_vallado, vvs_vallado = method.propagate_many(orbit.state, tofs)
+    assert_quantity_allclose(rrs_vallado[0], expected_r, rtol=1e-5)
+    assert_quantity_allclose(vvs_vallado[0], expected_v, rtol=1e-4)

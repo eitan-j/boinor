@@ -57,3 +57,16 @@ class ValladoPropagator:
 
         new_state = RVState(state.attractor, (r, v), state.plane)
         return new_state
+
+    def propagate_many(self, state, tofs):
+        state = state.to_vectors()
+        k = state.attractor.k.to_value(u.km**3 / u.s**2)
+        rv0 = state.to_value()
+
+        # TODO: This should probably return a RVStateArray instead,
+        # see discussion at https://github.com/boinor/boinor/pull/1492
+        results = np.array([vallado(k, *rv0, tof, numiter=self._numiter) for tof in tofs.to_value(u.s)])
+        return (
+            results[:, 0] << u.km,
+            results[:, 1] << (u.km / u.s),
+        )
