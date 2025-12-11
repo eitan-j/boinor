@@ -514,9 +514,9 @@ def test_propagation_many():
         DanbyPropagator(),
         MarkleyPropagator(),
         GoodingPropagator(),
+        RecseriesPropagator(),
         #        CowellPropagator(),
         #        FarnocchiaPropagator(),
-        #        RecseriesPropagator(),
         #        ValladoPropagator(),
     ],
 )

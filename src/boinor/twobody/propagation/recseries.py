@@ -2,6 +2,7 @@
 import sys
 
 from astropy import units as u
+import numpy as np
 
 from boinor.core.propagation import recseries_coe as recseries_fast
 from boinor.twobody.propagation.enums import PropagatorKind
@@ -58,3 +59,34 @@ class RecseriesPropagator:
 
         new_state = ClassicalState(state.attractor, state.to_tuple()[:5] + (nu,), state.plane)
         return new_state
+
+    def propagate_many_sa(self, state, tofs):
+        state = state.to_classical()
+
+        # k = state.attractor.k.to_value(u.km**3 / u.s**2)
+        # rv0 = state.to_value()
+
+        rv_state_array = np.array(
+            [
+                ClassicalState(
+                    state.attractor,
+                    state.to_tuple()[:5]
+                    + (
+                        recseries_fast(
+                            state.attractor.k.to_value(u.km**3 / u.s**2),
+                            *state.to_value(),
+                            tof,
+                            method=self._method,
+                            order=self._order,
+                            numiter=self._numiter,
+                            rtol=self._rtol,
+                        )
+                        << u.rad,
+                    ),
+                    state.plane,
+                )
+                for tof in tofs.to_value(u.s)
+            ]
+        )
+
+        return rv_state_array
