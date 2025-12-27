@@ -16,12 +16,14 @@ from boinor.plotting.orbit.backends.plotly import (
 class Dummy2D(BasePlotly):
     """dummy class to help with 2D plotting"""
 
-    def __init__(self, figure):
+    def __init__(self, figure, width=None, height=None):
         theme = "plotly_dark"
 
         # Declare the layout and attach it to the figure
         layout = go.Layout(
             autosize=True,
+            width=width,
+            height=height,
             xaxis={"constrain": "domain"},
             yaxis={"scaleanchor": "x"},
             template=theme,
@@ -51,6 +53,14 @@ def test_orbit_backends_plotly():
     assert v.x == x
     assert v.y == y
     assert v.z == z
+
+    # at the moment this does not give any exception
+    _ = Dummy2D(None, width=234, height=345)
+    with pytest.raises(
+        ValueError,
+        match="Invalid value of type 'builtins.str' received for the 'height' property of layout",
+    ):
+        _ = Dummy2D(None, width=234, height="nix da")
 
 
 def test_orbit_backends_base():

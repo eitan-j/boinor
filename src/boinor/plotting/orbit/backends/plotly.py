@@ -237,7 +237,7 @@ class BasePlotly(OrbitPlotterBackend):
 class Plotly2D(BasePlotly):
     """An orbit plotter backend class based on Plotly."""
 
-    def __init__(self, figure=None, use_dark_theme=False):
+    def __init__(self, figure=None, use_dark_theme=False, width=None, height=None):
         """Initializes a backend instance.
 
         Parameters
@@ -247,6 +247,10 @@ class Plotly2D(BasePlotly):
         use_dark_theme : bool, optional
             If ``True``, uses dark theme. If ``False``, uses light theme.
             Default to ``False``.
+        width : integer, optional
+            Explicitely set width of layout
+        height : integer, optional
+            Explicitely set height of layout
 
         """
         # Apply the desired theme
@@ -255,6 +259,8 @@ class Plotly2D(BasePlotly):
         # Declare the layout and attach it to the figure
         layout = go.Layout(
             autosize=True,
+            width=width,
+            height=height,
             xaxis={"constrain": "domain"},
             yaxis={"scaleanchor": "x"},
             template=theme,
@@ -393,7 +399,7 @@ class Plotly2D(BasePlotly):
 class Plotly3D(BasePlotly):
     """An orbit plotter backend class based on Plotly."""
 
-    def __init__(self, figure=None, use_dark_theme=False):
+    def __init__(self, figure=None, use_dark_theme=False, width=None, height=None):
         """Initialize a backend instance.
 
         Parameters
@@ -403,6 +409,10 @@ class Plotly3D(BasePlotly):
         use_dark_theme : bool, optional
             If ``True``, uses dark theme. If ``False``, uses light theme.
             Default to ``False``.
+        width : integer, optional
+            Explicitely set width of layout
+        height : integer, optional
+            Explicitely set height of layout
 
         """
         # Apply the desired theme
@@ -411,6 +421,8 @@ class Plotly3D(BasePlotly):
         # Declare the layout and attach it to the figure
         layout = go.Layout(
             autosize=True,
+            width=width,
+            height=height,
             scene={"aspectmode": "data"},
             template=theme,
         )

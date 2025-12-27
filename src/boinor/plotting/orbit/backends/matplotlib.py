@@ -20,7 +20,7 @@ def _segments_from_arrays(x, y):
 class Matplotlib2D(OrbitPlotterBackend):
     """An orbit plotter backend class based on Matplotlib."""
 
-    def __init__(self, ax=None, use_dark_theme=False):
+    def __init__(self, ax=None, use_dark_theme=False, width=None, height=None):
         """Initializes a backend instance.
 
         Parameters
@@ -30,6 +30,10 @@ class Matplotlib2D(OrbitPlotterBackend):
         use_dark_theme : bool, optional
             If ``True``, uses dark theme. If ``False``, uses light theme.
             Default to ``False``.
+        width : integer, optional (XXX not used yet)
+            Explicitely set width of layout
+        height : integer, optional (XXX not used yet)
+            Explicitely set height of layout
 
         """
         if ax is None:
