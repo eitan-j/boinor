@@ -318,6 +318,31 @@ def test_frozen_orbit_no_args(attractor, alt, expected_inc, expected_argp):
 
 
 @pytest.mark.parametrize(
+    "attractor,alt,ecc,expected_ecc,expected_inc",
+    [
+        (
+            Earth,
+            1e6 * u.m,
+            0.04 * u.one,
+            0.04 * u.one,
+            0.352471 * u.rad,
+        ),
+        (
+            Earth,
+            0 * u.m,
+            0.04 * u.one,
+            0.04 * u.one,
+            0.303046 * u.rad,
+        ),
+    ],
+)
+def test_frozen_orbit_critical(attractor, alt, ecc, expected_ecc, expected_inc):
+    orbit = Orbit.frozen(attractor, alt, argp=None, ecc=ecc)
+    assert_allclose(orbit.ecc, expected_ecc)
+    assert_allclose(orbit.inc, expected_inc, rtol=1e-6)
+
+
+@pytest.mark.parametrize(
     "attractor,alt,argp,expected_inc,ecc,expected_ecc",
     [
         (
@@ -346,6 +371,11 @@ def test_frozen_orbit_with_non_critical_argp(attractor, alt, argp, expected_inc,
 
 def test_frozen_orbit_non_critical_inclination():
     orbit = Orbit.frozen(Earth, 1e3 * u.km, inc=0 * u.deg)  # Non-critical value
+    assert orbit.argp in [np.pi / 2, 3 * np.pi / 2] * u.rad
+
+
+def test_frozen_orbit_non_critical_inclination_and_argp():
+    orbit = Orbit.frozen(Earth, 1e3 * u.km, argp=10 * u.deg, inc=0 * u.deg)  # Non-critical value
     assert orbit.argp in [np.pi / 2, 3 * np.pi / 2] * u.rad
 
 
