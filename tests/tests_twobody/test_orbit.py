@@ -245,6 +245,24 @@ def test_parabolic_has_zero_energy():
 
 
 @pytest.mark.filterwarnings("ignore::DeprecationWarning")
+def test_pqw_big_inc():
+    attractor = Earth
+    _d = 0.1 * u.AU  # Unused distance
+    _a = 0.5 * u.deg  # Unused angle
+    _e = 0.0 * u.one  # Unused angle
+    expected_p = [0.99996192, 0.00872654, -0.0] * u.one
+    expected_q = [-0.0087262, 0.99992385, 0.00872654] * u.one
+    expected_w = [7.61524218e-05, -8.72620322e-03, 9.99961923e-01] * u.one
+
+    ss = Orbit.from_classical(attractor, _d, _e, _a, _a, _a, _a)
+    p, q, w = ss.pqw()
+
+    assert_allclose(p, expected_p, rtol=1e-6)
+    assert_allclose(q, expected_q, rtol=1e-6)
+    assert_allclose(w, expected_w, rtol=1e-6)
+
+
+@pytest.mark.filterwarnings("ignore::DeprecationWarning")
 def test_pqw_for_circular_equatorial_orbit():
     ss = Orbit.circular(Earth, 600 * u.km)
     expected_p = [1, 0, 0] * u.one
