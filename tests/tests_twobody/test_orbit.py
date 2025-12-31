@@ -461,6 +461,17 @@ def test_sample_big_orbits():
     assert len(positions) == 15
 
 
+def test_sample_with_anomaly():
+    # See https://github.com/poliastro/poliastro/issues/265
+    ss = Orbit.from_vectors(
+        Sun,
+        [-9_018_878.6, -94_116_055, 22_619_059] * u.km,
+        [-49.950923, -12.948431, -4.2925158] * u.km / u.s,
+    )
+    positions = ss.sample_with_anomaly(15)
+    assert len(positions) == 15
+
+
 def test_hyperbolic_nu_value_check(hyperbolic):
     positions = hyperbolic.sample(100)
 
