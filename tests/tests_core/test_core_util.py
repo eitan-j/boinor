@@ -134,3 +134,10 @@ def test_alinspace_no_max_value_uses_full_circle(x):
     result = alinspace(x)
 
     assert result.max() - result.min() == pytest.approx(2 * np.pi)
+
+
+@settings(deadline=None)
+@given(x=angles())
+def test_alinspace_no_endpoint(x):
+    result = alinspace(x, num=10000000, endpoint=False)
+    assert result.max() - result.min() == pytest.approx(2 * np.pi)
