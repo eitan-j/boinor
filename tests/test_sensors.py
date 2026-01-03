@@ -28,6 +28,13 @@ from boinor.sensors import (
             1.5984 * u.deg,
             -1.5984 * u.deg,
         ),
+        (  # own example to test edge cases, expected values taken from latest calculations
+            -Earth.R.to(u.km),
+            (25 * u.deg).to(u.rad),
+            (0 * u.deg).to(u.rad),
+            -0.218166 * u.rad,
+            0.218166 * u.rad,
+        ),
     ],
 )
 def test_max_and_min_ground_range(altitude, fov, boresight, expected_lat_lon_max, expected_lat_lon_min):
@@ -51,6 +58,17 @@ def test_max_and_min_ground_range(altitude, fov, boresight, expected_lat_lon_max
             (6.9254 / 2) * u.deg,
             44.9926 * u.deg,
             45.7577 * u.deg,
+        ),
+        (  # own example to test edge cases, expected values taken from latest calculations
+            -Earth.R.to(u.km),
+            (25 * u.deg).to(u.rad),
+            (40 * u.deg).to(u.rad),
+            (140 * u.deg).to(u.rad),
+            (50 * u.deg).to(u.rad),
+            (40 * u.deg).to(u.rad),
+            -0.218166 * u.rad,
+            1.127482 * u.rad,
+            -0.600753 * u.rad,
         ),
     ],
 )
