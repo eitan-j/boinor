@@ -1,6 +1,7 @@
 """tests related to propagation in sub-package core"""
 from astropy import units as u
 from astropy.tests.helper import assert_quantity_allclose
+import numpy as np
 import pytest
 
 from boinor.core.elements import coe2rv
@@ -18,6 +19,7 @@ from boinor.core.propagation import (
     pimienta,
     pimienta_coe,
     recseries,
+    recseries_coe,
     vallado,
 )
 from boinor.core.propagation.farnocchia import (
@@ -123,6 +125,10 @@ def test_farnocchia_stuff():
     value = M_to_D_near_parabolic(M, ecc)
     assert_quantity_allclose(expected_value, value)
 
+    # we do not enough iterations and fail
+    value = M_to_D_near_parabolic(M, ecc, maxiter=1)
+    assert_quantity_allclose(np.nan, value)
+
     expected_value = 0.5381960297002113
     value = nu_from_delta_t(0.4, ecc)
     assert_quantity_allclose(expected_value, value)
@@ -182,6 +188,9 @@ def test_kepler_algorithm():
     print("vallado: ", f, g, fdot, gdot)
     assert_quantity_allclose(expected_r, value[0])
     assert_quantity_allclose(expected_v, value[1], rtol=1e-06)
+    # low numiter should fail
+    with pytest.raises(RuntimeError, match="Maximum number of iterations reached"):
+        _, _, _, _ = vallado(k, r0, v0, tof, 1)
 
     value_danby = danby(k, r0, v0, tof)
     #    print("danby: ", value_danby)
@@ -215,3 +224,43 @@ def test_kepler_algorithm():
     # print("cowell: ", value_cowell_r, value_cowell_v)
     assert_quantity_allclose(expected_r, value_cowell_r[0])
     assert_quantity_allclose(expected_v, value_cowell_v[0], rtol=1e-06)
+
+
+def test_edge_case_reseries_coe():
+    period = iss.period
+    a, ecc, inc, raan, argp, nu = iss.classical()
+    p = a * (1 - ecc**2)
+
+    # Delete the units
+    p = p.to_value(u.km)
+    ecc = ecc.value
+    period = period.to_value(u.s)
+    inc = inc.to_value(u.rad)
+    raan = raan.to_value(u.rad)
+    argp = argp.to_value(u.rad)
+    nu = nu.to_value(u.rad)
+    k = iss.attractor.k.to_value(u.km**3 / u.s**2)
+
+    # retest here to get positive result when doing only this test
+    nu_final = recseries_coe(k, p, ecc, inc, raan, argp, nu, period)
+    assert_quantity_allclose(nu_final, nu)
+
+    nu_final = recseries_coe(k, p, ecc, inc, raan, argp, nu, period, method="order")
+    assert_quantity_allclose(nu_final, nu)
+
+    # order=1 should fail
+    nu_final = recseries_coe(k, p, ecc, inc, raan, argp, nu, period, method="order", order=1)
+    assert nu_final != nu
+
+    # order=2,3 should pass
+    nu_final = recseries_coe(k, p, ecc, inc, raan, argp, nu, period, method="order", order=2)
+    assert_quantity_allclose(nu_final, nu)
+
+    nu_final = recseries_coe(k, p, ecc, inc, raan, argp, nu, period, method="order", order=3)
+    assert_quantity_allclose(nu_final, nu)
+
+    with pytest.raises(ValueError, match="Unknown recursion"):
+        _ = recseries_coe(k, p, ecc, inc, raan, argp, nu, period, method="blabla")
+
+    with pytest.raises(ValueError, match="Parabolic/Hyperbolic orbits not supported"):
+        _ = recseries_coe(k, p, 1.1, inc, raan, argp, nu, period)
