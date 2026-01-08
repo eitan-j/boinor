@@ -178,6 +178,8 @@ class PorkchopPlotter:
             self.launch_span[np.newaxis, :],
             self.arrival_span[:, np.newaxis],
         )
+        if any(None in row for row in tof):
+            raise ValueError("At least one result after calling targetting_vec is None.")
 
         # Start drawing porkchop
 

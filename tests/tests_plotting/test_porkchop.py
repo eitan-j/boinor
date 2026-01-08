@@ -4,6 +4,7 @@ from numpy.testing import assert_allclose
 import pytest
 
 from boinor.bodies import Earth, Mars
+from boinor.examples import iss
 from boinor.plotting.porkchop import PorkchopPlotter
 from boinor.util import time_range
 
@@ -24,6 +25,28 @@ def test_porkchop_plotting():
     _, _, _, _, _ = porkchop_plot.porkchop()
 
     return fig
+
+
+def test_porkchop_plotting_outside_solar_bodies():
+    """compare pictures with generated reference pictures
+
+    This test generates a plot and compares the resulting picture
+    with a previously generated one.
+    """
+    fig, ax = plt.subplots()
+
+    launch_span = time_range("2005-04-30", end="2005-10-07")
+    arrival_span = time_range("2005-11-16", end="2006-12-21")
+    porkchop_plot = PorkchopPlotter(Earth, iss, launch_span, arrival_span, ax=ax)
+    # original, maybe can be used later again: dv_dpt, dv_arr, c3dpt, c3arr, tof = porkchop_plot.porkchop()
+    _, _, _, _, _ = porkchop_plot.porkchop()
+
+    # try to produce negative tof
+    porkchop_plot = PorkchopPlotter(Earth, Mars, arrival_span, launch_span, ax=ax)
+    with pytest.raises(ValueError, match="At least one result after calling targetting_vec is None."):
+        dv_dpt, dv_arr, c3dpt, c3arr, tof = porkchop_plot.porkchop()
+
+    # XXX later: return fig
 
 
 def test_porkchop_deprecated_function():
