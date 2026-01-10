@@ -1,5 +1,6 @@
 """tests related to module cr3bp_lib_calc of sub-package threebody"""
-# from astropy import units as u
+from astropy import units as u
+
 # from astropy.units import L_ND
 from astropy.tests.helper import assert_quantity_allclose
 import numpy as np
@@ -36,7 +37,12 @@ from boinor.threebody.cr3bp_lib_calc import lib_pt_loc
 def test_lib_pt_loc(SysChars, conv_tol, expected_lib_pt_loc):
     lib_pt = lib_pt_loc(SysChars, conv_tol)
 
-    # L_ND = u.def_unit("dist_nd", SysChars.lstar)
+    L_ND = u.def_unit("dist_nd", SysChars.lstar)
+    V_ND = u.def_unit("vel_nd", SysChars.lstar)
+    T_ND = u.def_unit("time_nd", SysChars.tstar)
+    assert L_ND.is_equivalent(SysChars.V_ND)
+    assert V_ND.is_equivalent(SysChars.V_ND)
+    assert T_ND.is_equivalent(SysChars.V_ND)
 
     lib_pt = lib_pt.value
 
