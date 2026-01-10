@@ -96,9 +96,6 @@ workflows:
   build_and_test:
     jobs:
       - quality
-      - tests310:
-          requires:
-            - quality
       - tests311:
           requires:
             - quality
