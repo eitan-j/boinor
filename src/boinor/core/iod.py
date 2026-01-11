@@ -115,6 +115,8 @@ def vallado(k, r0, r, tof, M, prograde, lowpath, numiter, rtol):
     norm_r = norm(r)
     norm_r0_times_norm_r = norm_r0 * norm_r
     norm_r0_plus_norm_r = norm_r0 + norm_r
+    if norm_r0_times_norm_r == 0.0:
+        raise ValueError("Either norm of r or r0 is zero, this should not happen")
 
     cos_dnu = (r0 @ r) / norm_r0_times_norm_r
 

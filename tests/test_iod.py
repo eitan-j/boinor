@@ -202,3 +202,24 @@ def test_compute_t_min(ll, M, expected_x_T_min, expected_T_min):
     x_T_min, T_min = _compute_T_min(ll, M, 10, rtol)
     assert_quantity_allclose(x_T_min, expected_x_T_min, rtol=rtol)
     assert_quantity_allclose(T_min, expected_T_min, rtol=rtol)
+
+
+def test_edge_cases():
+    k = Earth.k
+    r0 = [15945.34, 0.0, 0.0] * u.km
+    r0_zero = [0.0, 0.0, 0.0] * u.km
+    r0_1 = [1.0, 0.0, 0.0] * u.km
+    r = [12214.83399, 10249.46731, 0.0] * u.km
+    r_1 = [-1.0, 0.0, 0.0] * u.km
+    tof = 76.0 * u.min
+
+    with pytest.raises(RuntimeError, match="Maximum number of iterations reached"):
+        va, vb = vallado.lambert(k, r0, r, tof, numiter=1)
+    with pytest.raises(NotImplementedError, match="Multi-revolution scenario not supported for Vallado."):
+        va, vb = vallado.lambert(k, r0, r, tof, M=1, numiter=10)
+    with pytest.raises(ValueError, match="Either norm of r or r0 is zero, this should not happen"):
+        va, vb = vallado.lambert(k, r0_zero, r, tof, numiter=10)
+    with pytest.raises(RuntimeError, match="Cannot compute orbit, phase angle is 180 degrees"):
+        va, vb = vallado.lambert(k, r0_1, r_1, tof, numiter=10)
+    with pytest.raises(RuntimeError, match="Failed to converge"):
+        va, vb = izzo.lambert(k, r0, r, tof, numiter=1)
