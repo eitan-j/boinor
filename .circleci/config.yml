@@ -129,3 +129,6 @@ workflows:
       - tests313-coverage:
           requires:
             - quality
+      - tests314:
+          requires:
+            - quality
