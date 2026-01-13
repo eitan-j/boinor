@@ -11,6 +11,7 @@ from boinor.earth.atmosphere.jacchia import Jacchia77
 
 # SOLUTIONS DIRECTLY TAKEN FROM JACCHIA77 REPORT AND
 # https://git.mysmce.com/ccmc-share/modelwebarchive/-/raw/main/Jacchi-Reference-Atmosphere/t1000.out
+# (link no longer works and wayback machine is no help)
 jacchia77_solutions = {
     90
     * u.km: [
@@ -282,14 +283,36 @@ def test_H_correction(z):
     #       later one has to check the results as well
 
 
-# @pytest.mark.parametrize("z", jacchia77_solutions.keys())
-@pytest.mark.xfail(
-    reason="This is basically just a template and need to be expanded later; fails on circleci but not locally!?"
-)
+@pytest.mark.parametrize("z", jacchia77_solutions.keys())
 def test_O_and_O2_correction(z):
-    Jacchia77(1000 * u.K)._O_and_O2_correction(200)
-    # TODO: at the moment it is only checked whether the call does work (it didn't before)
-    #       later one has to check the results as well
+    jacchia = Jacchia77(1000 * u.K)
+    Z, T, CN2, CO2, CO, CAr, CHe, CH, CM, WM = jacchia.altitude_profile(z)
+    jacchia._O_and_O2_correction(z.value)
+    (
+        Z_corr,
+        T_corr,
+        CN2_corr,
+        CO2_corr,
+        CO_corr,
+        CAr_corr,
+        CHe_corr,
+        CH_corr,
+        CM_corr,
+        WM_corr,
+    ) = jacchia.altitude_profile(z)
+
+    assert Z == Z_corr
+    assert T == T_corr
+    assert CN2 == CN2_corr
+    # TODO: shouldn't CO2 and CO2_corr be different here??
+    assert CO2 == CO2_corr
+    # TODO: shouldn't CO and CO_corr be different here??
+    assert CO == CO_corr
+    assert CAr == CAr_corr
+    assert CHe == CHe_corr
+    assert CH == CH_corr
+    assert CM == CM_corr
+    assert WM == WM_corr
 
 
 def test_outside_upper_limit_coesa76():
