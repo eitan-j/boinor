@@ -287,7 +287,7 @@ def test_H_correction(z):
 def test_O_and_O2_correction(z):
     jacchia = Jacchia77(1000 * u.K)
     Z, T, CN2, CO2, CO, CAr, CHe, CH, CM, WM = jacchia.altitude_profile(z)
-    jacchia._O_and_O2_correction(z.value)
+    jacchia._O_and_O2_correction(int(z.value))
     (
         Z_corr,
         T_corr,
