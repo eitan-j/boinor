@@ -22,6 +22,9 @@ The code coverage increased from 96.47% to XX.XX%.
   here as well, so that nobody wonders why it disappeared from misc/issues.json.open.
 - all (except a few that I don't intend to fix) disabled pylint message are gone from .pylintrc now ({github}`boinor issue #4 <boinor/boinor#4>`).
 
+- Review naming conventions in light of PEP8 ({github}`poliastro issue #1522 <poliastro/poliastro#1522>`) has been done and there won't be a change
+  of variable names. In this case physics is more important than PEP8.
+
 ### Pull requests
 
 - sadly none

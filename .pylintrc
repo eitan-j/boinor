@@ -423,8 +423,14 @@ confidence=HIGH,
 # XXX duplicate-code (R0801):        is not something to take care of at the moment
 # XXX line-too-long:                 I don't like restrictions in line length
 # XXX unused-argmuent:               who cares about such things, the API is as it is
-# XXX invalid name:                  I do like all those names
 # XXX too-many-positional-arguments: there are as much parameters as needed
+# invalid name
+#   On one side there is PEP8, on the other side is physics.
+#   Though PEP8 is generally useful, it becomes strange when applied to formulas.
+#   For example there is a suggestion to rename method _H_correction() to _h_correction().
+#   But this is wrong, it is not a correction of the height (h) but a correction of the
+#   hydrogen (H) concentration (there are lots of other examples).
+#   So and because it is just a C-message, I won't fix this and disable it.
 disable=too-many-positional-arguments,
         invalid-name,
         unused-argument,

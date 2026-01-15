@@ -131,11 +131,6 @@
   },
   {
     "state": "OPEN",
-    "title": "Review naming conventions in light of PEP8",
-    "url": "https://github.com/poliastro/poliastro/issues/1522"
-  },
-  {
-    "state": "OPEN",
     "title": "Sometimes true anomalies cross circle boundaries and get out of range",
     "url": "https://github.com/poliastro/poliastro/issues/1517"
   },
