@@ -29,7 +29,8 @@ The code coverage increased from 96.47% to XX.XX%.
 
 ### Pull requests
 
-- sadly none
+- Using SPICE dsk kernel to render for a few small,irregularly shaped objects ({github}`boinor issue #46 <boinor/boinor#46>`) created by @rahulranjansah 
+- FIX: Resolve CircleCI failures ({github}`boinor issue #49 <boinor/boinor#49>`) created by @rahulranjansah 
 
 ### Contributors
 
@@ -38,6 +39,7 @@ release, with a + sign indicating first contribution.
 
 - Thorsten Alteholz
 - Manuel López-Ibáñez
+- Rahul Ranjan Sah
 
 
 ## boinor 0.19.0 (31.08.2025)
