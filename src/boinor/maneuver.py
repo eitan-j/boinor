@@ -58,6 +58,7 @@ class Maneuver:
     @staticmethod
     @u.quantity_input(dts=u.s, dvs=u.m / u.s)
     def impulse_has_valid_units(dts, dvs):
+        """make sure that all parameters dts and dvs have the correct unit"""
         return dts, dvs
 
     @classmethod
