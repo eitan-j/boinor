@@ -54,6 +54,7 @@ class BaseInterpolator:
     """Dummy interpolator, the correct one has to be set"""
 
     def interpolate(self, epochs, reference_epochs, coordinates):
+        """Dummy interpolation function, the correct one has to be set"""
         raise NotImplementedError
 
 
@@ -61,6 +62,8 @@ class SincInterpolator:
     """Whittaker-Shannon interpolator"""
 
     def interpolate(self, epochs, reference_epochs, coordinates):
+        """Interpolation function of the Whittaker-Shannon interpolator"""
+
         def _interp_1d(arr):
             return sinc_interp(arr, reference_epochs.jd, epochs.jd)
 
@@ -85,6 +88,7 @@ class SplineInterpolator:
         self._kind = kind
 
     def interpolate(self, epochs, reference_epochs, coordinates):
+        """interpolation function of the spline interpolator (by default a cubic spline is used)"""
         xyz_unit = coordinates.xyz.unit
         d_xyz_unit = coordinates.differentials["s"].d_xyz.unit
 
