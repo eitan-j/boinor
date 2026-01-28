@@ -29,8 +29,10 @@ The code coverage increased from 96.47% to XX.XX%.
 
 ### Pull requests
 
-- Using SPICE dsk kernel to render for a few small,irregularly shaped objects ({github}`boinor issue #46 <boinor/boinor#46>`) created by @rahulranjansah 
-- FIX: Resolve CircleCI failures ({github}`boinor issue #49 <boinor/boinor#49>`) created by @rahulranjansah 
+- Using SPICE dsk kernel to render for a few small,irregularly shaped objects ({github}`boinor issue #46 <boinor/boinor#46>`) created by @rahulranjansah
+- FIX: Resolve CircleCI failures ({github}`boinor issue #49 <boinor/boinor#49>`) created by @rahulranjansah
+- Aitoff projections: Aitoff Projection of Solar System bodies and spacecraft ({github}`boinor issue #48 <boinor/boinor#48>`) created by @rahulranjansah
+- Fix aitoff plotting init ({github}`boinor issue #50 <boinor/boinor#50>`) created by @rahulranjansah
 
 ### Contributors
 
