@@ -32,6 +32,7 @@ class CowellPropagator:
         self._f = f
 
     def propagate(self, state, tof):
+        """actual propagation function for Cowell propagator"""
         state = state.to_vectors()
         tofs = tof.reshape(-1)
 

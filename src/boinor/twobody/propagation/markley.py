@@ -27,6 +27,7 @@ class MarkleyPropagator:
     kind = PropagatorKind.ELLIPTIC
 
     def propagate(self, state, tof):
+        """actual propagation function for Markley propagator"""
         state = state.to_classical()
 
         nu = (

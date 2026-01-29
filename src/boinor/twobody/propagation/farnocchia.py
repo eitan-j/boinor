@@ -30,6 +30,7 @@ class FarnocchiaPropagator:
     kind = PropagatorKind.ELLIPTIC | PropagatorKind.PARABOLIC | PropagatorKind.HYPERBOLIC
 
     def propagate(self, state, tof):
+        """actual propagation function for Farnocchia propagator"""
         state = state.to_classical()
 
         nu = (

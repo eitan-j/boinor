@@ -28,6 +28,7 @@ class PimientaPropagator:
     kind = PropagatorKind.ELLIPTIC
 
     def propagate(self, state, tof):
+        """actual propagation function for Pimienta propagator"""
         state = state.to_classical()
 
         nu = (

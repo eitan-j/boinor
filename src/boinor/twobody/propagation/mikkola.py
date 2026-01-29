@@ -25,6 +25,7 @@ class MikkolaPropagator:
     kind = PropagatorKind.ELLIPTIC | PropagatorKind.HYPERBOLIC
 
     def propagate(self, state, tof):
+        """actual propagation function for Mikkola propagator"""
         state = state.to_classical()
 
         nu = (

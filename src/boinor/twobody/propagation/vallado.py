@@ -44,6 +44,7 @@ class ValladoPropagator:
         self._numiter = numiter
 
     def propagate(self, state, tof):
+        """actual propagation function for Vallado propagator"""
         state = state.to_vectors()
 
         r_raw, v_raw = vallado(

@@ -94,6 +94,7 @@ class BaseState:
         )
 
     def to_tuple(self):
+        """Converts to Six-tuple of orbital elements."""
         return self._elements
 
     def to_value(self):

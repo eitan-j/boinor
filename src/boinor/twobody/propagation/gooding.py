@@ -31,6 +31,7 @@ class GoodingPropagator:
     kind = PropagatorKind.ELLIPTIC
 
     def propagate(self, state, tof):
+        """actual propagation function for Gooding propagator"""
         state = state.to_classical()
 
         nu = (

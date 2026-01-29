@@ -26,6 +26,7 @@ class DanbyPropagator:
     kind = PropagatorKind.ELLIPTIC | PropagatorKind.HYPERBOLIC
 
     def propagate(self, state, tof):
+        """actual propagation function for Danby propagator"""
         state = state.to_classical()
 
         nu = (

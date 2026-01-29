@@ -42,6 +42,7 @@ class RecseriesPropagator:
         self._rtol = rtol
 
     def propagate(self, state, tof):
+        """actual propagation function for recseries propagator"""
         state = state.to_classical()
 
         nu = (
