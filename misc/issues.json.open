@@ -51,11 +51,6 @@
   },
   {
     "state": "OPEN",
-    "title": "Test failures on Debian",
-    "url": "https://github.com/poliastro/poliastro/issues/1614"
-  },
-  {
-    "state": "OPEN",
     "title": "Incorrect calculation of maneuver time of flight",
     "url": "https://github.com/poliastro/poliastro/issues/1602"
   },

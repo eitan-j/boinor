@@ -26,6 +26,8 @@ The code coverage increased from 96.47% to XX.XX%.
 
 - Review naming conventions in light of PEP8 ({github}`poliastro issue #1522 <poliastro/poliastro#1522>`) has been done and there won't be a change
   of variable names. In this case physics is more important than PEP8.
+- Test failures on Debian ({github}`poliastro issue #1614 <poliastro/poliastro#1614>`) was probably related to a bad combination of numba and numpy versions.
+  It no longer happens nowadays.
 
 ### Pull requests
 
