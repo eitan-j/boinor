@@ -121,11 +121,6 @@
   },
   {
     "state": "OPEN",
-    "title": "Poliastro is not compatible with PyInstaller",
-    "url": "https://github.com/poliastro/poliastro/issues/1510"
-  },
-  {
-    "state": "OPEN",
     "title": "Visualize the velocity vector of celestial bodies and elements",
     "url": "https://github.com/poliastro/poliastro/issues/1507"
   },
