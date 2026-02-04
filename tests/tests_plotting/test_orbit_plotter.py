@@ -495,3 +495,8 @@ def test_edge_cases(Backend):
     plotter.set_body_frame(Jupiter)
     # XXX plotting with 3D does not work here
     # plotter.plot_trajectory(trajectory)
+
+
+def test_body_plotting_without_epoch():
+    # this must not raise an error, as epoch should be optional
+    Earth.plot()

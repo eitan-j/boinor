@@ -35,6 +35,7 @@ from astropy import units as u
 from astropy.constants import (  # pylint: disable=no-name-in-module    # this is a false positive
     G,
 )
+from astropy.time import Time
 from astropy.units import Quantity
 
 from boinor import constants
@@ -166,6 +167,9 @@ class SolarSystemPlanet(Body):
         # HACK: import here the OrbitPlotter to avoid a circular dependency
         # between bodies.py and misc.py
         from boinor.plotting.orbit.plotter import OrbitPlotter  # pylint: disable=C0415
+
+        if epoch is None:
+            epoch = Time.now().tdb
 
         return OrbitPlotter(backend=backend, plane=plane).plot_body_orbit(self, epoch=epoch, label=label)
 
