@@ -4,7 +4,7 @@ ci:
 
 repos:
 - repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v4.4.0
+  rev: v6
   hooks:
   - id: check-added-large-files
   - id: check-case-conflict
@@ -14,17 +14,20 @@ repos:
   - id: check-yaml
   - id: check-toml
   - id: check-xml
+  - id: destroyed-symlinks
   - id: debug-statements
   - id: mixed-line-ending
+  - id: detect-aws-credentials
+  - id: detect-private-key
 
-- repo: https://github.com/psf/black
-  rev: 23.3.0
+- repo: https://github.com/psf/black-pre-commit-mirror
+  rev: 26.1.0
   hooks:
   - id: black
     args: ["--line-length", "120"]
 
 - repo: https://github.com/astral-sh/ruff-pre-commit
-  rev: v0.11.7
+  rev: v0.12.0
   hooks:
     # Run the linter.
     - id: ruff

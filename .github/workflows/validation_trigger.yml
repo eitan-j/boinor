@@ -15,6 +15,6 @@ jobs:
   
   # Validate boinor's new features
   validation:
-    uses: boinor/validation/.github/workflows/trigger_validation.yml@main
+    uses: eitan-j/validation/.github/workflows/trigger_validation.yml@main
     with:
       boinor-branch: ${{ github.ref }}
