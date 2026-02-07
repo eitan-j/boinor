@@ -14,6 +14,7 @@ sys.modules[__name__].__class__ = OldPropagatorModule
 
 
 def vallado(k, r0, v0, tof, *, numiter):
+    """high level implementation of Vallado's method (see also core/propagation)"""
     # Compute Lagrange coefficients
     f, g, fdot, gdot = vallado_fast(k, r0, v0, tof, numiter)
 
@@ -60,6 +61,7 @@ class ValladoPropagator:
         return new_state
 
     def propagate_many(self, state, tofs):
+        """actual propagation function for Vallado propagator with array of TOFs"""
         state = state.to_vectors()
         k = state.attractor.k.to_value(u.km**3 / u.s**2)
         rv0 = state.to_value()

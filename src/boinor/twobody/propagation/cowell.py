@@ -51,6 +51,7 @@ class CowellPropagator:
         return new_state
 
     def propagate_many(self, state, tofs):
+        """actual propagation function for Cowell propagator with array of TOFs"""
         state = state.to_vectors()
 
         rrs, vvs = cowell(
