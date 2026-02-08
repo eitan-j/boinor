@@ -15,6 +15,7 @@ class OldPropagatorModule(sys.modules[__name__].__class__):
 
 
 def propagate(*args, **kwargs):
+    """dummy function for old propagation"""
     raise ImportError(
         "The 'propagate' function is gone, use either "
         "Orbit.propagate if you want to retrieve the final state, "

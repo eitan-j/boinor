@@ -42,6 +42,7 @@ class DanbyPropagator:
         return new_state
 
     def propagate_many_sa(self, state, tofs):
+        """actual propagation function for Danby propagator with array of TOFs"""
         state = state.to_classical()
 
         # k = state.attractor.k.to_value(u.km**3 / u.s**2)

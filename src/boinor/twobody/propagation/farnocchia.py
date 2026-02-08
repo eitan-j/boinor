@@ -46,6 +46,7 @@ class FarnocchiaPropagator:
         return new_state
 
     def propagate_many(self, state, tofs):
+        """actual propagation function for Farnocchia propagator with array of TOFs"""
         state = state.to_vectors()
         k = state.attractor.k.to_value(u.km**3 / u.s**2)
         rv0 = state.to_value()
