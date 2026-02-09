@@ -33,10 +33,12 @@ class Event:
 
     @property
     def terminal(self):
+        """getter for property whether integration shall be terminated"""
         return self._terminal
 
     @property
     def direction(self):
+        """getter for property direction"""
         return self._direction
 
     @property

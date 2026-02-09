@@ -6,6 +6,7 @@ from numpy import cos, sin
 
 @jit
 def rotation_matrix(angle, axis):
+    """create 3D rotation matrix for rotation by angle around axis"""
     assert axis in (0, 1, 2)
     angle = np.asarray(angle)
     c = cos(angle)
