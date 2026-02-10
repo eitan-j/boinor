@@ -397,7 +397,8 @@ def test_body_frame_raises_warning_if_time_is_not_tdb_with_proper_time(
 
 @pytest.mark.xfail(sys.maxsize < 2**32, reason="not supported for 32 bit systems")
 @pytest.mark.mpl_image_compare
-def test_plot_maneuver_using_matplotlib2D_backend():
+@pytest.mark.parametrize("Backend", DEFAULT_ORBIT_PLOTTER_BACKENDS_2D.values())
+def test_plot_maneuver(Backend):
     # Data from Vallado, example 6.1
     alt_i = 191.34411 * u.km
     alt_f = 35781.34857 * u.km
@@ -417,7 +418,10 @@ def test_plot_maneuver_using_matplotlib2D_backend():
 
     # Plot the maneuver
     fig, ax = plt.subplots()
-    backend = Matplotlib2D(ax=ax)
+    if Backend == "Matplotlib2D":
+        backend = Matplotlib2D(ax=ax)
+    else:
+        backend = Backend()
     plotter = OrbitPlotter(backend=backend)
     plotter.plot(orb_i, label="Initial orbit", color="blue")
     plotter.plot_maneuver(orb_i, man, label="Hohmann maneuver", color="red")
@@ -478,23 +482,23 @@ def test_edge_cases(Backend):
     )
 
     # Create the maneuver
-    _ = Maneuver.hohmann(orb_i, Earth.R + alt_f)  # man
+    man = Maneuver.hohmann(orb_i, Earth.R + alt_f)  # man
 
     # Create the trajectory
-    _ = churi.sample()  # trajectory
+    trajectory = churi.sample()  # trajectory
 
     # Plot the maneuver
     fig, ax = plt.subplots()
-    plotter = OrbitPlotter(backend=Backend)
+    plotter = OrbitPlotter(backend=Backend())
     # XXX plotting with 3D does not work here
-    # plotter.plot(orb_i, label="Initial orbit", color="blue")
-    # plotter.plot_maneuver(orb_i, man, label="Hohmann maneuver", color="red")
+    plotter.plot(orb_i, label="Initial orbit", color="blue")
+    plotter.plot_maneuver(orb_i, man, label="Hohmann maneuver", color="red")
 
     # Plot the trajectroy
     plotter.set_attractor(Sun)
     plotter.set_body_frame(Jupiter)
     # XXX plotting with 3D does not work here
-    # plotter.plot_trajectory(trajectory)
+    plotter.plot_trajectory(trajectory)
 
 
 def test_body_plotting_without_epoch():
