@@ -61,6 +61,7 @@ class _PlanetaryICRS(BaseRADecFrame):
 
     @staticmethod
     def to_icrs(planet_coo, _):
+        """convert coordinates of the planetary coordinate system to ICRS"""
         # This is just an origin translation so without a distance it cannot go ahead
         if isinstance(planet_coo.data, UnitSphericalRepresentation):
             raise u.UnitsError(_NEED_ORIGIN_HINT.format(planet_coo.__class__.__name__))
@@ -77,6 +78,7 @@ class _PlanetaryICRS(BaseRADecFrame):
 
     @staticmethod
     def from_icrs(icrs_coo, planet_frame):
+        """convert ICRS to the coordinates of the planetary coordinate systemS"""
         # This is just an origin translation so without a distance it cannot go ahead
         if isinstance(icrs_coo.data, UnitSphericalRepresentation):
             raise u.UnitsError(_NEED_ORIGIN_HINT.format(icrs_coo.__class__.__name__))

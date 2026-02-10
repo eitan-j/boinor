@@ -61,6 +61,7 @@ class GabbardPlotter:
         return apogee_paths, perigee_paths
 
     def plot_orbits(self, orbits, label=""):
+        """Plot with given list of Orbits"""
         apogee_paths, perigee_paths = self._static_gabbard_plot(orbits)
         self._set_legend(orbits[-1].epoch, label)
         return apogee_paths, perigee_paths
