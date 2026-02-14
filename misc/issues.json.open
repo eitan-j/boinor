@@ -469,9 +469,4 @@
     "title": "Support plotting objects orbiting around different attractors",
     "url": "https://github.com/poliastro/poliastro/issues/204"
   },
-  {
-    "state": "OPEN",
-    "title": "Test with dev version of hard dependencies",
-    "url": "https://github.com/poliastro/poliastro/issues/158"
-  }
 ]

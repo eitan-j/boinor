@@ -4,10 +4,12 @@
 
 ### Highlights
 
-- pylint no longer complains about missing docstrings
+- pylint no longer complains about missing module docstrings
 - orbit._state now is public available as orbit.state
 - instead of needing to shovel units back and forth, a new property exists: Event.last_t_without_unit
 - make all functions in twobody/angles.py usable with vectors, especially M_to_E() and M_to_F()
+- testing will be done with pre releases of astropy, numba, numpy and scipy as well
+
 
 ### Coverage
 
@@ -28,6 +30,9 @@ The code coverage increased from 96.47% to XX.XX%.
   of variable names. In this case physics is more important than PEP8.
 - Test failures on Debian ({github}`poliastro issue #1614 <poliastro/poliastro#1614>`) was probably related to a bad combination of numba and numpy versions.
   It no longer happens nowadays.
+- Though testing with real dev-versions of other packages makes no sense from my point of view, testing with pre releases is reasonable.
+  Hence there is a new circleci job now, that installs the available latest pre releases of astropy, numba, numpy and scipy and runs the fast version of all tests.
+  So {github}`poliastro issue #158 <poliastro/poliastro#158>` can be marked as fixed for boinor.
 
 ### Pull requests
 
