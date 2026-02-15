@@ -14,6 +14,7 @@ from boinor.core.elements import coe2rv, rv2coe
 
 @jit
 def markley_coe(k, p, ecc, inc, raan, argp, nu, tof):
+    """actual calculation of propagation of an orbit using Markley's method"""
     M0 = E_to_M(nu_to_E(nu, ecc), ecc)
     a = p / (1 - ecc**2)
     n = np.sqrt(k / a**3)
