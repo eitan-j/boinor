@@ -8,11 +8,13 @@ from boinor.core.elements import coe2rv, rv2coe
 
 @jit
 def gooding_coe_parabolic(k, p, ecc, inc, raan, argp, nu, tof, numiter=150, rtol=1e-8):
+    """not yet implemented propagation with Gooding's method for parabolic case"""
     raise NotImplementedError("Parabolic/Hyperbolic cases still not implemented in gooding.")
 
 
 @jit
 def gooding_coe_hyperbolic(k, p, ecc, inc, raan, argp, nu, tof, numiter=150, rtol=1e-8):
+    """not yet implemented propagation with Gooding's method for hyperbolic case"""
     raise NotImplementedError("Parabolic/Hyperbolic cases still not implemented in gooding.")
 
 
