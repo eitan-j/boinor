@@ -433,8 +433,8 @@ class Plotly3D(BasePlotly):
 
         Parameters
         ----------
-        position : list[float, float]
-            A list containing the x and y coordinates of the point.
+        position : list[float, float, float]
+            A list containing the x, y, and z coordinates of the point.
         color : str
             A string representing the hexadecimal color for the point.
         marker_symbol : str
