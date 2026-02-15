@@ -291,8 +291,8 @@ class Plotly2D(BasePlotly):
         """
         marker_style = {"size": size, "color": color, "symbol": marker_symbol}
         marker_trace = go.Scatter(
-            x=position[0],
-            y=position[1],
+            x=[position[0]],
+            y=[position[1]],
             marker=marker_style,
             name=label,
             showlegend=label is not None,
@@ -452,9 +452,9 @@ class Plotly3D(BasePlotly):
         """
         marker_style = {"size": size, "color": color, "symbol": marker_symbol}
         marker_trace = go.Scatter3d(
-            x=position[0],
-            y=position[1],
-            z=position[2],
+            x=[position[0]],
+            y=[position[1]],
+            z=[position[2]],
             marker=marker_style,
             name=label,
             showlegend=label is not None,
