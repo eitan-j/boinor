@@ -11,8 +11,6 @@ jobs:
     docker:
       - image: python:3.<<parameters.pyver>>
     resource_class: small
-    environment:
-      TOXENV: py3<<parameters.pyver>>
     steps:
       - checkout
       - run: python -m pip install tox
@@ -22,19 +20,19 @@ jobs:
     <<: *test-template
     description: Code style - Python 3.<<parameters.pyver>>
     environment:
-      TOXENV: py3<<parameters.pyver>>-style
+      TOXENV: style
 
   online:
     <<: *test-template
     description: Tests online - Python 3.<<parameters.pyver>>
     environment:
-      TOXENV: py3<<parameters.pyver>>-online
+      TOXENV: online
 
   images:
     <<: *test-template
     description: Tests images - Python 3.<<parameters.pyver>>
     environment:
-      TOXENV: py3<<parameters.pyver>>-images
+      TOXENV: images
     steps:
       - checkout
       - run:
@@ -50,7 +48,7 @@ jobs:
     <<: *test-template
     description: Tests coverage - Python 3.<<parameters.pyver>>
     environment:
-      TOXENV: py3<<parameters.pyver>>-coverage
+      TOXENV: coverage
     steps:
       - checkout
       - run: python -m pip install tox
@@ -61,7 +59,7 @@ jobs:
     <<: *test-template
     description: Tests with preversion packages - Python 3.<<parameters.pyver>>
     environment:
-      TOXENV: py3<<parameters.pyver>>-fast
+      TOXENV: fast
     steps:
       - checkout
       - run: python -m pip install tox
