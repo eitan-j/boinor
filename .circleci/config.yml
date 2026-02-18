@@ -9,7 +9,7 @@ jobs:
         type: string
     description: Tests - Python 3.<<parameters.pyver>>
     docker:
-      - image: python:3.<<parameters.pyver>>-slim
+      - image: cimg/python:3.<<parameters.pyver>>
     resource_class: small
     environment:
       PIP_PREFER_BINARY: true
