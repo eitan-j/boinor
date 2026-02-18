@@ -9,12 +9,10 @@ jobs:
         type: string
     description: Tests - Python 3.<<parameters.pyver>>
     docker:
-      - image: cimg/python:3.<<parameters.pyver>>
+      - image: python:3.<<parameters.pyver>>
     resource_class: small
     environment:
-      PIP_PREFER_BINARY: true
-      PIP_PROGRESS_BAR: "off"
-      TOXENV: tests3<<parameters.pyver>>
+      TOXENV: py3<<parameters.pyver>>
     steps:
       - checkout
       - run: python -m pip install tox
@@ -22,21 +20,21 @@ jobs:
 
   quality:
     <<: *test-template
-    description: Code style
+    description: Code style - Python 3.<<parameters.pyver>>
     environment:
-      TOXENV: style
+      TOXENV: py3<<parameters.pyver>>-style
 
   online:
     <<: *test-template
     description: Tests online - Python 3.<<parameters.pyver>>
     environment:
-      TOXENV: tests3<<parameters.pyver>>-online
+      TOXENV: py3<<parameters.pyver>>-online
 
   images:
     <<: *test-template
     description: Tests images - Python 3.<<parameters.pyver>>
     environment:
-      TOXENV: tests3<<parameters.pyver>>-images
+      TOXENV: py3<<parameters.pyver>>-images
     steps:
       - checkout
       - run:
@@ -52,7 +50,7 @@ jobs:
     <<: *test-template
     description: Tests coverage - Python 3.<<parameters.pyver>>
     environment:
-      TOXENV: tests3<<parameters.pyver>>-coverage
+      TOXENV: py3<<parameters.pyver>>-coverage
     steps:
       - checkout
       - run: python -m pip install tox
@@ -63,7 +61,7 @@ jobs:
     <<: *test-template
     description: Tests with preversion packages - Python 3.<<parameters.pyver>>
     environment:
-      TOXENV: tests3<<parameters.pyver>>-fast
+      TOXENV: py3<<parameters.pyver>>-fast
     steps:
       - checkout
       - run: python -m pip install tox
