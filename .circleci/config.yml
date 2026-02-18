@@ -9,7 +9,7 @@ jobs:
         type: string
     description: Tests - Python 3.<<parameters.pyver>>
     docker:
-      - image: python:3.<<parameters.pyver>>
+      - image: python:3.<<parameters.pyver>>-slim
     resource_class: small
     environment:
       PIP_PREFER_BINARY: true
@@ -61,9 +61,7 @@ jobs:
 
   preversion:
     <<: *test-template
-    description: Tests - Python 3.<<parameters.pyver>>
-    docker:
-      - image: python:3.<<parameters.pyver>>
+    description: Tests with preversion packages - Python 3.<<parameters.pyver>>
     environment:
       TOXENV: tests3<<parameters.pyver>>-fast
     steps:
