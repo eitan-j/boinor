@@ -1,82 +1,42 @@
 version: 2.1
 
 jobs:
-  quality: &test-template
-    description: Code style
+
+  tests: &test-template
+    parameters:
+      pyver:
+        default: "13"
+        type: string
+    description: Tests - Python 3.<<parameters.pyver>>
     docker:
-      - image: python:3.10
+      - image: python:3.<<parameters.pyver>>
+    resource_class: small
     environment:
       PIP_PREFER_BINARY: true
       PIP_PROGRESS_BAR: "off"
-      TOXENV: style
+      TOXENV: tests3<<parameters.pyver>>
     steps:
       - checkout
       - run: python -m pip install tox
       - run: tox
 
-  tests310:
+  quality:
     <<: *test-template
-    description: Tests - Python 3.10
-    docker:
-      - image: python:3.10
+    description: Code style
     environment:
-      TOXENV: tests310
+      TOXENV: style
 
-  tests311:
+  online:
     <<: *test-template
-    description: Tests - Python 3.11
-    docker:
-      - image: python:3.11
+    description: Tests online - Python 3.<<parameters.pyver>>
     environment:
-      TOXENV: tests311
+      TOXENV: tests3<<parameters.pyver>>-online
 
-  tests312:
+  images:
     <<: *test-template
-    description: Tests - Python 3.12
-    docker:
-      - image: python:3.12
+    description: Tests images - Python 3.<<parameters.pyver>>
     environment:
-      TOXENV: tests312
-
-  tests313:
-    <<: *test-template
-    description: Tests - Python 3.13
-    docker:
-      - image: python:3.13
-    environment:
-      TOXENV: tests313
-
-  tests313-fast:
-    <<: *test-template
-    description: Tests fast - Python 3.13
-    docker:
-      - image: python:3.13
-    environment:
-      TOXENV: tests313-fast
-
-  tests313-online:
-    <<: *test-template
-    description: Tests online - Python 3.13
-    docker:
-      - image: python:3.13
-    environment:
-      TOXENV: tests313-online
-
-  tests313-slow:
-    <<: *test-template
-    description: Tests slow - Python 3.13
-    docker:
-      - image: python:3.13
-    environment:
-      TOXENV: tests313-slow
-
-  tests313-images:
-    <<: *test-template
-    description: Tests images - Python 3.13
-    docker:
-      - image: python:3.13
-    environment:
-      TOXENV: tests313-images
+      TOXENV: tests3<<parameters.pyver>>-images
     steps:
       - checkout
       - run:
@@ -88,34 +48,24 @@ jobs:
       - run: python -m pip install tox
       - run: xvfb-run -a tox
 
-  tests313-coverage:
+  coverage:
     <<: *test-template
-    description: Tests coverage - Python 3.13
-    docker:
-      - image: python:3.13
+    description: Tests coverage - Python 3.<<parameters.pyver>>
     environment:
-      TOXENV: tests313-coverage
+      TOXENV: tests3<<parameters.pyver>>-coverage
     steps:
       - checkout
       - run: python -m pip install tox
       - run: tox
       - run: python -m pip install codecov && codecov
 
-  tests314:
-    <<: *test-template
-    description: Tests - Python 3.14
-    docker:
-      - image: python:3.14
-    environment:
-      TOXENV: tests314
-
   tests314-preversion:
     <<: *test-template
-    description: Tests - Python 3.14
+    description: Tests - Python 3.<<parameters.pyver>>
     docker:
-      - image: python:3.14
+      - image: python:3.<<parameters.pyver>>
     environment:
-      TOXENV: tests314-fast
+      TOXENV: tests3<<parameters.pyver>>-fast
     steps:
       - checkout
       - run: python -m pip install tox
@@ -127,37 +77,30 @@ jobs:
 
 
 workflows:
-  version: 2
   build_and_test:
     jobs:
       - quality
-      - tests311:
+      - tests:
+          matrix:
+            parameters:
+              pyver:
+                - "10"
+                - "11"
+                - "12"
+                - "13"
+                - "14"
           requires:
             - quality
-      - tests312:
+      - online:
           requires:
-            - quality
-      - tests313:
+            - tests
+      - images:
           requires:
-            - quality
-      - tests313-fast:
+            - tests
+      - coverage:
           requires:
-            - quality
-      - tests313-online:
+            - tests
+      - preversion:
+          pyver: "14"
           requires:
-            - quality
-      - tests313-slow:
-          requires:
-            - quality
-      - tests313-images:
-          requires:
-            - quality
-      - tests313-coverage:
-          requires:
-            - quality
-      - tests314:
-          requires:
-            - quality
-      - tests314-preversion:
-          requires:
-            - quality
+            - tests
