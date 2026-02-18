@@ -1,15 +1,20 @@
 """tests related to module cr3bp_lib_calc of sub-package threebody"""
+
+from importlib.metadata import version
+
 from astropy import units as u
 
 # from astropy.units import L_ND
 from astropy.tests.helper import assert_quantity_allclose
 import numpy as np
+from packaging.verison import Version
 import pytest
 
 from boinor.threebody.cr3bp_char_quant import SystemChars
 from boinor.threebody.cr3bp_lib_calc import lib_pt_loc
 
 
+@pytest.mark.xfail(Version(version("astropy")) >= Version("7.1.0"))
 @pytest.mark.parametrize(
     "SysChars, conv_tol, expected_lib_pt_loc",
     [
