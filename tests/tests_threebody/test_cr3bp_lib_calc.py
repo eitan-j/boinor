@@ -14,7 +14,7 @@ from boinor.threebody.cr3bp_char_quant import SystemChars
 from boinor.threebody.cr3bp_lib_calc import lib_pt_loc
 
 
-@pytest.mark.xfail(Version(version("astropy")) >= Version("7.1.0"))
+@pytest.mark.xfail(Version(version("astropy")) < Version("7.1.0"), reason="def_unit fails prior to 7.1.0")
 @pytest.mark.parametrize(
     "SysChars, conv_tol, expected_lib_pt_loc",
     [
