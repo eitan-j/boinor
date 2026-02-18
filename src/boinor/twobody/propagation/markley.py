@@ -1,4 +1,5 @@
 """module related to propagation of an orbit using Markley's method in the twobody sub-package"""
+
 import sys
 
 from astropy import units as u
@@ -54,9 +55,7 @@ class MarkleyPropagator:
                 ClassicalState(
                     state.attractor,
                     state.to_tuple()[:5]
-                    + (
-                        markley_fast(state.attractor.k.to_value(u.km**3 / u.s**2), *state.to_value(), tof) << u.rad,
-                    ),
+                    + (markley_fast(state.attractor.k.to_value(u.km**3 / u.s**2), *state.to_value(), tof) << u.rad,),
                     state.plane,
                 )
                 for tof in tofs.to_value(u.s)

@@ -1,4 +1,5 @@
 """module to test the core sub-package thrust when semimajor axis and inclination change at the same time"""
+
 import numpy as np
 
 from boinor.core.thrust.change_a_inc import delta_V

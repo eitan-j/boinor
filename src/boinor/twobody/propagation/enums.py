@@ -1,4 +1,5 @@
 """module enums of sub-package propagation of sub-package twobody"""
+
 from enum import Flag, auto
 
 

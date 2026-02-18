@@ -1,4 +1,4 @@
-""" calculate Ephemerides of objects"""
+"""calculate Ephemerides of objects"""
 
 from warnings import warn
 

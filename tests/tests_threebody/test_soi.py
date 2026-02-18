@@ -1,4 +1,5 @@
 """tests related to module soi of sub-package threebody"""
+
 from astropy import units as u
 from astropy.tests.helper import assert_quantity_allclose
 import pytest
@@ -27,7 +28,7 @@ from boinor.threebody.soi import hill_radius, laplace_radius
         (Saturn, 5.48e10 * u.m),
         (Uranus, 5.18e10 * u.m),
         (Neptune, 8.66e10 * u.m),
-    ]
+    ],
     # Data from Table A.2., Curtis (2013) "Orbital Mechanics for Engineering Students"
 )
 def test_laplace_radius(body, expected_r_SOI):

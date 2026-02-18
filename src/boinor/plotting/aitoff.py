@@ -1,4 +1,5 @@
 """Aitoff projection sky map plotting in J2000 equatorial coordinates."""
+
 from astropy import units as u
 from astropy.time import Time
 from matplotlib import pyplot as plt

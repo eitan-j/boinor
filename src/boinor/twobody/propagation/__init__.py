@@ -24,6 +24,7 @@ different propagators available at boinor:
 +-------------+------------+-----------------+-----------------+
 
 """
+
 from boinor.twobody.propagation.cowell import CowellPropagator
 from boinor.twobody.propagation.danby import DanbyPropagator
 from boinor.twobody.propagation.enums import PropagatorKind

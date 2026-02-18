@@ -1,4 +1,5 @@
 """Izzo's algorithm for Lambert's problem."""
+
 from astropy import units as u
 
 from boinor.core.iod import izzo as izzo_fast

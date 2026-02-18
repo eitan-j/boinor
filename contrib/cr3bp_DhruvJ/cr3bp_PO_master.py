@@ -22,6 +22,7 @@ These are some of the referneces that provide a comprehensive brackground and ha
 3. V. Szebehely, "Theory of Orbits: The Restricted Problem of Three Bodies", 1967
 4. W. Koon, M. Lo, J. Marsden, S. Ross, "Dynamical Systems, The Three-Body Problem, and Space Mission Design", 2006
 """
+
 import copy
 
 from cr3bp_model_master import cr3bp_model

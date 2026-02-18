@@ -1,4 +1,5 @@
 """Tests for render.data_loader module."""
+
 from io import StringIO
 
 import numpy as np

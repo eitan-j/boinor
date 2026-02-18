@@ -1,4 +1,5 @@
 """module related to propagation of an orbit using Gooding's method in the twobody sub-package"""
+
 import sys
 
 from astropy import units as u
@@ -58,9 +59,7 @@ class GoodingPropagator:
                 ClassicalState(
                     state.attractor,
                     state.to_tuple()[:5]
-                    + (
-                        gooding_fast(state.attractor.k.to_value(u.km**3 / u.s**2), *state.to_value(), tof) << u.rad,
-                    ),
+                    + (gooding_fast(state.attractor.k.to_value(u.km**3 / u.s**2), *state.to_value(), tof) << u.rad,),
                     state.plane,
                 )
                 for tof in tofs.to_value(u.s)

@@ -1,4 +1,5 @@
 """Generates Tisserand plots."""
+
 from enum import Enum
 
 from astropy import units as u

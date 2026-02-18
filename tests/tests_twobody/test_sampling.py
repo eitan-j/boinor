@@ -1,4 +1,5 @@
 """test related to module sampling of sub-package twobody"""
+
 from functools import partial
 
 from astropy import units as u

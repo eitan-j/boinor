@@ -1,4 +1,5 @@
-""" module fixed from the sub-package frames to handle body-fixed frames in the solar system"""
+"""module fixed from the sub-package frames to handle body-fixed frames in the solar system"""
+
 from astropy import units as u
 from astropy.coordinates import (
     HCRS,

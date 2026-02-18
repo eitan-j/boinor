@@ -8,7 +8,7 @@ gravitational parameter.
 
 Unless otherwise specified, gravitational and mass parameters were obtained from:
 
-* Luzum, Brian et al. 
+* Luzum, Brian et al.
   “The IAU 2009 System of Astronomical Constants: The Report of the IAU Working Group on Numerical
   Standards for Fundamental Astronomy.”
   Celestial Mechanics and Dynamical Astronomy 110.4 (2011): 293–304.

@@ -1,4 +1,5 @@
 """Module of sub-package plotting containing utility functions"""
+
 import numpy as np
 
 # Inspired by https://astronomiac.com/color-of-each-planet-in-the-solarsystem/

@@ -1,4 +1,5 @@
 """module jacchia of sub-package atmosphere of sub-package earth"""
+
 from astropy import units as u
 import numpy as np
 
@@ -179,7 +180,7 @@ class Jacchia77:
         rho: ~astropy.units.Quantity
             Density at given altitude and exospheric temperature.
         """
-        (_Z, _T, CN2, CO2, CO, CAr, CHe, CH, _CM, _WM) = self.altitude_profile(alt)
+        _Z, _T, CN2, CO2, CO, CAr, CHe, CH, _CM, _WM = self.altitude_profile(alt)
 
         # using eqn(42) of COESA for multiple gases
         M_i = [wmN2, wmO2, wmO, wmAr, wmHe, wmH] << (u.g / u.mol)

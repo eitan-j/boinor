@@ -1,4 +1,5 @@
 """utility functions in module util of sub-package earth"""
+
 from astropy import units as u
 from astropy.coordinates import get_sun
 from astropy.time import Time

@@ -1,4 +1,5 @@
 """Orbital maneuvers."""
+
 from astropy import units as u
 import numpy as np
 

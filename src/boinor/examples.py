@@ -1,4 +1,5 @@
 """Example data."""
+
 from astropy import time, units as u
 
 from boinor.bodies import Earth, Sun

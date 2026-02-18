@@ -3,7 +3,6 @@
 Includes the computation of Lagrange points
 """
 
-
 from astropy import units as u
 import numpy as np
 

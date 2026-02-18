@@ -1,4 +1,5 @@
 """Sub-package of earth holding all modules related to atmosphere"""
+
 from boinor.earth.atmosphere.coesa62 import COESA62
 from boinor.earth.atmosphere.coesa76 import COESA76
 

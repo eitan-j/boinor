@@ -1,4 +1,5 @@
 """test angles from core sub-package angles"""
+
 import numpy as np
 import pytest
 

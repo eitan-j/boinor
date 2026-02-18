@@ -1,4 +1,5 @@
 """module containing functions related to ecliptic coordinates in the frames sub-package"""
+
 from astropy import units as u
 
 # import GCRS directly from astropy as the:

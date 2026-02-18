@@ -1,4 +1,5 @@
 """tests related to module earth_util in sub-package earth"""
+
 from astropy import units as u
 from astropy.tests.helper import assert_quantity_allclose
 from astropy.time import Time

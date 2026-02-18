@@ -28,6 +28,7 @@ and a way to define new bodies (:py:class:`~Body` class).
 
 Data references can be found in :py:mod:`~boinor.constants`
 """
+
 from collections import namedtuple
 import math
 
@@ -190,7 +191,7 @@ Mercury = SolarSystemPlanet(
     parent=Sun,
     k=constants.GM_mercury,
     name="Mercury",
-    symbol="\u263F",
+    symbol="\u263f",
     R=constants.R_mercury,
     R_mean=constants.R_mean_mercury,
     R_polar=constants.R_polar_mercury,
@@ -276,7 +277,7 @@ Uranus = SolarSystemPlanet(
     parent=Sun,
     k=constants.GM_uranus,
     name="Uranus",
-    symbol="\u26E2",
+    symbol="\u26e2",
     R=constants.R_uranus,
     R_mean=constants.R_mean_uranus,
     R_polar=constants.R_polar_uranus,
@@ -314,7 +315,7 @@ Moon = Body(
     parent=Earth,
     k=constants.GM_moon,
     name="Moon",
-    symbol="\u263E",
+    symbol="\u263e",
     R=constants.R_moon,
     R_mean=constants.R_mean_moon,
     R_polar=constants.R_polar_moon,

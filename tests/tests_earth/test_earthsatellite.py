@@ -1,4 +1,5 @@
 """tests related to module earthsatellite in sub-package earth"""
+
 from astropy import units as u
 import numpy as np
 import pytest

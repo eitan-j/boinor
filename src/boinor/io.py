@@ -1,6 +1,7 @@
 """get ephemerides from different sources
-   at the moment only data from SBDB can be retrieved
+at the moment only data from SBDB can be retrieved
 """
+
 from astropy import units as u
 from astropy.time import Time
 from astroquery.jplsbdb import SBDB

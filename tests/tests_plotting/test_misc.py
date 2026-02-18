@@ -1,4 +1,5 @@
 """tests related to module misc in sub-package plotting"""
+
 from matplotlib import pyplot as plt
 import pytest
 

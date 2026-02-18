@@ -1,4 +1,5 @@
 """tests related to module orbit of sub-package twobody"""
+
 # there are lots of things to test, so this is large
 # pylint: disable=too-many-lines
 from collections import OrderedDict
@@ -435,7 +436,7 @@ def test_orbit_no_frame_representation():
     r = [61_445.76498656, 24_827.93010168, 0.0] * u.km
     v = [-0.42581645, -0.18867869, 0.0] * u.km / u.s
     ss = Orbit.from_vectors(Moon, r, v, date_launch)
-    expected_str = "106 x -142299 km x 180.0 deg orbit around Moon (\u263E) at epoch 2011-11-26 15:02:00.000 (UTC)"
+    expected_str = "106 x -142299 km x 180.0 deg orbit around Moon (\u263e) at epoch 2011-11-26 15:02:00.000 (UTC)"
 
     assert str(ss) == repr(ss) == expected_str
 

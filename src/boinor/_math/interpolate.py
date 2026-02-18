@@ -1,4 +1,5 @@
 """module for interpolation in the _math sub package"""
+
 import numpy as np
 from scipy.interpolate import interp1d
 

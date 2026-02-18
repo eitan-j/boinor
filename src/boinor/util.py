@@ -1,4 +1,5 @@
 """Function helpers."""
+
 from astropy import units as u
 from astropy.coordinates import Angle
 from astropy.time import Time

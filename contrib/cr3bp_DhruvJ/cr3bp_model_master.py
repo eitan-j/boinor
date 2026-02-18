@@ -25,6 +25,7 @@ These are some of the referneces that provide a comprehensive brackground and ha
 3. V. Szebehely, "Theory of Orbits: The Restricted Problem of Three Bodies", 1967
 4. W. Koon, M. Lo, J. Marsden, S. Ross, "Dynamical Systems, The Three-Body Problem, and Space Mission Design", 2006
 """
+
 import numpy as np
 from scipy.integrate import solve_ivp
 
@@ -419,10 +420,7 @@ class cr3bp_model:
             3 * one_minus_mu * x_plus_mu * state[2] / dist_p1_p3**5
             + 3 * self.mu * x_minus_1_plus_mu * state[2] / dist_p2_p3**5
         )
-        Uyz = (
-            3 * one_minus_mu * state[1] * state[2] / dist_p1_p3**5
-            + 3 * self.mu * state[1] * state[2] / dist_p2_p3**5
-        )
+        Uyz = 3 * one_minus_mu * state[1] * state[2] / dist_p1_p3**5 + 3 * self.mu * state[1] * state[2] / dist_p2_p3**5
 
         return Uxx, Uyy, Uzz, Uxy, Uxz, Uyz
 

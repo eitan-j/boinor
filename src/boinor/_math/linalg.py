@@ -1,4 +1,5 @@
 """basic linear algebra functions in the _math sub-package"""
+
 from numba import njit as jit
 import numpy as np
 

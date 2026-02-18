@@ -6,6 +6,7 @@ References
   Elliptical Orbit Transfers", 1997.
 
 """
+
 from astropy import units as u
 from numba import njit
 import numpy as np

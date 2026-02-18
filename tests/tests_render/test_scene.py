@@ -1,4 +1,5 @@
 """Tests for render.scene module."""
+
 import numpy as np
 import pytest
 

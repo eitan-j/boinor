@@ -1,4 +1,5 @@
 """Module of sub-package plotting containing miscellaneous functions"""
+
 import warnings
 
 from astropy.time import Time

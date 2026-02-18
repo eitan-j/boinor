@@ -1,4 +1,5 @@
-""" Sub-package holding all modules for Initial Orbit Determination (IOD)"""
+"""Sub-package holding all modules for Initial Orbit Determination (IOD)"""
+
 # Select default algorithm
 from boinor.iod.izzo import lambert
 

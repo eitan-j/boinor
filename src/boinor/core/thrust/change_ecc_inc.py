@@ -5,6 +5,7 @@ References
 * Pollard, J. E. "Simplified Analysis of Low-Thrust Orbital Maneuvers", 2000.
 
 """
+
 from numba import njit as jit
 import numpy as np
 from numpy import cross

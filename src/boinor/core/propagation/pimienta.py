@@ -1,4 +1,5 @@
 """module related to propagation of an orbit using the method of Pimienta-Peñalver and John L. Crassidis in the core sub-package"""
+
 from numba import njit as jit
 import numpy as np
 
@@ -156,15 +157,7 @@ def pimienta_coe(k, p, ecc, inc, raan, argp, nu, tof):
     h6 = f1 + g1 * u5 * f2 + g2 * u5**2 * f3 + g3 * u5**3 * f4 + g4 * u5**4 * f5 + g5 * u5**5 * f6
     u6 = -f / h6
 
-    h7 = (
-        f1
-        + g1 * u6 * f2
-        + g2 * u6**2 * f3
-        + g3 * u6**3 * f4
-        + g4 * u6**4 * f5
-        + g5 * u6**5 * f6
-        + g6 * u6**6 * f7
-    )
+    h7 = f1 + g1 * u6 * f2 + g2 * u6**2 * f3 + g3 * u6**3 * f4 + g4 * u6**4 * f5 + g5 * u6**5 * f6 + g6 * u6**6 * f7
     u7 = -f / h7
 
     h8 = (
@@ -297,14 +290,7 @@ def pimienta_coe(k, p, ecc, inc, raan, argp, nu, tof):
 
     # Solving for the true anomaly from eccentricity anomaly
     E = M + ecc * (
-        -16384 * w**15
-        + 61440 * w**13
-        - 92160 * w**11
-        + 70400 * w**9
-        - 28800 * w**7
-        + 6048 * w**5
-        - 560 * w**3
-        + 15 * w
+        -16384 * w**15 + 61440 * w**13 - 92160 * w**11 + 70400 * w**9 - 28800 * w**7 + 6048 * w**5 - 560 * w**3 + 15 * w
     )
 
     return E_to_nu(E, ecc)

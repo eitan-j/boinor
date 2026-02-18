@@ -7,6 +7,7 @@ References
 * Pollard, J. E. "Evaluation of Low-Thrust Orbital Maneuvers", 1998.
 
 """
+
 from astropy import units as u
 
 from boinor.core.thrust.change_argp import change_argp as change_a_inc_fast

@@ -1,4 +1,5 @@
 """module to test the Hypergeometric function 2F1 from _math.special"""
+
 import numpy as np
 from numpy.testing import assert_allclose
 import pytest
