@@ -7,7 +7,7 @@ from astropy import units as u
 # from astropy.units import L_ND
 from astropy.tests.helper import assert_quantity_allclose
 import numpy as np
-from packaging.verison import Version
+from packaging.version import Version
 import pytest
 
 from boinor.threebody.cr3bp_char_quant import SystemChars
