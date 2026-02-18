@@ -59,7 +59,7 @@ jobs:
       - run: tox
       - run: python -m pip install codecov && codecov
 
-  tests314-preversion:
+  preversion:
     <<: *test-template
     description: Tests - Python 3.<<parameters.pyver>>
     docker:
