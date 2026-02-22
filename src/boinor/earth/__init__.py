@@ -9,6 +9,8 @@ from boinor.bodies import Earth
 from boinor.core.perturbations import J2_perturbation
 from boinor.core.propagation import func_twobody
 from boinor.earth.enums import EarthGravity
+from boinor.spacecraft import Spacecraft
+from boinor.twobody import Orbit
 from boinor.twobody.propagation import CowellPropagator
 
 
@@ -36,8 +38,8 @@ class EarthSatellite:
         if orbit.attractor is not Earth:
             raise ValueError("The attractor must be Earth")
 
-        self._orbit = orbit  # type: Orbit
-        self._spacecraft = spacecraft  # type: Spacecraft
+        self._orbit: Orbit = orbit
+        self._spacecraft: Spacecraft = spacecraft
 
     @property
     def orbit(self):

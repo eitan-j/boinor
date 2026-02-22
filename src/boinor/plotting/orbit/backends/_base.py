@@ -23,7 +23,7 @@ class OrbitPlotterBackend:
         """
         # Verify backend name ends with '2D' or '3D'
         if name[-2:] not in ["2D", "3D"]:
-            print(f"Name was found to be {name[-2:] = }")
+            print(f"Name was found to be {name[-2:]=}")
             raise ValueError("Backend name must end with '2D' or '3D'.")
 
         self._scene = scene
@@ -167,7 +167,7 @@ class OrbitPlotterBackend:
         """Remove the attractor from the scene."""
         raise NotImplementedError("This method is expected to be overridden by a plotting backend class.")
 
-    def draw_coordinates(self, coordinates, *, colors, label, size):
+    def draw_coordinates(self, coordinates, *, colors, dashed, label):
         """Draw desired coordinates into the scene.
 
         Parameters
@@ -176,10 +176,10 @@ class OrbitPlotterBackend:
             A set of lists containing the x, y and z coordinates of the sphere location.
         colors : list[str]
             A string representing the hexadecimal color for the coordinates.
+        dashed : bool
+            Whether to use a dashed or solid line style for the coordiantes.
         label : str
             The name to be used in the legend for the marker.
-        size : float
-            The size of the marker for drawing the coordinates.
 
         """
         raise NotImplementedError("This method is expected to be overridden by a specific plotting backend.")

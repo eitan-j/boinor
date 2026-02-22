@@ -1,5 +1,7 @@
 """module to prepare orbitary data for displaying them with Cesium in a browser."""
+
 from datetime import timezone
+from typing import Any
 
 from astropy import units as u
 from astropy.coordinates import CartesianRepresentation
@@ -76,10 +78,10 @@ class CZMLExtractor:
             mode, otherwise it's the orthographic projection.
 
         """
-        self.packets = []  # type: List[Packet]
-        self.trajectories = []  # type: List[Any]
+        self.packets: list[Packet] = []
+        self.trajectories: list[Any] = []
         self.attractor = attractor
-        self.orbits = []  # type: List[Any]
+        self.orbits: list[Any] = []
         self.N = N
         self.i = 0
         self.gs_n = 0
@@ -123,7 +125,7 @@ class CZMLExtractor:
         -------
         coordinate list
         """
-        cart_cords = []  # type: List[float]
+        cart_cords: list[float] = []
 
         h = (self.end_epoch - self.orbits[i][2]).to(u.s) / self.orbits[i][1]
 
@@ -157,7 +159,7 @@ class CZMLExtractor:
         -------
         coordinate list
         """
-        cart_cords = []  # type: List[float]
+        cart_cords: list[float] = []
 
         h = (self.end_epoch - self.orbits[i][2]).to(u.s) / self.orbits[i][1]
 
@@ -397,21 +399,25 @@ class CZMLExtractor:
             path=Path(
                 show=path_show,
                 width=path_width,
-                material=Material(solidColor=SolidColorMaterial(color=Color.from_list(path_color)))
-                if path_color is not None
-                else Material(solidColor=SolidColorMaterial(color=Color.from_list([255, 255, 0]))),
+                material=(
+                    Material(solidColor=SolidColorMaterial(color=Color.from_list(path_color)))
+                    if path_color is not None
+                    else Material(solidColor=SolidColorMaterial(color=Color.from_list([255, 255, 0])))
+                ),
                 resolution=120,
             ),
             label=Label(
                 text=label_text,
                 font=label_font if label_font is not None else "11pt Lucida Console",
                 show=label_show,
-                fillColor=Color(rgba=label_fill_color)
-                if label_fill_color is not None
-                else Color(rgba=[255, 255, 0, 255]),
-                outlineColor=Color(rgba=label_outline_color)
-                if label_outline_color is not None
-                else Color(rgba=[255, 255, 0, 255]),
+                fillColor=(
+                    Color(rgba=label_fill_color) if label_fill_color is not None else Color(rgba=[255, 255, 0, 255])
+                ),
+                outlineColor=(
+                    Color(rgba=label_outline_color)
+                    if label_outline_color is not None
+                    else Color(rgba=[255, 255, 0, 255])
+                ),
             ),
             billboard=Billboard(image=PIC_SATELLITE, show=True),
         )
@@ -435,9 +441,11 @@ class CZMLExtractor:
                 ),
                 path=Path(
                     show=True,
-                    material=Material(solidColor=SolidColorMaterial(color=Color(rgba=groundtrack_color)))
-                    if groundtrack_color is not None
-                    else Material(solidColor=SolidColorMaterial(color=Color(rgba=[255, 255, 0, 255]))),
+                    material=(
+                        Material(solidColor=SolidColorMaterial(color=Color(rgba=groundtrack_color)))
+                        if groundtrack_color is not None
+                        else Material(solidColor=SolidColorMaterial(color=Color(rgba=[255, 255, 0, 255])))
+                    ),
                     resolution=60,
                     width=groundtrack_width,
                     leadTime=groundtrack_lead_time if groundtrack_lead_time else 100,
@@ -543,21 +551,25 @@ class CZMLExtractor:
             path=Path(
                 show=path_show,
                 width=path_width,
-                material=Material(solidColor=SolidColorMaterial(color=Color.from_list(path_color)))
-                if path_color is not None
-                else Material(solidColor=SolidColorMaterial(color=Color.from_list([255, 255, 0]))),
+                material=(
+                    Material(solidColor=SolidColorMaterial(color=Color.from_list(path_color)))
+                    if path_color is not None
+                    else Material(solidColor=SolidColorMaterial(color=Color.from_list([255, 255, 0])))
+                ),
                 resolution=120,
             ),
             label=Label(
                 text=label_text,
                 font=label_font if label_font is not None else "11pt Lucida Console",
                 show=label_show,
-                fillColor=Color(rgba=label_fill_color)
-                if label_fill_color is not None
-                else Color(rgba=[255, 255, 0, 255]),
-                outlineColor=Color(rgba=label_outline_color)
-                if label_outline_color is not None
-                else Color(rgba=[255, 255, 0, 255]),
+                fillColor=(
+                    Color(rgba=label_fill_color) if label_fill_color is not None else Color(rgba=[255, 255, 0, 255])
+                ),
+                outlineColor=(
+                    Color(rgba=label_outline_color)
+                    if label_outline_color is not None
+                    else Color(rgba=[255, 255, 0, 255])
+                ),
             ),
             billboard=Billboard(image=PIC_SATELLITE, show=True),
         )

@@ -24,6 +24,7 @@ different propagators available at boinor:
 +-------------+------------+-----------------+-----------------+
 
 """
+
 from boinor.twobody.propagation.cowell import CowellPropagator
 from boinor.twobody.propagation.danby import DanbyPropagator
 from boinor.twobody.propagation.enums import PropagatorKind
@@ -37,7 +38,19 @@ from boinor.twobody.propagation.vallado import ValladoPropagator
 
 from ._compat import propagate
 
-ALL_PROPAGATORS = [
+ALL_PROPAGATORS: list[
+    type[
+        CowellPropagator
+        | DanbyPropagator
+        | FarnocchiaPropagator
+        | GoodingPropagator
+        | MarkleyPropagator
+        | MikkolaPropagator
+        | PimientaPropagator
+        | RecseriesPropagator
+        | ValladoPropagator
+    ]
+] = [
     CowellPropagator,
     DanbyPropagator,
     FarnocchiaPropagator,

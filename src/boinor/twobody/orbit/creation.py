@@ -1,4 +1,5 @@
 """module related to orbit creation in the twobody sub-package"""
+
 from warnings import warn
 
 from astropy import units as u
@@ -14,11 +15,7 @@ from boinor.twobody.elements import (
     heliosynchronous,
 )
 from boinor.twobody.mean_elements import get_mean_elements
-from boinor.twobody.states import (
-    ClassicalState,
-    ModifiedEquinoctialState,
-    RVState,
-)
+from boinor.twobody.states import ClassicalState, ModifiedEquinoctialState, RVState
 from boinor.util import find_closest_value
 
 
@@ -70,7 +67,9 @@ class OrbitCreationMixin:
         if v.ndim != 1:
             raise ValueError(f"Vectors must have dimension 1, got {v.ndim}")
 
-        self.state = RVState(self.attractor, (self.r, self.v + v), self.plane)
+        self.state = RVState(
+            self.attractor, (self.r, self.v + v), self.plane  # type: ignore[attr-defined]
+        )  # type: ignore[attr-defined]
 
     @classmethod
     def from_coords(cls, attractor, coord, plane=Planes.EARTH_EQUATOR):

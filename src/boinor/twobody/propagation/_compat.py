@@ -1,9 +1,11 @@
 """reminder to change the code from the old to the new propagators"""
+
 import sys
 
-
 # https://stackoverflow.com/a/48100440
-class OldPropagatorModule(sys.modules[__name__].__class__):
+
+
+class OldPropagatorModule(sys.modules[__name__].__class__):  # type: ignore[misc]
     """dummy class to remind everybody of the new way to handle propagators"""
 
     def __call__(self):

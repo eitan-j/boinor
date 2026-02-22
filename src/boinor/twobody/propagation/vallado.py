@@ -1,4 +1,5 @@
 """module related to propagation of an orbit using Vallado's method in the twobody sub-package"""
+
 import sys
 
 from astropy import units as u
@@ -53,7 +54,7 @@ class ValladoPropagator:
             *state.to_value(),
             tof.to_value(u.s),
             numiter=self._numiter,
-        )
+        )  # type: ignore[misc]
         r = r_raw << u.km
         v = v_raw << (u.km / u.s)
 
@@ -68,7 +69,9 @@ class ValladoPropagator:
 
         # TODO: This should probably return a RVStateArray instead,
         # see discussion at https://github.com/boinor/boinor/pull/1492
-        results = np.array([vallado(k, *rv0, tof, numiter=self._numiter) for tof in tofs.to_value(u.s)])
+        results = np.array(
+            [vallado(k, *rv0, tof, numiter=self._numiter) for tof in tofs.to_value(u.s)]  # type: ignore[misc]
+        )
         return (
             results[:, 0] << u.km,
             results[:, 1] << (u.km / u.s),

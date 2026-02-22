@@ -39,7 +39,6 @@ classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Education",
     "Intended Audience :: Science/Research",
-    "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
@@ -120,6 +119,9 @@ test = [
     "tox",
     "vulture",
 ]
+typing = [
+    "scipy-stubs",
+]
 
 [tool.flit.sdist]
 include = [
@@ -169,6 +171,13 @@ max-complexity = 18
 check_untyped_defs = true
 strict_optional = false
 ignore_missing_imports = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_return_any = true
+warn_unreachable = true
+strict_equality = true
+strict_equality_for_none = true
+# follow_untyped_imports = true
 
 [tool.coverage.paths]
 source = ["src"]

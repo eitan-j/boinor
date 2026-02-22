@@ -70,7 +70,7 @@ class OrbitPlotter:
         self._frame = None
 
         # Initialize the list containing all the plotted trajectories
-        self._trajectories = []  # type: List[Trajectory]
+        self._trajectories: list[Trajectory] = []
 
     @property
     def backend(self):
@@ -193,8 +193,8 @@ class OrbitPlotter:
             )
 
         with warnings.catch_warnings():
-            ephem = Ephem.from_body(body, epoch, attractor=Sun, plane=self.plane)  # type: ignore
-            orbit = Orbit.from_ephem(Sun, ephem, epoch).change_plane(self.plane)  # type: ignore
+            ephem = Ephem.from_body(body, epoch, attractor=Sun, plane=self.plane)
+            orbit = Orbit.from_ephem(Sun, ephem, epoch).change_plane(self.plane)
 
         self.set_orbit_frame(orbit)
 

@@ -92,7 +92,7 @@ class BasePlotly(OrbitPlotterBackend):
         """
         raise NotImplementedError("This method is expected to be overridden by a plotting backend class.")
 
-    def draw_coordinates(self, coordinates, *, colors, label, size):
+    def draw_coordinates(self, coordinates, *, colors, dashed, label):
         """Draw desired coordinates into the scene.
 
         Parameters
@@ -101,10 +101,10 @@ class BasePlotly(OrbitPlotterBackend):
             A set of lists containing the x, y and z coordinates of the sphere location.
         colors : list[str]
             A string representing the hexadecimal color for the coordinates.
+        dashed : bool
+            Ignored.
         label : str
             The name to be used in the legend for the marker.
-        size : float
-            The size of the marker for drawing the coordinates.
 
         """
         raise NotImplementedError("This method is expected to be overridden by a specific plotting backend.")
@@ -354,7 +354,6 @@ class Plotly2D(BasePlotly):
             Whether to use a dashed or solid line style for the coordiantes.
         label : str
             The name shown in the legend for identifying the coordinates.
-
         Returns
         -------
         trace_coordinates : object
@@ -511,7 +510,6 @@ class Plotly3D(BasePlotly):
             Whether to use a dashed or solid line style for the coordiantes.
         label : str
             The name shown in the legend of the figure to identify the coordinates.
-
         Returns
         -------
         trace_coordinates : object

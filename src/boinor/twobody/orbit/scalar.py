@@ -22,6 +22,7 @@ from boinor.twobody.elements import eccentricity_vector, energy, t_p
 from boinor.twobody.orbit.creation import OrbitCreationMixin
 from boinor.twobody.propagation import FarnocchiaPropagator, PropagatorKind
 from boinor.twobody.sampling import TrueAnomalyBounds
+from boinor.twobody.states import BaseState
 from boinor.util import norm, wrap_angle
 from boinor.warnings import PatchedConicsWarning
 
@@ -45,7 +46,7 @@ class Orbit(OrbitCreationMixin):
     # class Orbit is derived from the mixin class OrbitCreationMixin.
     # pylint does not understand this concept and complains, so it is silenced here
     # more info at PR#1554 created by @s-m-e
-    def __init__(self, state, epoch):  # pylint: disable=super-init-not-called
+    def __init__(self, state: BaseState, epoch: time.Time):  # pylint: disable=super-init-not-called
         """Constructor.
 
         Parameters
@@ -56,8 +57,8 @@ class Orbit(OrbitCreationMixin):
             Epoch of the orbit.
 
         """
-        self.state = state  # type: BaseState
-        self._epoch = epoch  # type: time.Time
+        self.state = state  # type: ignore[assignment]
+        self._epoch = epoch
 
     @property
     def attractor(self):
@@ -676,7 +677,7 @@ class Orbit(OrbitCreationMixin):
             if intermediate:  # Avoid keeping them in memory.
                 states.append(orbit_new)
         if intermediate:
-            res = states  # type: Union[Orbit, List[Orbit]]
+            res: Orbit | list[Orbit] = states
         else:
             res = orbit_new
         return res
@@ -702,7 +703,7 @@ class Orbit(OrbitCreationMixin):
             Matplotlib2D,
             Plotly2D,
         )
-        from boinor.plotting.orbit.plotter import OrbitPlotter  #  pylint: disable=C0415
+        from boinor.plotting.orbit.plotter import OrbitPlotter  # pylint: disable=C0415
 
         # Select the best backend depending if it is an interactive or batch
         # session
@@ -710,7 +711,8 @@ class Orbit(OrbitCreationMixin):
             is_interactive = False  # set default value here
             # we can not really test this block, so exclude it from coverage report
             try:  # pragma: no cover
-                shell = get_ipython().__class__.__name__
+
+                shell = get_ipython().__class__.__name__  # type: ignore[name-defined]
                 if shell == "ZMQInteractiveShell":
                     # Jupyter notebook or qtconsole
                     is_interactive = True

@@ -1,4 +1,5 @@
 """module related to propagation of an orbit using Cowell's method in the twobody sub-package"""
+
 import sys
 
 from astropy import units as u
@@ -43,7 +44,7 @@ class CowellPropagator:
             self._rtol,
             events=self._events,
             f=self._f,
-        )
+        )  # type: ignore[misc]
         r = rrs[-1] << u.km
         v = vvs[-1] << (u.km / u.s)
 
@@ -61,7 +62,7 @@ class CowellPropagator:
             self._rtol,
             events=self._events,
             f=self._f,
-        )
+        )  # type: ignore[misc]
 
         # TODO: This should probably return a RVStateArray instead,
         # see discussion at https://github.com/boinor/boinor/pull/1492

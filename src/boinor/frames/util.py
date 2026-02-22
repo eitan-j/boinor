@@ -1,5 +1,9 @@
 """module with utility functions for the frames sub-package"""
+
+from astropy.coordinates import BaseCoordinateFrame
+
 from boinor.bodies import (
+    Body,
     Earth,
     Jupiter,
     Mars,
@@ -11,10 +15,7 @@ from boinor.bodies import (
     Venus,
 )
 from boinor.constants import J2000
-from boinor.frames.ecliptic import (
-    GeocentricMeanEcliptic,
-    HeliocentricEclipticJ2000,
-)
+from boinor.frames.ecliptic import GeocentricMeanEcliptic, HeliocentricEclipticJ2000
 from boinor.frames.enums import Planes
 from boinor.frames.equatorial import (
     GCRS,
@@ -38,7 +39,7 @@ from boinor.frames.fixed import (
     VenusFixed,
 )
 
-_FRAME_MAPPING = {
+_FRAME_MAPPING: dict[Body, dict[Planes, BaseCoordinateFrame]] = {
     Sun: {
         Planes.EARTH_EQUATOR: HCRS,
         Planes.EARTH_ECLIPTIC: HeliocentricEclipticJ2000,
@@ -64,7 +65,7 @@ _FRAME_MAPPING = {
         Planes.EARTH_EQUATOR: NeptuneICRS,
         Planes.BODY_FIXED: NeptuneFixed,
     },
-}  # type: Dict[Union[Body, SolarSystemPlanet], Dict[Planes, BaseCoordinateFrame]]
+}
 
 
 def get_frame(attractor, plane, obstime=J2000):
