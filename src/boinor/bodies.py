@@ -44,7 +44,7 @@ from boinor.frames import Planes
 # HACK: Constants cannot be hashed
 # (see https://github.com/astropy/astropy/issues/10043)
 # so we will convert them all to normal Quantities
-def _q(c):
+def _q(c) -> Quantity:
     return Quantity(c)
 
 

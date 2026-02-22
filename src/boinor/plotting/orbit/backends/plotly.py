@@ -56,7 +56,7 @@ class BasePlotly(OrbitPlotterBackend):
         """
         return self._layout
 
-    def draw_marker(self, position, *, color, label, marker_symbol, size):
+    def draw_marker(self, position, *, color, label, marker_symbol: str, size):
         """Draw desired marker into the scene.
 
         Parameters

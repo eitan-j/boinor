@@ -1,4 +1,5 @@
 """Module of sub-package plotting containing miscellaneous functions"""
+
 import warnings
 
 from astropy.time import Time
@@ -25,7 +26,7 @@ def plot_solar_system(
     outer=True,
     backend=None,
     length_scale_units=u.km,
-):
+) -> OrbitPlotter:
     """Plots the whole solar system in one single call.
 
     .. versionadded:: 0.9.0

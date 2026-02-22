@@ -255,7 +255,7 @@ class OrbitPlotter:
         for trajectory in self._trajectories:
             self._add_trajectory(trajectory)
 
-    def _create_trajectory(self, coordinates, position, *, colors=None, dashed=False, label=None):
+    def _create_trajectory(self, coordinates, position, *, colors=None, dashed: bool = False, label=None) -> Trajectory:
         """Create a new ``Trajectory`` instance.
 
         Parameters
@@ -282,7 +282,7 @@ class OrbitPlotter:
         self._trajectories.append(trajectory)
         return trajectory
 
-    def _add_trajectory(self, trajectory):
+    def _add_trajectory(self, trajectory: Trajectory):
         """Add a new trajectory to the scene.
 
         Parameters
@@ -455,7 +455,7 @@ class OrbitPlotter:
 
         return self.plot_ephem(ephem, epoch, label=label, color=color, trail=trail)
 
-    def plot_ephem(self, ephem, epoch=None, *, label=None, color=None, trail=False):
+    def plot_ephem(self, ephem, epoch=None, *, label=None, color=None, trail: bool = False):
         """Plot ``Ephem`` object over its sampling period.
 
         Parameters
@@ -618,8 +618,8 @@ class OrbitPlotter:
         position=None,
         label=None,
         color=None,
-        trail=False,
-        dashed=False,
+        trail: bool = False,
+        dashed: bool = False,
     ):
         """Plot a precomputed trajectory.
 

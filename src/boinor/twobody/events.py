@@ -28,7 +28,7 @@ class Event:
 
     """
 
-    def __init__(self, terminal, direction) -> None:
+    def __init__(self, terminal: bool, direction) -> None:
         self._terminal, self._direction = terminal, direction
         self._last_t = None
 
@@ -74,7 +74,7 @@ class AltitudeCrossEvent(Event):
 
     """
 
-    def __init__(self, alt, R, terminal=True, direction=-1) -> None:
+    def __init__(self, alt: int, R, terminal: bool = True, direction=-1) -> None:
         super().__init__(terminal, direction)
         self._R = R
         self._alt = alt  # Threshold altitude from the ground.
@@ -149,7 +149,7 @@ class EclipseEvent(Event):
 
     """
 
-    def __init__(self, orbit, terminal=False, direction=0) -> None:
+    def __init__(self, orbit, terminal: bool = False, direction=0) -> None:
         super().__init__(terminal, direction)
         self._primary_body = orbit.attractor
         self._secondary_body = orbit.attractor.parent

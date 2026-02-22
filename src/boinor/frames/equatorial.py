@@ -1,4 +1,5 @@
 """module to convert coordinates from ICRS to the respective planet in the frames sub-package"""
+
 from astropy import units as u
 from astropy.coordinates import (
     GCRS as _GCRS,
@@ -72,7 +73,6 @@ class _PlanetaryICRS(BaseRADecFrame):
 
         else:
             bary_sun_pos = get_body_barycentric(planet_coo.body.name, planet_coo.obstime)
-            bary_sun_vel = None
 
         return None, bary_sun_pos
 

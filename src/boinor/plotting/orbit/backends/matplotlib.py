@@ -95,7 +95,7 @@ class Matplotlib2D(OrbitPlotterBackend):
         colors = [color, to_rgba(color, 0)] if trail else [color]
         return colors
 
-    def draw_marker(self, position, *, color, label, marker_symbol, size):
+    def draw_marker(self, position, *, color, label, marker_symbol: str, size):
         """Draw a marker into the scene.
 
         Parameters

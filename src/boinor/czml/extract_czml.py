@@ -113,7 +113,7 @@ class CZMLExtractor:
 
         self._change_custom_params(*self.cust_prop)
 
-    def _init_orbit_packet_cords_(self, i, rtol):
+    def _init_orbit_packet_cords_(self, i: int, rtol: float):
         """Parameters
         ----------
         i : int
@@ -147,7 +147,7 @@ class CZMLExtractor:
 
         return cart_cords
 
-    def _init_groundtrack_packet_cords_(self, i, rtol):
+    def _init_groundtrack_packet_cords_(self, i: int, rtol: float):
         """Parameters
         ----------
         i : int
@@ -207,7 +207,7 @@ class CZMLExtractor:
         )
         self.packets.append(pckt)
 
-    def _change_custom_params(self, ellipsoid, pr_map, scene3D) -> None:
+    def _change_custom_params(self, ellipsoid, pr_map, scene3D: bool) -> None:
         """Change the custom properties package.
 
         Parameters
@@ -581,6 +581,6 @@ class CZMLExtractor:
 
         self.i += 1
 
-    def get_document(self):
+    def get_document(self) -> Document:
         """Retrieves CZML document."""
         return Document(self.packets)
