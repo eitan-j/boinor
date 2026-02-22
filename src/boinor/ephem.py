@@ -1,4 +1,4 @@
-""" calculate Ephemerides of objects"""
+"""calculate Ephemerides of objects"""
 
 from warnings import warn
 
@@ -17,7 +17,7 @@ from boinor.bodies import Earth
 from boinor.frames import Planes
 from boinor.frames.util import get_frame
 from boinor.twobody.sampling import EpochsArray
-from boinor.warnings import TimeScaleWarning
+from boinor.xarnings import TimeScaleWarning
 
 EPHEM_FORMAT = "Ephemerides at {num} epochs from {start} ({start_scale}) to {end} ({end_scale})"
 

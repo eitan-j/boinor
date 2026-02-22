@@ -24,7 +24,7 @@ from boinor.twobody.propagation import FarnocchiaPropagator, PropagatorKind
 from boinor.twobody.sampling import TrueAnomalyBounds
 from boinor.twobody.states import BaseState
 from boinor.util import norm, wrap_angle
-from boinor.warnings import PatchedConicsWarning
+from boinor.xarnings import PatchedConicsWarning
 
 ORBIT_FORMAT = "{r_p:.0f} x {r_a:.0f} x {inc:.1f} ({frame}) orbit around {body} at epoch {epoch} ({scale})"
 # String representation for orbits around bodies without predefined

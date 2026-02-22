@@ -179,7 +179,7 @@ class OrbitPlotter:
         # HACK: avoid circular dependency with ``Body.plot()``
         from boinor.bodies import Sun  # pylint: disable=C0415
         from boinor.twobody import Orbit  # pylint: disable=C0415
-        from boinor.warnings import TimeScaleWarning  # pylint: disable=C0415
+        from boinor.xarnings import TimeScaleWarning  # pylint: disable=C0415
 
         if not epoch:
             epoch = time.Time.now().tdb
