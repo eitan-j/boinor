@@ -1,4 +1,5 @@
 """This is the implementation of porkchop plot."""
+
 from astropy import coordinates as coord, units as u
 from matplotlib import pyplot as plt
 import numpy as np
@@ -134,7 +135,7 @@ class PorkchopPlotter:
         vhp=True,
         max_c3=45.0 * u.km**2 / u.s**2,
         max_vhp=5 * u.km / u.s,
-    ):
+    ) -> None:
         self.departure_body = departure_body
         self.target_body = target_body
         self.launch_span = launch_span

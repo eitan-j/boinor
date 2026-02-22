@@ -57,7 +57,7 @@ class CZMLExtractor:
         attractor=None,
         pr_map=None,
         scene3D=True,
-    ):
+    ) -> None:
         """Orbital constructor.
 
         Parameters
@@ -192,7 +192,7 @@ class CZMLExtractor:
 
         return cart_cords
 
-    def _init_czml_(self):
+    def _init_czml_(self) -> None:
         """Only called at the initialization of the extractor Builds packets."""
         pckt = Preamble(
             name="document_packet",
@@ -207,7 +207,7 @@ class CZMLExtractor:
         )
         self.packets.append(pckt)
 
-    def _change_custom_params(self, ellipsoid, pr_map, scene3D):
+    def _change_custom_params(self, ellipsoid, pr_map, scene3D) -> None:
         """Change the custom properties package.
 
         Parameters

@@ -1,4 +1,5 @@
 """module related to propagation of an orbit using the recursive series approximation method in the twobody sub-package"""
+
 import sys
 
 from astropy import units as u
@@ -35,7 +36,7 @@ class RecseriesPropagator:
         order=8,
         numiter=100,
         rtol=1e-8,
-    ):
+    ) -> None:
         self._method = method
         self._order = order
         self._numiter = numiter

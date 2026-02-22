@@ -22,7 +22,7 @@ from boinor.util import find_closest_value
 class OrbitCreationMixin:
     """Mixin-class containing class-methods to create Orbit objects."""
 
-    def __init__(self, *_, **__):  # HACK stub to make mypy happy
+    def __init__(self, *_, **__) -> None:  # HACK stub to make mypy happy
         ...
 
     @classmethod

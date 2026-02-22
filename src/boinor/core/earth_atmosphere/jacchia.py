@@ -43,7 +43,7 @@ R = 8314.32  # Units: u.J / (u.kg * u.mol)
 
 
 @jit
-def _O_and_O2_correction(alt, Texo, Z, CN2, CO2, CO, CAr, CHe, CH, CM, WM):
+def _O_and_O2_correction(alt, Texo, Z, CN2, CO2, CO, CAr, CHe, CH, CM, WM) -> None:
     for iz in range(90, alt):
         CO2[iz] = CO2[iz] * (10.0 ** (-0.07 * (1.0 + np.tanh(0.18 * (Z[iz] - 111.0)))))
         CO[iz] = CO[iz] * (10.0 ** (-0.24 * np.exp(-0.009 * (Z[iz] - 97.7) ** 2)))
@@ -54,7 +54,7 @@ def _O_and_O2_correction(alt, Texo, Z, CN2, CO2, CO, CAr, CHe, CH, CM, WM):
 
 
 @jit
-def _H_correction(alt, Texo, x, y, Z, CN2, CO2, CO, CAr, CHe, CH, CM, WM, T):
+def _H_correction(alt, Texo, x, y, Z, CN2, CO2, CO, CAr, CHe, CH, CM, WM, T) -> None:
     phid00 = 10.0 ** (6.9 + 28.9 * Texo ** (-0.25)) / 2.0e20
     phid00 = phid00 * 5.24e2
     H_500 = 10.0 ** (-0.06 + 28.9 * Texo ** (-0.25))

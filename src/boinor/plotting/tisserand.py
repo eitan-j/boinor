@@ -1,4 +1,5 @@
 """Generates Tisserand plots."""
+
 from enum import Enum
 
 from astropy import units as u
@@ -21,7 +22,7 @@ class TisserandKind(Enum):
 class TisserandPlotter:
     """Generates Tisserand figures."""
 
-    def __init__(self, kind=TisserandKind.APSIS, axes=None):
+    def __init__(self, kind=TisserandKind.APSIS, axes=None) -> None:
         """Object initializer.
 
         Parameters

@@ -27,7 +27,7 @@ class MainWindow(scene.SceneCanvas):
         Window size as (width, height). Default is (800, 600).
     """
 
-    def __init__(self, camera="turntable", fov=60, bgcolor="black", size=(800, 600)):
+    def __init__(self, camera="turntable", fov=60, bgcolor="black", size=(800, 600)) -> None:
         super().__init__(keys="interactive", size=size, show=True)
         self.unfreeze()
         self.grid = self.central_widget.add_grid(margin=10)
@@ -35,7 +35,7 @@ class MainWindow(scene.SceneCanvas):
         self.view.bgcolor = bgcolor
         self.view.camera.fov = fov
 
-    def set_model(self, vertices, faces, shading="smooth", color="grey"):
+    def set_model(self, vertices, faces, shading="smooth", color="grey") -> None:
         """
         Set the 3D model to be rendered.
 

@@ -19,7 +19,7 @@ class EarthSatellite:
     at a given time.
     """
 
-    def __init__(self, orbit, spacecraft):
+    def __init__(self, orbit, spacecraft) -> None:
         """Constructor.
 
         Parameters

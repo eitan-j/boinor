@@ -11,7 +11,7 @@ from boinor.core.earth_atmosphere.util import (
 class COESA:
     """Class for U.S Standard Atmosphere models."""
 
-    def __init__(self, *tables):
+    def __init__(self, *tables) -> None:
         """Constructor for Atmosphere instances.
 
         Parameters

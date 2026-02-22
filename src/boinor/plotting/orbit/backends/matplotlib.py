@@ -20,7 +20,7 @@ def _segments_from_arrays(x, y):
 class Matplotlib2D(OrbitPlotterBackend):
     """An orbit plotter backend class based on Matplotlib."""
 
-    def __init__(self, ax=None, use_dark_theme=False, width=None, height=None):
+    def __init__(self, ax=None, use_dark_theme=False, width=None, height=None) -> None:
         """Initializes a backend instance.
 
         Parameters
@@ -208,12 +208,12 @@ class Matplotlib2D(OrbitPlotterBackend):
             )
         )
 
-    def undraw_attractor(self):
+    def undraw_attractor(self) -> None:
         """Remove the attractor from the scene."""
         for attractor in self.ax.findobj(match=mpl_patches.Circle):
             attractor.remove()
 
-    def draw_axes_labels_with_length_scale_units(self, length_scale_units):
+    def draw_axes_labels_with_length_scale_units(self, length_scale_units) -> None:
         """Draw the desired label into the specified axis.
 
         Parameters
@@ -294,7 +294,7 @@ class Matplotlib2D(OrbitPlotterBackend):
         """
         return (None, label) if has_position else (label, None)
 
-    def update_legend(self):
+    def update_legend(self) -> None:
         """Update the legend of the scene."""
         # Enable the legend (if required)
         if not self.ax.get_legend():
@@ -308,12 +308,12 @@ class Matplotlib2D(OrbitPlotterBackend):
             numpoints=1,
         )
 
-    def resize_limits(self):
+    def resize_limits(self) -> None:
         """Resize the limits of the scene."""
         self.ax.relim()
         self.ax.autoscale()
         self.ax.set_aspect(1)
 
-    def show(self):
+    def show(self) -> None:
         """Display the scene."""
         plt.show()

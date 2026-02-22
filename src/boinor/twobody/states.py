@@ -1,4 +1,4 @@
-""" classes of different states defined by their elements
+"""classes of different states defined by their elements
 
 classical orbital elements.
     p    : Semilatus rectum.
@@ -36,7 +36,7 @@ from boinor.twobody.elements import mean_motion, period, t_p
 class BaseState:
     """Base State class, meant to be subclassed."""
 
-    def __init__(self, attractor, elements, plane):
+    def __init__(self, attractor, elements, plane) -> None:
         """Constructor.
 
         Parameters
@@ -259,7 +259,7 @@ class RVState(BaseState):
 
     def to_classical(self):
         """Converts to classical orbital elements representation."""
-        (p, ecc, inc, raan, argp, nu) = rv2coe(
+        p, ecc, inc, raan, argp, nu = rv2coe(
             self.attractor.k.to_value(u.km**3 / u.s**2),
             *self.to_value(),
         )
@@ -279,11 +279,11 @@ class RVState(BaseState):
 
     def to_equinoctial(self):
         """Converts to modified equinoctial elements representation."""
-        (p_coe, ecc_coe, inc_coe, raan_coe, argp_coe, nu_coe) = rv2coe(
+        p_coe, ecc_coe, inc_coe, raan_coe, argp_coe, nu_coe = rv2coe(
             self.attractor.k.to_value(u.km**3 / u.s**2),
             *self.to_value(),
         )
-        (p_mee, f_mee, g_mee, h_mee, k_mee, L_mee) = coe2mee(p_coe, ecc_coe, inc_coe, raan_coe, argp_coe, nu_coe)
+        p_mee, f_mee, g_mee, h_mee, k_mee, L_mee = coe2mee(p_coe, ecc_coe, inc_coe, raan_coe, argp_coe, nu_coe)
 
         return ModifiedEquinoctialState(
             self.attractor,

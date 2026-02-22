@@ -5,6 +5,7 @@ satellite breakups.
 The plots contain orbital period of each debris object on x-axis and
 perigee/apogee on y-axis.
 """
+
 from astropy import units as u
 from matplotlib import pyplot as plt
 
@@ -14,7 +15,7 @@ from boinor.plotting.util import generate_label
 class GabbardPlotter:
     """GabbardPlotter class."""
 
-    def __init__(self, ax=None, dark=False, altitude_unit=u.km, period_unit=u.min):
+    def __init__(self, ax=None, dark=False, altitude_unit=u.km, period_unit=u.min) -> None:
         self._ax = ax
         if not self._ax:
             if dark:
@@ -66,7 +67,7 @@ class GabbardPlotter:
         self._set_legend(orbits[-1].epoch, label)
         return apogee_paths, perigee_paths
 
-    def _set_legend(self, epoch, label):
+    def _set_legend(self, epoch, label) -> None:
         label = generate_label(epoch, label)
         if not self._ax.get_legend():
             size = self._ax.figure.get_size_inches() + [8, 0]

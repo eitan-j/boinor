@@ -1,4 +1,5 @@
 """@author: Dhruv Jain, Multi-Body Dynamics Research Group, Purdue University."""
+
 from astropy import units as u
 
 from boinor.core.threebody.cr3bp_quantities_calculations import (
@@ -15,7 +16,7 @@ class SystemChars:
     If P2 is more massive than P1 then swap the Pi, so that P1 is the more massive body.
     """
 
-    def __init__(self, name, mu, lstar, tstar):
+    def __init__(self, name, mu, lstar, tstar) -> None:
         """Constructor.
 
         Parameters

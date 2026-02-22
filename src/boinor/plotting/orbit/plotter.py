@@ -40,7 +40,7 @@ class OrbitPlotter:
         *,
         plane=None,
         length_scale_units=u.km,
-    ):
+    ) -> None:
         """Initializes the plotter instance.
 
         Parameters
@@ -164,7 +164,7 @@ class OrbitPlotter:
             if self._trajectories:
                 self._redraw()
 
-    def set_body_frame(self, body, epoch=None):
+    def set_body_frame(self, body, epoch=None) -> None:
         """Set perifocal frame based on the orbit of a body at a particular epoch if given.
 
         Parameters
@@ -216,11 +216,11 @@ class OrbitPlotter:
         vec_proj = vec - (vec @ self._frame[2])[:, None] * self._frame[2]
         return [vec_proj @ self._frame[i] for i in range(3)]
 
-    def _unplot_attractor(self):
+    def _unplot_attractor(self) -> None:
         """Remove the attractor from the scene."""
         self._backend.undraw_attractor()
 
-    def _plot_attractor(self):
+    def _plot_attractor(self) -> None:
         """Plot the scene attractor.
 
         Notes
@@ -250,7 +250,7 @@ class OrbitPlotter:
             radius=self._attractor_radius.to_value(ref_len_units),
         )
 
-    def _redraw(self):
+    def _redraw(self) -> None:
         """Redraw the the whole scene."""
         for trajectory in self._trajectories:
             self._add_trajectory(trajectory)
@@ -727,6 +727,6 @@ class OrbitPlotter:
             distance.to_value(self.length_scale_units),
         )
 
-    def show(self):
+    def show(self) -> None:
         """Render the plot."""
         self.backend.show()

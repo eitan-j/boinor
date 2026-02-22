@@ -84,7 +84,7 @@ class SincInterpolator:
 class SplineInterpolator:
     """spline interpolator, by default a cubic spline is used"""
 
-    def __init__(self, kind="cubic"):
+    def __init__(self, kind="cubic") -> None:
         self._kind = kind
 
     def interpolate(self, epochs, reference_epochs, coordinates):
@@ -141,7 +141,7 @@ class Ephem:
 
     """
 
-    def __init__(self, coordinates, epochs, plane):
+    def __init__(self, coordinates, epochs, plane) -> None:
         if coordinates.ndim != 1 or epochs.ndim != 1:
             raise ValueError(f"Coordinates and epochs must have dimension 1, got {coordinates.ndim} and {epochs.ndim}")
 
@@ -149,7 +149,7 @@ class Ephem:
         self._coordinates = coordinates
         self._plane = Planes(plane)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return EPHEM_FORMAT.format(
             num=len(self.epochs),
             start=self.epochs[0],
@@ -158,7 +158,7 @@ class Ephem:
             end_scale=self.epochs[-1].scale.upper(),
         )
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return self.__str__()
 
     @property

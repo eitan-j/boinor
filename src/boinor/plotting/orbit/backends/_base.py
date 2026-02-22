@@ -4,7 +4,7 @@
 class OrbitPlotterBackend:
     """A base class for implementing new orbit plotter backends."""
 
-    def __init__(self, scene, name):
+    def __init__(self, scene, name) -> None:
         """Initialize the orbit plotter backend.
 
         Parameters

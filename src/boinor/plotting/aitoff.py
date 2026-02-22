@@ -1,4 +1,5 @@
 """Aitoff projection sky map plotting in J2000 equatorial coordinates."""
+
 from astropy import units as u
 from astropy.time import Time
 from matplotlib import pyplot as plt
@@ -60,7 +61,7 @@ class AitoffPlotter:
         style="dark_background",
         show_ecliptic=True,
         ecliptic_obliquity=23.439281,
-    ):
+    ) -> None:
         """Initialize the Aitoff plotter."""
         self.epoch = epoch if epoch is not None else Time.now()
         self.show_ecliptic = show_ecliptic
@@ -80,7 +81,7 @@ class AitoffPlotter:
         if self.show_ecliptic:
             self._plot_ecliptic()
 
-    def _plot_ecliptic(self):
+    def _plot_ecliptic(self) -> None:
         """Plot the ecliptic (β = 0°) as a reference curve in equatorial coordinates.
 
         The ecliptic is converted from ecliptic coordinates (λ, β=0) to equatorial
@@ -281,7 +282,7 @@ class AitoffPlotter:
             **kwargs,
         )
 
-    def set_title(self, title=None):
+    def set_title(self, title=None) -> None:
         """Set the plot title.
 
         Parameters
@@ -297,19 +298,19 @@ class AitoffPlotter:
                 title = "Sky Map"
         self.ax.set_title(title, fontsize=10)
 
-    def set_labels(self):
+    def set_labels(self) -> None:
         """Set standard axis labels for the sky map."""
         self.ax.set_xlabel("Eq. long. in hours")
         self.ax.set_ylabel("Eq. lat. in deg")
 
-    def set_ticks(self):
+    def set_ticks(self) -> None:
         """Set standard tick labels for right ascension in hours."""
         ticks = np.radians([-150, -120, -90, -60, -30, 0, 30, 60, 90, 120, 150])
         labels = ["10 h", "8 h", "6 h", "4 h", "2 h", "0 h", "22 h", "20 h", "18 h", "16 h", "14 h"]
         self.ax.set_xticks(ticks)
         self.ax.set_xticklabels(labels)
 
-    def show(self):
+    def show(self) -> None:
         """Display the plot with legend and grid."""
         self.set_title()
         self.set_labels()
@@ -318,7 +319,7 @@ class AitoffPlotter:
         self.ax.grid(True)
         plt.show()
 
-    def save(self, filename, **kwargs):
+    def save(self, filename, **kwargs) -> None:
         """Save the plot to a file.
 
         Parameters

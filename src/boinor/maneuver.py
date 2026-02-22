@@ -1,4 +1,5 @@
 """Orbital maneuvers."""
+
 from astropy import units as u
 import numpy as np
 
@@ -27,7 +28,7 @@ class Maneuver:
 
     """
 
-    def __init__(self, *impulses):
+    def __init__(self, *impulses) -> None:
         r"""Constructor.
 
         Parameters
@@ -49,7 +50,7 @@ class Maneuver:
         except (TypeError, ValueError) as e:
             raise ValueError("Delta-V must be three dimensions vectors") from e
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"Number of impulses: {len(self.impulses)}, Total cost: {self.get_total_cost():.6f}"
 
     def __getitem__(self, key):

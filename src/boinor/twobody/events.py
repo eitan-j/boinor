@@ -1,4 +1,5 @@
 """module handling events for sub-package twobody"""
+
 from warnings import warn
 
 from astropy import units as u
@@ -27,7 +28,7 @@ class Event:
 
     """
 
-    def __init__(self, terminal, direction):
+    def __init__(self, terminal, direction) -> None:
         self._terminal, self._direction = terminal, direction
         self._last_t = None
 
@@ -73,7 +74,7 @@ class AltitudeCrossEvent(Event):
 
     """
 
-    def __init__(self, alt, R, terminal=True, direction=-1):
+    def __init__(self, alt, R, terminal=True, direction=-1) -> None:
         super().__init__(terminal, direction)
         self._R = R
         self._alt = alt  # Threshold altitude from the ground.
@@ -97,7 +98,7 @@ class LithobrakeEvent(AltitudeCrossEvent):
 
     """
 
-    def __init__(self, R, terminal=True):
+    def __init__(self, R, terminal=True) -> None:
         super().__init__(0, R, terminal, direction=-1)
 
 
@@ -118,7 +119,7 @@ class LatitudeCrossEvent(Event):
 
     """
 
-    def __init__(self, orbit, lat, terminal=False, direction=0):
+    def __init__(self, orbit, lat, terminal=False, direction=0) -> None:
         super().__init__(terminal, direction)
 
         self._R = orbit.attractor.R.to_value(u.m)
@@ -148,7 +149,7 @@ class EclipseEvent(Event):
 
     """
 
-    def __init__(self, orbit, terminal=False, direction=0):
+    def __init__(self, orbit, terminal=False, direction=0) -> None:
         super().__init__(terminal, direction)
         self._primary_body = orbit.attractor
         self._secondary_body = orbit.attractor.parent
@@ -185,7 +186,7 @@ class PenumbraEvent(EclipseEvent):
     """
 
     # for better clarity we do want to keep this function here
-    def __init__(self, orbit, terminal=False, direction=0):  # pylint: disable=useless-parent-delegation
+    def __init__(self, orbit, terminal=False, direction=0) -> None:  # pylint: disable=useless-parent-delegation
         super().__init__(orbit, terminal, direction)
 
     def __call__(self, t, u_, k):
@@ -220,7 +221,7 @@ class UmbraEvent(EclipseEvent):
     """
 
     # for better clarity we do want to keep this function here
-    def __init__(self, orbit, terminal=False, direction=0):  # pylint: disable=useless-parent-delegation
+    def __init__(self, orbit, terminal=False, direction=0) -> None:  # pylint: disable=useless-parent-delegation
         super().__init__(orbit, terminal, direction)
 
     def __call__(self, t, u_, k):
@@ -246,7 +247,7 @@ class NodeCrossEvent(Event):
 
     """
 
-    def __init__(self, terminal=False, direction=0):
+    def __init__(self, terminal=False, direction=0) -> None:
         super().__init__(terminal, direction)
 
     def __call__(self, t, u_, k):
@@ -268,7 +269,7 @@ class LosEvent(Event):
 
     """
 
-    def __init__(self, attractor, pos_coords, terminal=False, direction=0):
+    def __init__(self, attractor, pos_coords, terminal=False, direction=0) -> None:
         super().__init__(terminal, direction)
         self._attractor = attractor
         self._pos_coords = (pos_coords << u.km).value.tolist()

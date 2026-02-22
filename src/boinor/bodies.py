@@ -111,13 +111,13 @@ class Body(
         """Return angular velocity of Body."""
         return (2 * math.pi * u.rad) / self.rotational_period.to(u.s)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.name} ({self.symbol})"
 
     def __reduce__(self):
         return self.name
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return self.__str__()
 
     def tmp_G(self):

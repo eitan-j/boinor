@@ -1,4 +1,5 @@
 """Sub-package to hold all packages/modules about a spacecraft"""
+
 from astropy import units as u
 
 
@@ -6,7 +7,7 @@ class Spacecraft:
     """Class to represent a Spacecraft."""
 
     @u.quantity_input(A=u.km**2, C_D=u.one, m=u.kg)
-    def __init__(self, A, C_D, m, **metadata):
+    def __init__(self, A, C_D, m, **metadata) -> None:
         """Constructor.
 
         Parameters

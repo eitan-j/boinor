@@ -1,4 +1,5 @@
 """module related to sampling of open or closed orbits in the sub-package twobody"""
+
 from astropy import units as u
 from astropy.coordinates import CartesianDifferential, CartesianRepresentation
 import numpy as np
@@ -81,7 +82,7 @@ class SamplingStrategy:
 class EpochsArray(SamplingStrategy):
     """sample orbit created from a list of epochs"""
 
-    def __init__(self, epochs, method=FarnocchiaPropagator()):
+    def __init__(self, epochs, method=FarnocchiaPropagator()) -> None:
         self._epochs = epochs
         self._method = method
 
@@ -105,7 +106,7 @@ class TrueAnomalyBounds(SamplingStrategy):
     as default, orbit consists of 100 samples
     """
 
-    def __init__(self, min_nu=None, max_nu=None, num_values=100, hyp_r_factor=3.0):
+    def __init__(self, min_nu=None, max_nu=None, num_values=100, hyp_r_factor=3.0) -> None:
         self._min_nu = min_nu
         self._max_nu = max_nu
         self._hyp_r_factor = hyp_r_factor
@@ -175,7 +176,7 @@ class EpochBounds(SamplingStrategy):
     as default  orbit consists of 100 samples
     """
 
-    def __init__(self, min_epoch=None, max_epoch=None, num_values=100):
+    def __init__(self, min_epoch=None, max_epoch=None, num_values=100) -> None:
         self._min_epoch = min_epoch
         self._max_epoch = max_epoch
         self._num_values = num_values

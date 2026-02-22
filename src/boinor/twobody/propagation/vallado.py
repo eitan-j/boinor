@@ -42,7 +42,7 @@ class ValladoPropagator:
 
     kind = PropagatorKind.ELLIPTIC | PropagatorKind.PARABOLIC | PropagatorKind.HYPERBOLIC
 
-    def __init__(self, numiter=350):
+    def __init__(self, numiter=350) -> None:
         self._numiter = numiter
 
     def propagate(self, state, tof):

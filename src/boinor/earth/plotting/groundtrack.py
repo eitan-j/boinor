@@ -18,7 +18,7 @@ from boinor.twobody.sampling import EpochsArray
 class GroundtrackPlotter:
     """Generates two-dimensional ground-track."""
 
-    def __init__(self, fig=None, color_palette=None):
+    def __init__(self, fig=None, color_palette=None) -> None:
         """Initializes the ground-track.
 
         Parameters
@@ -77,7 +77,7 @@ class GroundtrackPlotter:
         self.fig.update_layout(config)
         return self.fig
 
-    def add_trace(self, trace):
+    def add_trace(self, trace) -> None:
         """Adds trace to custom figure."""
         self.fig.add_trace(trace)
 

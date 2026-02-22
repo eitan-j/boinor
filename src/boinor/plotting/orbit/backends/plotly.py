@@ -13,7 +13,7 @@ from boinor.plotting.util import generate_sphere
 class BasePlotly(OrbitPlotterBackend):
     """An orbit plotter backend class based on Plotly."""
 
-    def __init__(self, figure, layout):
+    def __init__(self, figure, layout) -> None:
         """Initializes a backend instance.
 
         Parameters
@@ -120,7 +120,7 @@ class BasePlotly(OrbitPlotterBackend):
         """
         raise NotImplementedError("This method is expected to be overridden by a specific plotting backend.")
 
-    def update_layout(self, layout):
+    def update_layout(self, layout) -> None:
         """Update the layout of the figure scene.
 
         Parameters
@@ -150,7 +150,7 @@ class BasePlotly(OrbitPlotterBackend):
         color = color or next(self._color_cycle)
         return [color]
 
-    def undraw_attractor(self):
+    def undraw_attractor(self) -> None:
         """Removes the attractor from the scene."""
         pass  # pylint: disable=unnecessary-pass
 
@@ -198,11 +198,11 @@ class BasePlotly(OrbitPlotterBackend):
         """
         return self.draw_marker(position, color=color, label=label, marker_symbol="x", size=size)
 
-    def update_legend(self):
+    def update_legend(self) -> None:
         """Update the legend of the scene."""
         pass  # pylint: disable=unnecessary-pass
 
-    def resize_limits(self):
+    def resize_limits(self) -> None:
         """Resize the limits of the scene."""
         pass  # pylint: disable=unnecessary-pass
 
@@ -237,7 +237,7 @@ class BasePlotly(OrbitPlotterBackend):
 class Plotly2D(BasePlotly):
     """An orbit plotter backend class based on Plotly."""
 
-    def __init__(self, figure=None, use_dark_theme=False, width=None, height=None):
+    def __init__(self, figure=None, use_dark_theme=False, width=None, height=None) -> None:
         """Initializes a backend instance.
 
         Parameters
@@ -378,7 +378,7 @@ class Plotly2D(BasePlotly):
         self.figure.add_trace(coordinates_trace)
         return coordinates_trace
 
-    def draw_axes_labels_with_length_scale_units(self, length_scale_units):
+    def draw_axes_labels_with_length_scale_units(self, length_scale_units) -> None:
         """Draw the desired label into the specified axis.
 
         Parameters
@@ -398,7 +398,7 @@ class Plotly2D(BasePlotly):
 class Plotly3D(BasePlotly):
     """An orbit plotter backend class based on Plotly."""
 
-    def __init__(self, figure=None, use_dark_theme=False, width=None, height=None):
+    def __init__(self, figure=None, use_dark_theme=False, width=None, height=None) -> None:
         """Initialize a backend instance.
 
         Parameters
@@ -532,7 +532,7 @@ class Plotly3D(BasePlotly):
         self.figure.add_trace(coordinates_trace)
         return coordinates_trace
 
-    def draw_axes_labels_with_length_scale_units(self, length_scale_units):
+    def draw_axes_labels_with_length_scale_units(self, length_scale_units) -> None:
         """Draw the desired label into the specified axis.
 
         Parameters
@@ -549,7 +549,7 @@ class Plotly3D(BasePlotly):
             )
         )
 
-    def set_view(self, elevation_angle, azimuth_angle, distance):
+    def set_view(self, elevation_angle, azimuth_angle, distance) -> None:
         """Change 3D view.
 
         Parameters

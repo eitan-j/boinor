@@ -46,7 +46,7 @@ class Orbit(OrbitCreationMixin):
     # class Orbit is derived from the mixin class OrbitCreationMixin.
     # pylint does not understand this concept and complains, so it is silenced here
     # more info at PR#1554 created by @s-m-e
-    def __init__(self, state: BaseState, epoch: time.Time):  # pylint: disable=super-init-not-called
+    def __init__(self, state: BaseState, epoch: time.Time) -> None:  # pylint: disable=super-init-not-called
         """Constructor.
 
         Parameters
@@ -383,7 +383,7 @@ class Orbit(OrbitCreationMixin):
         q_vec = np.cross(w_vec, p_vec) * u.one
         return p_vec, q_vec, w_vec
 
-    def __str__(self):
+    def __str__(self) -> str:
         if self.a > 1e7 * u.km:
             unit = u.au
         else:
@@ -409,7 +409,7 @@ class Orbit(OrbitCreationMixin):
                 scale=self.epoch.scale.upper(),
             )
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return self.__str__()
 
     def propagate(self, value, method=FarnocchiaPropagator()):
@@ -682,7 +682,7 @@ class Orbit(OrbitCreationMixin):
             res = orbit_new
         return res
 
-    def plot(self, backend=None, label=None):
+    def plot(self, backend=None, label=None) -> None:
         """Plots the orbit.
 
         Parameters
