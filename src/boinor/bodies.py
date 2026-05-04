@@ -39,6 +39,7 @@ from astropy.units import Quantity
 
 from boinor import constants
 from boinor.frames import Planes
+from boinor.plotting.orbit.backends._base import OrbitPlotterBackend
 
 
 # HACK: Constants cannot be hashed
@@ -144,10 +145,10 @@ class SolarSystemPlanet(Body):
 
     def plot(
         self,
-        epoch=None,
-        label=None,
-        plane=Planes.EARTH_ECLIPTIC,
-        backend=None,
+        epoch: Time | None = None,
+        label: str | None = None,
+        plane: Planes = Planes.EARTH_ECLIPTIC,
+        backend: OrbitPlotterBackend = None,
     ):
         """Plots the body orbit.
 

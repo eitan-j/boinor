@@ -67,9 +67,7 @@ class OrbitCreationMixin:
         if v.ndim != 1:
             raise ValueError(f"Vectors must have dimension 1, got {v.ndim}")
 
-        self.state = RVState(
-            self.attractor, (self.r, self.v + v), self.plane  # type: ignore[attr-defined]
-        )  # type: ignore[attr-defined]
+        self.state = RVState(self.attractor, (self.r, self.v + v), self.plane)  # type: ignore[attr-defined]
 
     @classmethod
     def from_coords(cls, attractor, coord, plane=Planes.EARTH_EQUATOR):
