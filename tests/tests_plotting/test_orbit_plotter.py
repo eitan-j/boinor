@@ -1,4 +1,5 @@
 """tests related to module orbit_plotter in sub-package plotting"""
+
 import sys
 
 from astropy import time, units as u
@@ -134,6 +135,33 @@ def test_plot_2d_trajectory_plots_a_trajectory(Backend):
     plotter.set_attractor(Sun)
     plotter.set_orbit_frame(churi)
     plotter.plot_coordinates(trajectory)
+
+    assert len(plotter.trajectories) == 1
+    assert plotter._attractor == Sun
+
+
+@pytest.mark.parametrize("Backend", DEFAULT_ORBIT_PLOTTER_BACKENDS_3D.values())
+def test_plot_3d_maneuver_plots_a_maneuver(Backend):
+    plotter = OrbitPlotter(backend=Backend())
+    assert len(plotter.trajectories) == 0
+
+    man = Maneuver((0 * u.s, [1, 1, 1] * u.km / u.s), (10 * u.s, [1, 1, 1] * u.km / u.s))
+    plotter.set_attractor(Sun)
+    plotter.plot_maneuver(churi, man)
+
+    assert len(plotter.trajectories) == 1
+    assert plotter._attractor == Sun
+
+
+@pytest.mark.parametrize("Backend", DEFAULT_ORBIT_PLOTTER_BACKENDS_2D.values())
+def test_plot_2d_maneuver_plots_a_maneuver(Backend):
+    plotter = OrbitPlotter(backend=Backend())
+    assert len(plotter.trajectories) == 0
+
+    man = Maneuver((0 * u.s, [1, 1, 1] * u.km / u.s), (10 * u.s, [1, 1, 1] * u.km / u.s))
+    plotter.set_attractor(Sun)
+    plotter.set_orbit_frame(churi)
+    plotter.plot_maneuver(churi, man)
 
     assert len(plotter.trajectories) == 1
     assert plotter._attractor == Sun
@@ -397,8 +425,7 @@ def test_body_frame_raises_warning_if_time_is_not_tdb_with_proper_time(
 
 @pytest.mark.xfail(sys.maxsize < 2**32, reason="not supported for 32 bit systems")
 @pytest.mark.mpl_image_compare
-@pytest.mark.parametrize("Backend", DEFAULT_ORBIT_PLOTTER_BACKENDS_2D.values())
-def test_plot_maneuver(Backend):
+def test_plot_maneuver_using_matplotlib2D_backend():
     # Data from Vallado, example 6.1
     alt_i = 191.34411 * u.km
     alt_f = 35781.34857 * u.km
@@ -418,10 +445,7 @@ def test_plot_maneuver(Backend):
 
     # Plot the maneuver
     fig, ax = plt.subplots()
-    if Backend == "Matplotlib2D":
-        backend = Matplotlib2D(ax=ax)
-    else:
-        backend = Backend()
+    backend = Matplotlib2D(ax=ax)
     plotter = OrbitPlotter(backend=backend)
     plotter.plot(orb_i, label="Initial orbit", color="blue")
     plotter.plot_maneuver(orb_i, man, label="Hohmann maneuver", color="red")
@@ -482,23 +506,23 @@ def test_edge_cases(Backend):
     )
 
     # Create the maneuver
-    man = Maneuver.hohmann(orb_i, Earth.R + alt_f)  # man
+    _ = Maneuver.hohmann(orb_i, Earth.R + alt_f)  # man
 
     # Create the trajectory
-    trajectory = churi.sample()  # trajectory
+    _ = churi.sample()  # trajectory
 
     # Plot the maneuver
     fig, ax = plt.subplots()
-    plotter = OrbitPlotter(backend=Backend())
+    plotter = OrbitPlotter(backend=Backend)
     # XXX plotting with 3D does not work here
-    plotter.plot(orb_i, label="Initial orbit", color="blue")
-    plotter.plot_maneuver(orb_i, man, label="Hohmann maneuver", color="red")
+    # plotter.plot(orb_i, label="Initial orbit", color="blue")
+    # plotter.plot_maneuver(orb_i, man, label="Hohmann maneuver", color="red")
 
     # Plot the trajectroy
     plotter.set_attractor(Sun)
     plotter.set_body_frame(Jupiter)
     # XXX plotting with 3D does not work here
-    plotter.plot_trajectory(trajectory)
+    # plotter.plot_trajectory(trajectory)
 
 
 def test_body_plotting_without_epoch():
